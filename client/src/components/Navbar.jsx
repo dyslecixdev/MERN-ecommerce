@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {Outlet, Link} from 'react-router-dom';
+import {useSelector, useDispatch} from 'react-redux';
 import {styled, useTheme, alpha} from '@mui/material/styles';
 import MuiAppBar from '@mui/material/AppBar';
 import {
@@ -35,6 +36,8 @@ import {
 	Watch,
 	Info
 } from '@mui/icons-material';
+
+import {logoutStart, logoutSuccess, logoutFailure} from '../redux/userRedux';
 
 const drawerWidth = 240;
 
@@ -121,6 +124,9 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
 }));
 
 function Navbar() {
+	const user = useSelector(state => state.user.currentUser);
+	const dispatch = useDispatch();
+
 	const theme = useTheme();
 	const [open, setOpen] = useState(false);
 	const [anchorEl, setAnchorEl] = useState(null);
@@ -130,7 +136,6 @@ function Navbar() {
 	const isCartMenuOpen = Boolean(cartAnchorEl);
 	const isMenuOpen = Boolean(anchorEl);
 	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-	const user = false; // ! Simulate if a user is logged in or not.
 
 	const handleDrawerOpen = () => {
 		setOpen(true);
@@ -164,6 +169,17 @@ function Navbar() {
 	const handleMenuClose = () => {
 		setAnchorEl(null);
 		handleMobileMenuClose();
+	};
+
+	// Logs out of the app
+	const handleLogout = async () => {
+		dispatch(logoutStart());
+		try {
+			dispatch(logoutSuccess());
+		} catch (err) {
+			console.log(err);
+			dispatch(logoutFailure());
+		}
 	};
 
 	const renderCartMenu = (
@@ -208,6 +224,7 @@ function Navbar() {
 			onClose={handleMenuClose}
 		>
 			{user && <MenuItem onClick={handleMenuClose}>Profile</MenuItem>}
+			{user && <MenuItem onClick={handleLogout}>Logout</MenuItem>}
 			{!user && (
 				<MenuItem onClick={handleMenuClose}>
 					<Link to='/register' style={{textDecoration: 'none', color: 'black'}}>

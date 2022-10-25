@@ -1,4 +1,5 @@
-import {Routes, Route} from 'react-router-dom';
+import {Routes, Route, Navigate} from 'react-router-dom';
+import {useSelector} from 'react-redux';
 
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
@@ -10,13 +11,19 @@ import Items from './pages/Items';
 import './App.css';
 
 function App() {
+	const user = useSelector(state => state.user.currentUser); // Logged in user from redux
+
 	return (
 		<div className='backgroundContainer'>
 			<Routes>
 				<Route path='/' element={<Navbar />}>
 					<Route index element={<Home />} />
-					<Route path='/register' element={<Register />} />
-					<Route path='/login' element={<Login />} />
+					<Route path='/register' element={user ? <Navigate to='/' /> : <Register />} />
+					<Route path='/login' element={user ? <Navigate to='/' /> : <Login />} />
+					{/* <Route
+						path='/profile'
+						element={user ? <Profile /> : <Navigate to='/login' />}
+					/> */}
 					<Route path='/checkout' element={<Checkout />} />
 					<Route path='/items' element={<Items />} />
 				</Route>
