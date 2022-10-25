@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Outlet} from 'react-router-dom';
+import {Outlet, Link} from 'react-router-dom';
 import {styled, useTheme, alpha} from '@mui/material/styles';
 import MuiAppBar from '@mui/material/AppBar';
 import {
@@ -17,7 +17,8 @@ import {
 	InputBase,
 	Badge,
 	MenuItem,
-	Menu
+	Menu,
+	Button
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
@@ -25,7 +26,7 @@ import {
 	AccountCircle,
 	ChevronLeft,
 	ChevronRight,
-	More,
+	MoreVert,
 	ShoppingCart,
 	Man,
 	Woman,
@@ -35,7 +36,7 @@ import {
 	Info
 } from '@mui/icons-material';
 
-const drawerWidth = 300;
+const drawerWidth = 240;
 
 const Main = styled('main', {shouldForwardProp: prop => prop !== 'open'})(({theme, open}) => ({
 	flexGrow: 1,
@@ -74,8 +75,7 @@ const AppBar = styled(MuiAppBar, {
 const DrawerHeader = styled('div')(({theme}) => ({
 	display: 'flex',
 	alignItems: 'center',
-	padding: theme.spacing(0, 1),
-	// necessary for content to be below app bar
+	padding: theme.spacing(0, 1), // necessary for content to be below app bar
 	...theme.mixins.toolbar,
 	justifyContent: 'flex-end'
 }));
@@ -123,9 +123,14 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
 function Navbar() {
 	const theme = useTheme();
 	const [open, setOpen] = useState(false);
+	const [anchorEl, setAnchorEl] = useState(null);
+	const [cartAnchorEl, setCartAnchorEl] = useState(null);
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
+	const isCartMenuOpen = Boolean(cartAnchorEl);
+	const isMenuOpen = Boolean(anchorEl);
 	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+	const user = false; // ! Simulate if a user is logged in or not.
 
 	const handleDrawerOpen = () => {
 		setOpen(true);
@@ -135,13 +140,90 @@ function Navbar() {
 		setOpen(false);
 	};
 
+	const handleProfileMenuOpen = e => {
+		setAnchorEl(e.currentTarget);
+	};
+
 	const handleMobileMenuClose = () => {
 		setMobileMoreAnchorEl(null);
 	};
 
-	const handleMobileMenuOpen = event => {
-		setMobileMoreAnchorEl(event.currentTarget);
+	const handleCartMenuOpen = e => {
+		setCartAnchorEl(e.currentTarget);
 	};
+
+	const handleCartMenuClose = () => {
+		setCartAnchorEl(null);
+		handleMobileMenuClose();
+	};
+
+	const handleMobileMenuOpen = e => {
+		setMobileMoreAnchorEl(e.currentTarget);
+	};
+
+	const handleMenuClose = () => {
+		setAnchorEl(null);
+		handleMobileMenuClose();
+	};
+
+	const renderCartMenu = (
+		<Menu
+			anchorEl={cartAnchorEl}
+			anchorOrigin={{
+				vertical: 'top',
+				horizontal: 'right'
+			}}
+			keepMounted
+			transformOrigin={{
+				vertical: 'top',
+				horizontal: 'right'
+			}}
+			open={isCartMenuOpen}
+			onClose={handleCartMenuClose}
+		>
+			<Button
+				variant='contained'
+				onClick={handleCartMenuClose}
+				component={Link}
+				to='/checkout'
+			>
+				Checkout
+			</Button>
+		</Menu>
+	);
+
+	const renderMenu = (
+		<Menu
+			anchorEl={anchorEl}
+			anchorOrigin={{
+				vertical: 'top',
+				horizontal: 'right'
+			}}
+			keepMounted
+			transformOrigin={{
+				vertical: 'top',
+				horizontal: 'right'
+			}}
+			open={isMenuOpen}
+			onClose={handleMenuClose}
+		>
+			{user && <MenuItem onClick={handleMenuClose}>Profile</MenuItem>}
+			{!user && (
+				<MenuItem onClick={handleMenuClose}>
+					<Link to='/register' style={{textDecoration: 'none', color: 'black'}}>
+						Register
+					</Link>
+				</MenuItem>
+			)}
+			{!user && (
+				<MenuItem onClick={handleMenuClose}>
+					<Link to='/login' style={{textDecoration: 'none', color: 'black'}}>
+						Login
+					</Link>
+				</MenuItem>
+			)}
+		</Menu>
+	);
 
 	const renderMobileMenu = (
 		<Menu
@@ -159,14 +241,14 @@ function Navbar() {
 			onClose={handleMobileMenuClose}
 		>
 			<MenuItem>
-				<IconButton size='large' color='inherit'>
+				<IconButton size='large' onClick={handleCartMenuOpen} color='inherit'>
 					<Badge badgeContent={17} color='error'>
 						<ShoppingCart />
 					</Badge>
 				</IconButton>
 			</MenuItem>
 			<MenuItem>
-				<IconButton size='large' color='inherit'>
+				<IconButton size='large' onClick={handleProfileMenuOpen} color='inherit'>
 					<AccountCircle />
 				</IconButton>
 			</MenuItem>
@@ -191,7 +273,9 @@ function Navbar() {
 						component='div'
 						sx={{display: {xs: 'none', sm: 'block'}}}
 					>
-						LOGO
+						<Link to='/' style={{textDecoration: 'none', color: 'white'}}>
+							LOGO
+						</Link>
 					</Typography>
 					<Search>
 						<SearchIconWrapper>
@@ -200,23 +284,30 @@ function Navbar() {
 						<StyledInputBase placeholder='Search…' />
 					</Search>
 					<Box sx={{flexGrow: 1}} />
-					<Box sx={{display: {xs: 'none', md: 'flex'}}}>
-						<IconButton size='large' color='inherit'>
+					<Box sx={{display: {xs: 'none', sm: 'flex'}}}>
+						<IconButton size='large' onClick={handleCartMenuOpen} color='inherit'>
 							<Badge badgeContent={17} color='error'>
 								<ShoppingCart />
 							</Badge>
 						</IconButton>
-						<IconButton size='large' edge='end' color='inherit'>
+						<IconButton
+							size='large'
+							edge='end'
+							onClick={handleProfileMenuOpen}
+							color='inherit'
+						>
 							<AccountCircle />
 						</IconButton>
 					</Box>
-					<Box sx={{display: {xs: 'flex', md: 'none'}}}>
+					<Box sx={{display: {xs: 'flex', sm: 'none'}}}>
 						<IconButton size='large' onClick={handleMobileMenuOpen} color='inherit'>
-							<More />
+							<MoreVert />
 						</IconButton>
 					</Box>
 				</Toolbar>
 			</AppBar>
+			{renderCartMenu}
+			{renderMenu}
 			{renderMobileMenu}
 			<Drawer
 				sx={{
@@ -239,7 +330,7 @@ function Navbar() {
 				<Divider />
 				<List>
 					<ListItem disablePadding>
-						<ListItemButton>
+						<ListItemButton onClick={handleDrawerClose} component={Link} to='/items'>
 							<ListItemIcon>
 								<Man />
 							</ListItemIcon>
@@ -247,7 +338,7 @@ function Navbar() {
 						</ListItemButton>
 					</ListItem>
 					<ListItem disablePadding>
-						<ListItemButton>
+						<ListItemButton onClick={handleDrawerClose} component={Link} to='/items'>
 							<ListItemIcon>
 								<Woman />
 							</ListItemIcon>
@@ -255,7 +346,7 @@ function Navbar() {
 						</ListItemButton>
 					</ListItem>
 					<ListItem disablePadding>
-						<ListItemButton>
+						<ListItemButton onClick={handleDrawerClose} component={Link} to='/items'>
 							<ListItemIcon>
 								<ChildFriendly />
 							</ListItemIcon>
@@ -266,7 +357,7 @@ function Navbar() {
 				<Divider />
 				<List>
 					<ListItem disablePadding>
-						<ListItemButton>
+						<ListItemButton onClick={handleDrawerClose} component={Link} to='/items'>
 							<ListItemIcon>
 								<Checkroom />
 							</ListItemIcon>
@@ -274,7 +365,7 @@ function Navbar() {
 						</ListItemButton>
 					</ListItem>
 					<ListItem disablePadding>
-						<ListItemButton>
+						<ListItemButton onClick={handleDrawerClose} component={Link} to='/items'>
 							<ListItemIcon>
 								<Watch />
 							</ListItemIcon>
@@ -289,7 +380,16 @@ function Navbar() {
 							<ListItemIcon>
 								<Info />
 							</ListItemIcon>
-							<ListItemText primary='About Me' />
+							<ListItemText>
+								<a
+									href='https://github.com/christiandeandemesa'
+									target='_blank'
+									rel='noreferrer'
+									style={{textDecoration: 'none', color: 'black'}}
+								>
+									About
+								</a>
+							</ListItemText>
 						</ListItemButton>
 					</ListItem>
 				</List>
