@@ -13,6 +13,7 @@ import Children from '../assets/children.jpg';
 import Accesories from '../assets/accesories.jpg';
 import Clothing from '../assets/clothing.jpg';
 
+// Each individual category in the categories image list
 const Item = styled(Paper)(({theme}) => ({
 	height: '20rem',
 	...theme.typography.heading1,
@@ -30,13 +31,11 @@ const Item = styled(Paper)(({theme}) => ({
 		transform: 'scale(1.05)',
 
 		'&::after': {
-			content: '"MEN"',
 			padding: '1rem',
 			fontSize: '2rem',
 			background: 'rgba(0, 0, 0, 0.4)',
 			color: 'white',
-			border: '1px solid white',
-			textDecoration: 'none' // bug Doesn't remove underline
+			border: '1px solid white'
 		}
 	}
 }));
@@ -114,26 +113,76 @@ function Home() {
 				))}
 			</Carousel>
 
-			{/* Items Categories */}
+			{/* Categories Image List */}
 			<Grid
 				container
 				spacing={3}
 				sx={{marginTop: '3rem', background: '#EDEDED', borderRadius: '5px'}}
 			>
-				<Grid xs={4} component={Link} to='/items'>
-					<Item text='MEN' sx={{backgroundImage: `url(${Men})`}} />
+				<Grid xs={4} component={Link} to='/items' sx={{textDecoration: 'none'}}>
+					<Item
+						text='MEN'
+						sx={{
+							backgroundImage: `url(${Men})`,
+							'&:hover': {
+								'&::after': {
+									content: '"MEN"' // Wasn't able to pass the text as props to Item
+								}
+							}
+						}}
+					/>
 				</Grid>
-				<Grid xs={4} component={Link} to='/items'>
-					<Item text='WOMEN' sx={{backgroundImage: `url(${Women})`}} />
+				<Grid xs={4} component={Link} to='/items' sx={{textDecoration: 'none'}}>
+					<Item
+						text='WOMEN'
+						sx={{
+							backgroundImage: `url(${Women})`,
+							'&:hover': {
+								'&::after': {
+									content: '"WOMEN"'
+								}
+							}
+						}}
+					/>
 				</Grid>
-				<Grid xs={4} component={Link} to='/items'>
-					<Item text='CHILDREN' sx={{backgroundImage: `url(${Children})`}} />
+				<Grid xs={4} component={Link} to='/items' sx={{textDecoration: 'none'}}>
+					<Item
+						text='CHILDREN'
+						sx={{
+							backgroundImage: `url(${Children})`,
+							'&:hover': {
+								'&::after': {
+									content: '"CHILDREN"'
+								}
+							}
+						}}
+					/>
 				</Grid>
-				<Grid xs={6} component={Link} to='/items'>
-					<Item text='ACCESORIES' sx={{backgroundImage: `url(${Accesories})`}} />
+				<Grid xs={6} component={Link} to='/items' sx={{textDecoration: 'none'}}>
+					<Item
+						text='ACCESORIES'
+						sx={{
+							backgroundImage: `url(${Accesories})`,
+							'&:hover': {
+								'&::after': {
+									content: '"ACCESORIES"'
+								}
+							}
+						}}
+					/>
 				</Grid>
-				<Grid xs={6} component={Link} to='/items'>
-					<Item text='CLOTHING' sx={{backgroundImage: `url(${Clothing})`}} />
+				<Grid xs={6} component={Link} to='/items' sx={{textDecoration: 'none'}}>
+					<Item
+						text='CLOTHING'
+						sx={{
+							backgroundImage: `url(${Clothing})`,
+							'&:hover': {
+								'&::after': {
+									content: '"CLOTHING"'
+								}
+							}
+						}}
+					/>
 				</Grid>
 			</Grid>
 		</Container>
