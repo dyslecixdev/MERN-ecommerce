@@ -1,9 +1,45 @@
 import {Link} from 'react-router-dom';
 
+import {styled} from '@mui/material/styles';
 import {Container, Paper, Button, Typography, Box} from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
 import {KeyboardArrowLeft, KeyboardArrowRight} from '@mui/icons-material';
 
 import Carousel from 'react-material-ui-carousel';
+
+import Men from '../assets/men.jpg';
+import Women from '../assets/women.jpg';
+import Children from '../assets/children.jpg';
+import Accesories from '../assets/accesories.jpg';
+import Clothing from '../assets/clothing.jpg';
+
+const Item = styled(Paper)(({theme}) => ({
+	height: '20rem',
+	...theme.typography.heading1,
+	padding: theme.spacing(1),
+	display: 'flex',
+	justifyContent: 'center',
+	alignItems: 'center',
+	backgroundPosition: 'center center',
+	backgroundSize: 'cover',
+	objectFit: 'cover',
+	overflow: 'hidden',
+	cursor: 'pointer',
+	transition: 'all 1s ease',
+	'&:hover': {
+		transform: 'scale(1.05)',
+
+		'&::after': {
+			content: '"MEN"',
+			padding: '1rem',
+			fontSize: '2rem',
+			background: 'rgba(0, 0, 0, 0.4)',
+			color: 'white',
+			border: '1px solid white',
+			textDecoration: 'none' // bug Doesn't remove underline
+		}
+	}
+}));
 
 function Home() {
 	// Carousel slide information
@@ -77,6 +113,29 @@ function Home() {
 					</Paper>
 				))}
 			</Carousel>
+
+			{/* Items Categories */}
+			<Grid
+				container
+				spacing={3}
+				sx={{marginTop: '3rem', background: '#EDEDED', borderRadius: '5px'}}
+			>
+				<Grid xs={4} component={Link} to='/items'>
+					<Item text='MEN' sx={{backgroundImage: `url(${Men})`}} />
+				</Grid>
+				<Grid xs={4} component={Link} to='/items'>
+					<Item text='WOMEN' sx={{backgroundImage: `url(${Women})`}} />
+				</Grid>
+				<Grid xs={4} component={Link} to='/items'>
+					<Item text='CHILDREN' sx={{backgroundImage: `url(${Children})`}} />
+				</Grid>
+				<Grid xs={6} component={Link} to='/items'>
+					<Item text='ACCESORIES' sx={{backgroundImage: `url(${Accesories})`}} />
+				</Grid>
+				<Grid xs={6} component={Link} to='/items'>
+					<Item text='CLOTHING' sx={{backgroundImage: `url(${Clothing})`}} />
+				</Grid>
+			</Grid>
 		</Container>
 	);
 }
