@@ -28,7 +28,7 @@ const Footer = () => {
 				<Typography variant='h6' noWrap component='div'>
 					LOGO
 				</Typography>
-				<Typography variant='p' component='div'>
+				<Typography variant='p' component='div' sx={{color: 'gray'}}>
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto voluptas possimus
 					laboriosam mollitia aut animi placeat, a molestiae esse quas. Accusantium,
 					laborum deleniti doloribus ducimus magni non enim atque ipsum facilis harum,
@@ -64,24 +64,24 @@ const Footer = () => {
 				<Typography
 					variant='p'
 					component='div'
-					sx={{display: 'flex', alignItems: 'center'}}
+					sx={{display: 'flex', alignItems: 'center', color: 'gray'}}
 				>
-					<Room sx={{marginRight: '1rem'}} /> 123 Imaginary Lane, Los Angeles, California,
-					90001
+					<Room sx={{marginRight: '1rem', color: 'red'}} /> 123 Imaginary Lane, Los
+					Angeles, California, 90001
 				</Typography>
 				<Typography
 					variant='p'
 					component='div'
-					sx={{display: 'flex', alignItems: 'center'}}
+					sx={{display: 'flex', alignItems: 'center', color: 'gray'}}
 				>
 					<Phone sx={{marginRight: '1rem'}} /> 909-909-9009
 				</Typography>
 				<Typography
 					variant='p'
 					component='div'
-					sx={{display: 'flex', alignItems: 'center'}}
+					sx={{display: 'flex', alignItems: 'center', color: 'gray'}}
 				>
-					<MailOutline sx={{marginRight: '1rem'}} /> fakeEmail@gmail.com
+					<MailOutline sx={{marginRight: '1rem', color: 'blue'}} /> fakeEmail@gmail.com
 				</Typography>
 			</Item>
 		</Stack>

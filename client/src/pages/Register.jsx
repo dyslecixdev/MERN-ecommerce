@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {TextField, Button, Paper, Typography, ButtonGroup} from '@mui/material';
+import {TextField, Button, Paper, Typography} from '@mui/material';
 
 import axios from 'axios';
 
@@ -65,7 +65,7 @@ function Register() {
 					display: 'flex',
 					flexDirection: 'column',
 					gap: '2rem',
-					background: 'white'
+					background: '#F1F1F1'
 				}}
 			>
 				{errorMessage && (
@@ -101,7 +101,12 @@ function Register() {
 					value={confirmPassword}
 					onChange={e => setConfirmPassword(e.target.value)}
 				/>
-				<Button type='submit' variant='contained' disabled={isFetching}>
+				<Button
+					type='submit'
+					variant='contained'
+					disabled={isFetching}
+					sx={{background: '#DAA520', '&:hover': {background: '#E4BA4D'}}}
+				>
 					Register
 				</Button>
 			</Paper>
