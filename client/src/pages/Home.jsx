@@ -7,6 +7,8 @@ import {KeyboardArrowLeft, KeyboardArrowRight} from '@mui/icons-material';
 
 import Carousel from 'react-material-ui-carousel';
 
+import Footer from '../components/Footer';
+
 import Men from '../assets/men.jpg';
 import Women from '../assets/women.jpg';
 import Children from '../assets/children.jpg';
@@ -65,18 +67,18 @@ function Home() {
 
 	return (
 		<Container maxWidth='xl' sx={{minWidth: '98vw', minHeight: '100vh'}}>
-			{/* Image Carousel */}
+			{/* Image Carousel for medium or larger */}
 			<Carousel
 				NextIcon={<KeyboardArrowRight />}
 				PrevIcon={<KeyboardArrowLeft />}
-				sx={{display: {xs: 'none', md: 'block'}}}
+				sx={{marginBottom: '3rem', display: {xs: 'none', md: 'block'}}}
 			>
 				{carouselItems.map((item, idx) => (
 					<Paper
 						key={idx}
 						elevation={0}
 						sx={{
-							height: '70vh',
+							height: '80vh',
 							display: {xs: 'none', md: 'flex'},
 							background: item.bg
 						}}
@@ -113,13 +115,71 @@ function Home() {
 				))}
 			</Carousel>
 
+			{/* Image for smaller than medium */}
+			<Paper
+				elevation={0}
+				sx={{
+					width: '95vw',
+					marginBottom: '3rem',
+					padding: '1rem',
+					display: {xs: 'block', md: 'none'},
+					background: carouselItems[2].bg
+				}}
+			>
+				<Box
+					sx={{
+						width: '100%',
+						display: 'flex',
+						flexDirection: 'column',
+						justifyContent: 'flex-between',
+						alignItems: 'center'
+					}}
+				>
+					<Typography
+						component='p'
+						sx={{
+							fontSize: {
+								xs: '2.5rem',
+								sm: '5.5rem'
+							}
+						}}
+					>
+						{carouselItems[2].name}
+					</Typography>
+					<img
+						src={carouselItems[2].img}
+						alt='carousel-img'
+						style={{width: '100%', objectFit: 'contain'}}
+					/>
+					<Button
+						variant='outlined'
+						component={Link} // The MUI Button component also acts as a react-router-dom Link
+						to='/items'
+						sx={{width: '50%'}}
+					>
+						View Deals
+					</Button>
+				</Box>
+			</Paper>
+
 			{/* Categories Image List */}
 			<Grid
 				container
 				spacing={3}
-				sx={{marginTop: '3rem', background: '#EDEDED', borderRadius: '5px'}}
+				sx={{
+					marginBottom: '1rem',
+					background: '#EDEDED',
+					borderRadius: '5px'
+				}}
 			>
-				<Grid xs={4} component={Link} to='/items' sx={{textDecoration: 'none'}}>
+				<Grid
+					xs={12}
+					sm={12}
+					md={4}
+					component={Link}
+					to='/items'
+					sx={{textDecoration: 'none'}}
+				>
 					<Item
 						text='MEN'
 						sx={{
@@ -130,9 +190,30 @@ function Home() {
 								}
 							}
 						}}
-					/>
+					>
+						<Typography
+							component='p'
+							sx={{
+								display: {md: 'none'},
+								padding: '1rem',
+								fontSize: '2rem',
+								background: 'rgba(0, 0, 0, 0.4)',
+								color: 'white',
+								border: '1px solid white'
+							}}
+						>
+							MEN
+						</Typography>
+					</Item>
 				</Grid>
-				<Grid xs={4} component={Link} to='/items' sx={{textDecoration: 'none'}}>
+				<Grid
+					xs={12}
+					sm={6}
+					md={4}
+					component={Link}
+					to='/items'
+					sx={{textDecoration: 'none'}}
+				>
 					<Item
 						text='WOMEN'
 						sx={{
@@ -143,9 +224,30 @@ function Home() {
 								}
 							}
 						}}
-					/>
+					>
+						<Typography
+							component='p'
+							sx={{
+								display: {md: 'none'},
+								padding: '1rem',
+								fontSize: '2rem',
+								background: 'rgba(0, 0, 0, 0.4)',
+								color: 'white',
+								border: '1px solid white'
+							}}
+						>
+							WOMEN
+						</Typography>
+					</Item>
 				</Grid>
-				<Grid xs={4} component={Link} to='/items' sx={{textDecoration: 'none'}}>
+				<Grid
+					xs={12}
+					sm={6}
+					md={4}
+					component={Link}
+					to='/items'
+					sx={{textDecoration: 'none'}}
+				>
 					<Item
 						text='CHILDREN'
 						sx={{
@@ -156,9 +258,30 @@ function Home() {
 								}
 							}
 						}}
-					/>
+					>
+						<Typography
+							component='p'
+							sx={{
+								display: {md: 'none'},
+								padding: '1rem',
+								fontSize: '2rem',
+								background: 'rgba(0, 0, 0, 0.4)',
+								color: 'white',
+								border: '1px solid white'
+							}}
+						>
+							CHILDREN
+						</Typography>
+					</Item>
 				</Grid>
-				<Grid xs={6} component={Link} to='/items' sx={{textDecoration: 'none'}}>
+				<Grid
+					xs={12}
+					sm={6}
+					md={6}
+					component={Link}
+					to='/items'
+					sx={{textDecoration: 'none'}}
+				>
 					<Item
 						text='ACCESORIES'
 						sx={{
@@ -169,9 +292,30 @@ function Home() {
 								}
 							}
 						}}
-					/>
+					>
+						<Typography
+							component='p'
+							sx={{
+								display: {md: 'none'},
+								padding: '1rem',
+								fontSize: '2rem',
+								background: 'rgba(0, 0, 0, 0.4)',
+								color: 'white',
+								border: '1px solid white'
+							}}
+						>
+							ACCESORIES
+						</Typography>
+					</Item>
 				</Grid>
-				<Grid xs={6} component={Link} to='/items' sx={{textDecoration: 'none'}}>
+				<Grid
+					xs={12}
+					sm={6}
+					md={6}
+					component={Link}
+					to='/items'
+					sx={{textDecoration: 'none'}}
+				>
 					<Item
 						text='CLOTHING'
 						sx={{
@@ -182,9 +326,25 @@ function Home() {
 								}
 							}
 						}}
-					/>
+					>
+						<Typography
+							component='p'
+							sx={{
+								display: {md: 'none'},
+								padding: '1rem',
+								fontSize: '2rem',
+								background: 'rgba(0, 0, 0, 0.4)',
+								color: 'white',
+								border: '1px solid white'
+							}}
+						>
+							CLOTHING
+						</Typography>
+					</Item>
 				</Grid>
 			</Grid>
+
+			<Footer />
 		</Container>
 	);
 }

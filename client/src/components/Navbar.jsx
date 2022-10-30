@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {Outlet, Link} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
+
 import {styled, useTheme, alpha} from '@mui/material/styles';
 import MuiAppBar from '@mui/material/AppBar';
 import {
@@ -41,13 +42,15 @@ import {logoutStart, logoutSuccess, logoutFailure} from '../redux/userRedux';
 
 const drawerWidth = 240;
 
+// Example usage of MUI styled components
+// Example of using props (viz. open)
 const Main = styled('main', {shouldForwardProp: prop => prop !== 'open'})(({theme, open}) => ({
 	flexGrow: 1,
-	padding: theme.spacing(3),
 	transition: theme.transitions.create('margin', {
 		easing: theme.transitions.easing.sharp,
 		duration: theme.transitions.duration.leavingScreen
 	}),
+	paddingTop: '1rem',
 	marginLeft: `-${drawerWidth}px`,
 	...(open && {
 		transition: theme.transitions.create('margin', {
@@ -58,9 +61,9 @@ const Main = styled('main', {shouldForwardProp: prop => prop !== 'open'})(({them
 	})
 }));
 
-const AppBar = styled(MuiAppBar, {
-	shouldForwardProp: prop => prop !== 'open'
-})(({theme, open}) => ({
+const AppBar = styled(MuiAppBar, {shouldForwardProp: prop => prop !== 'open'})(({theme, open}) => ({
+	background: 'black',
+	zIndex: 98,
 	transition: theme.transitions.create(['margin', 'width'], {
 		easing: theme.transitions.easing.sharp,
 		duration: theme.transitions.duration.leavingScreen
@@ -78,7 +81,7 @@ const AppBar = styled(MuiAppBar, {
 const DrawerHeader = styled('div')(({theme}) => ({
 	display: 'flex',
 	alignItems: 'center',
-	padding: theme.spacing(0, 1), // necessary for content to be below app bar
+	padding: theme.spacing(0, 1), // necessary for content (viz. Main) to be below app bar
 	...theme.mixins.toolbar,
 	justifyContent: 'flex-end'
 }));
@@ -137,37 +140,47 @@ function Navbar() {
 	const isMenuOpen = Boolean(anchorEl);
 	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+	// Opens the drawer
 	const handleDrawerOpen = () => {
 		setOpen(true);
 	};
 
+	// Closes the drawer
 	const handleDrawerClose = () => {
 		setOpen(false);
 	};
 
-	const handleProfileMenuOpen = e => {
-		setAnchorEl(e.currentTarget);
-	};
-
-	const handleMobileMenuClose = () => {
-		setMobileMoreAnchorEl(null);
-	};
-
-	const handleCartMenuOpen = e => {
-		setCartAnchorEl(e.currentTarget);
-	};
-
-	const handleCartMenuClose = () => {
-		setCartAnchorEl(null);
-		handleMobileMenuClose();
-	};
-
+	// Opens the vertical ellipsis menu for mobile devices
 	const handleMobileMenuOpen = e => {
 		setMobileMoreAnchorEl(e.currentTarget);
 	};
 
-	const handleMenuClose = () => {
+	// Closes the vertical ellipsis menu for mobile devices
+	const handleMobileMenuClose = () => {
+		setMobileMoreAnchorEl(null);
+	};
+
+	// Opens the profile menu
+	const handleProfileMenuOpen = e => {
+		setAnchorEl(e.currentTarget);
+		handleCartMenuClose();
+	};
+
+	// Closes the profile menu
+	const handleProfileMenuClose = () => {
 		setAnchorEl(null);
+		handleMobileMenuClose();
+	};
+
+	// Opens the cart menu
+	const handleCartMenuOpen = e => {
+		setCartAnchorEl(e.currentTarget);
+		handleProfileMenuClose();
+	};
+
+	// Closes the cart menu
+	const handleCartMenuClose = () => {
+		setCartAnchorEl(null);
 		handleMobileMenuClose();
 	};
 
@@ -182,6 +195,43 @@ function Navbar() {
 		}
 	};
 
+	// Profile menu
+	const renderProfileMenu = (
+		<Menu
+			anchorEl={anchorEl}
+			anchorOrigin={{
+				vertical: 'top',
+				horizontal: 'right'
+			}}
+			keepMounted
+			transformOrigin={{
+				vertical: 'top',
+				horizontal: 'right'
+			}}
+			open={isMenuOpen}
+			onClose={handleProfileMenuClose}
+			sx={{zIndex: 100}}
+		>
+			{user && <MenuItem onClick={handleProfileMenuClose}>Profile</MenuItem>}
+			{user && <MenuItem onClick={handleLogout}>Logout</MenuItem>}
+			{!user && (
+				<MenuItem onClick={handleProfileMenuClose}>
+					<Link to='/register' style={{textDecoration: 'none', color: 'black'}}>
+						Register
+					</Link>
+				</MenuItem>
+			)}
+			{!user && (
+				<MenuItem onClick={handleProfileMenuClose}>
+					<Link to='/login' style={{textDecoration: 'none', color: 'black'}}>
+						Login
+					</Link>
+				</MenuItem>
+			)}
+		</Menu>
+	);
+
+	// Cart menu
 	const renderCartMenu = (
 		<Menu
 			anchorEl={cartAnchorEl}
@@ -196,6 +246,7 @@ function Navbar() {
 			}}
 			open={isCartMenuOpen}
 			onClose={handleCartMenuClose}
+			sx={{zIndex: 100}}
 		>
 			<Button
 				variant='contained'
@@ -208,40 +259,7 @@ function Navbar() {
 		</Menu>
 	);
 
-	const renderMenu = (
-		<Menu
-			anchorEl={anchorEl}
-			anchorOrigin={{
-				vertical: 'top',
-				horizontal: 'right'
-			}}
-			keepMounted
-			transformOrigin={{
-				vertical: 'top',
-				horizontal: 'right'
-			}}
-			open={isMenuOpen}
-			onClose={handleMenuClose}
-		>
-			{user && <MenuItem onClick={handleMenuClose}>Profile</MenuItem>}
-			{user && <MenuItem onClick={handleLogout}>Logout</MenuItem>}
-			{!user && (
-				<MenuItem onClick={handleMenuClose}>
-					<Link to='/register' style={{textDecoration: 'none', color: 'black'}}>
-						Register
-					</Link>
-				</MenuItem>
-			)}
-			{!user && (
-				<MenuItem onClick={handleMenuClose}>
-					<Link to='/login' style={{textDecoration: 'none', color: 'black'}}>
-						Login
-					</Link>
-				</MenuItem>
-			)}
-		</Menu>
-	);
-
+	// Vertical ellipsis menu for mobile devices
 	const renderMobileMenu = (
 		<Menu
 			anchorEl={mobileMoreAnchorEl}
@@ -256,6 +274,7 @@ function Navbar() {
 			}}
 			open={isMobileMenuOpen}
 			onClose={handleMobileMenuClose}
+			sx={{zIndex: 99}}
 		>
 			<MenuItem>
 				<IconButton size='large' onClick={handleCartMenuOpen} color='inherit'>
@@ -274,8 +293,10 @@ function Navbar() {
 
 	return (
 		<Box sx={{display: 'flex'}}>
+			{/* Navbar */}
 			<AppBar position='fixed' open={open}>
 				<Toolbar>
+					{/* Hamburger menu icon */}
 					<IconButton
 						color='inherit'
 						onClick={handleDrawerOpen}
@@ -284,6 +305,8 @@ function Navbar() {
 					>
 						<MenuIcon />
 					</IconButton>
+
+					{/* LOGO */}
 					<Typography
 						variant='h6'
 						noWrap
@@ -294,13 +317,19 @@ function Navbar() {
 							LOGO
 						</Link>
 					</Typography>
+
+					{/* Search field */}
 					<Search>
 						<SearchIconWrapper>
 							<SearchIcon />
 						</SearchIconWrapper>
 						<StyledInputBase placeholder='Search…' />
 					</Search>
+
+					{/* Space between search field and icons */}
 					<Box sx={{flexGrow: 1}} />
+
+					{/* Shopping cart and Profile icons for non-mobile devices */}
 					<Box sx={{display: {xs: 'none', sm: 'flex'}}}>
 						<IconButton size='large' onClick={handleCartMenuOpen} color='inherit'>
 							<Badge badgeContent={17} color='error'>
@@ -316,6 +345,8 @@ function Navbar() {
 							<AccountCircle />
 						</IconButton>
 					</Box>
+
+					{/* Vertical ellipsis for mobile devices */}
 					<Box sx={{display: {xs: 'flex', sm: 'none'}}}>
 						<IconButton size='large' onClick={handleMobileMenuOpen} color='inherit'>
 							<MoreVert />
@@ -323,9 +354,13 @@ function Navbar() {
 					</Box>
 				</Toolbar>
 			</AppBar>
+
+			{/* Menu popups for the cart, profile, and vertical ellipsis */}
 			{renderCartMenu}
-			{renderMenu}
+			{renderProfileMenu}
 			{renderMobileMenu}
+
+			{/* Left-side drawer */}
 			<Drawer
 				sx={{
 					width: drawerWidth,
@@ -341,11 +376,13 @@ function Navbar() {
 			>
 				<DrawerHeader>
 					<IconButton onClick={handleDrawerClose}>
+						{/* If the webpage is read from left to right, use a different icon */}
 						{theme.direction === 'ltr' ? <ChevronLeft /> : <ChevronRight />}
 					</IconButton>
 				</DrawerHeader>
 				<Divider />
 				<List>
+					{/* Men, Women, and Children */}
 					<ListItem disablePadding>
 						<ListItemButton onClick={handleDrawerClose} component={Link} to='/items'>
 							<ListItemIcon>
@@ -372,6 +409,8 @@ function Navbar() {
 					</ListItem>
 				</List>
 				<Divider />
+
+				{/* Clothing and Accessories */}
 				<List>
 					<ListItem disablePadding>
 						<ListItemButton onClick={handleDrawerClose} component={Link} to='/items'>
@@ -391,6 +430,8 @@ function Navbar() {
 					</ListItem>
 				</List>
 				<Divider />
+
+				{/* About */}
 				<List>
 					<ListItem disablePadding>
 						<ListItemButton>
@@ -411,6 +452,8 @@ function Navbar() {
 					</ListItem>
 				</List>
 			</Drawer>
+
+			{/* Whitespace under the Navbar*/}
 			<Main open={open}>
 				<DrawerHeader />
 				<Outlet />
