@@ -384,7 +384,11 @@ function Navbar() {
 				<List>
 					{/* Men, Women, and Children */}
 					<ListItem disablePadding>
-						<ListItemButton onClick={handleDrawerClose} component={Link} to='/items'>
+						<ListItemButton
+							onClick={handleDrawerClose}
+							component={Link}
+							to='/products/men'
+						>
 							<ListItemIcon>
 								<Man />
 							</ListItemIcon>
@@ -392,7 +396,11 @@ function Navbar() {
 						</ListItemButton>
 					</ListItem>
 					<ListItem disablePadding>
-						<ListItemButton onClick={handleDrawerClose} component={Link} to='/items'>
+						<ListItemButton
+							onClick={handleDrawerClose}
+							component={Link}
+							to='/products/women'
+						>
 							<ListItemIcon>
 								<Woman />
 							</ListItemIcon>
@@ -400,7 +408,11 @@ function Navbar() {
 						</ListItemButton>
 					</ListItem>
 					<ListItem disablePadding>
-						<ListItemButton onClick={handleDrawerClose} component={Link} to='/items'>
+						<ListItemButton
+							onClick={handleDrawerClose}
+							component={Link}
+							to='/products/children'
+						>
 							<ListItemIcon>
 								<ChildFriendly />
 							</ListItemIcon>
@@ -413,19 +425,27 @@ function Navbar() {
 				{/* Clothing and Accessories */}
 				<List>
 					<ListItem disablePadding>
-						<ListItemButton onClick={handleDrawerClose} component={Link} to='/items'>
-							<ListItemIcon>
-								<Checkroom />
-							</ListItemIcon>
-							<ListItemText primary='Clothing' />
-						</ListItemButton>
-					</ListItem>
-					<ListItem disablePadding>
-						<ListItemButton onClick={handleDrawerClose} component={Link} to='/items'>
+						<ListItemButton
+							onClick={handleDrawerClose}
+							component={Link}
+							to='/products/accesories'
+						>
 							<ListItemIcon>
 								<Watch />
 							</ListItemIcon>
 							<ListItemText primary='Accesories' />
+						</ListItemButton>
+					</ListItem>
+					<ListItem disablePadding>
+						<ListItemButton
+							onClick={handleDrawerClose}
+							component={Link}
+							to='/products/clothing'
+						>
+							<ListItemIcon>
+								<Checkroom />
+							</ListItemIcon>
+							<ListItemText primary='Clothing' />
 						</ListItemButton>
 					</ListItem>
 				</List>

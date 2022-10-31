@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
 
 import {styled} from '@mui/material/styles';
-import {Container, Paper, Button, Typography, Box} from '@mui/material';
+import {Paper, Button, Typography, Box} from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import {KeyboardArrowLeft, KeyboardArrowRight} from '@mui/icons-material';
 
@@ -49,24 +49,27 @@ function Home() {
 			name: 'Wedding Sale!',
 			text: "50% Off All Men's Suits",
 			img: 'https://marvel-b1-cdn.bc0a.com/f00000000192484/stitchandtie.com/content/images/thumbs/0001753_slate-blue-suit-by-allure-men.png',
-			bg: '#DBE2FF'
+			bg: '#DBE2FF',
+			link: '/products/men'
 		},
 		{
 			name: 'Autumn Discounts!',
 			text: 'Buy 2 Get 1 Free on All Dresses',
 			img: 'https://d1fufvy4xao6k9.cloudfront.net/images/landing/sumissura/home/main_products_block/7.woman_dress_evening.webp',
-			bg: '#FFE9ED'
+			bg: '#FFE9ED',
+			link: '/products/women'
 		},
 		{
 			name: 'Black Friday!',
 			text: "Children's Clothing Marked Down",
 			img: 'https://www.bubblegumcasting.com.au/wp-content/uploads/elementor/thumbs/how-much-does-teens-child-modeling-pay-pes9b0l7oaxny1spj82mipw9fiz50bnxohayy7f5aq.png',
-			bg: '#FFFFED'
+			bg: '#FFFFED',
+			link: '/products/children'
 		}
 	];
 
 	return (
-		<Container maxWidth='xl' sx={{minWidth: '98vw', minHeight: '100vh'}}>
+		<>
 			{/* Image Carousel for medium or larger */}
 			<Carousel
 				NextIcon={<KeyboardArrowRight />}
@@ -105,7 +108,7 @@ function Home() {
 							<Button
 								variant='outlined'
 								component={Link} // The MUI Button component also acts as a react-router-dom Link
-								to='/items'
+								to={item.link}
 								sx={{width: {md: '30%', lg: '25%', xl: '20%'}}}
 							>
 								View Deals
@@ -119,8 +122,6 @@ function Home() {
 			<Paper
 				elevation={0}
 				sx={{
-					width: '95vw',
-					marginBottom: '3rem',
 					padding: '1rem',
 					display: {xs: 'block', md: 'none'},
 					background: carouselItems[2].bg
@@ -154,7 +155,7 @@ function Home() {
 					<Button
 						variant='outlined'
 						component={Link} // The MUI Button component also acts as a react-router-dom Link
-						to='/items'
+						to={carouselItems[2].link}
 						sx={{width: '50%'}}
 					>
 						View Deals
@@ -167,7 +168,8 @@ function Home() {
 				container
 				spacing={3}
 				sx={{
-					marginBottom: '1rem',
+					width: '100%',
+					margin: 'auto',
 					background: '#EDEDED',
 					borderRadius: '5px'
 				}}
@@ -177,7 +179,7 @@ function Home() {
 					sm={12}
 					md={4}
 					component={Link}
-					to='/items'
+					to='/products/men'
 					sx={{textDecoration: 'none'}}
 				>
 					<Item
@@ -211,7 +213,7 @@ function Home() {
 					sm={6}
 					md={4}
 					component={Link}
-					to='/items'
+					to='/products/women'
 					sx={{textDecoration: 'none'}}
 				>
 					<Item
@@ -245,7 +247,7 @@ function Home() {
 					sm={6}
 					md={4}
 					component={Link}
-					to='/items'
+					to='/products/children'
 					sx={{textDecoration: 'none'}}
 				>
 					<Item
@@ -279,7 +281,7 @@ function Home() {
 					sm={6}
 					md={6}
 					component={Link}
-					to='/items'
+					to='/products/accesories'
 					sx={{textDecoration: 'none'}}
 				>
 					<Item
@@ -313,7 +315,7 @@ function Home() {
 					sm={6}
 					md={6}
 					component={Link}
-					to='/items'
+					to='/products/clothing'
 					sx={{textDecoration: 'none'}}
 				>
 					<Item
@@ -345,7 +347,7 @@ function Home() {
 			</Grid>
 
 			<Footer />
-		</Container>
+		</>
 	);
 }
 

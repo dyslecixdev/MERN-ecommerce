@@ -8,7 +8,7 @@ const Item = styled(Box)(({theme}) => ({
 	display: 'flex',
 	flexDirection: 'column',
 	justifyContent: 'space-between',
-	background: '#F8FFF8'
+	background: '#F9F0D9'
 }));
 
 const Footer = () => {
@@ -20,7 +20,7 @@ const Footer = () => {
 				width: '100%',
 				display: 'flex',
 				justifyContent: 'space-between',
-				background: '#F8FFF8'
+				background: '#F9F0D9'
 			}}
 		>
 			{/* LOGO */}
@@ -36,7 +36,11 @@ const Footer = () => {
 					itaque culpa nulla quas quae, natus quam sequi laborum magnam.
 				</Typography>
 			</Item>
-			<Divider orientation='vertical' flexItem sx={{display: {xs: 'none', sm: 'flex'}}} />
+			<Divider
+				orientation='vertical'
+				flexItem
+				sx={{display: {xs: 'none', sm: 'flex'}, background: '#F9F0D9'}}
+			/>
 
 			{/* Newsletter Subscription */}
 			<Item display={{xs: 'none', sm: 'block'}}>
@@ -54,7 +58,11 @@ const Footer = () => {
 					</IconButton>
 				</Paper>
 			</Item>
-			<Divider orientation='vertical' flexItem sx={{display: {xs: 'none', sm: 'block'}}} />
+			<Divider
+				orientation='vertical'
+				flexItem
+				sx={{display: {xs: 'none', sm: 'block'}, background: '#F9F0D9'}}
+			/>
 
 			{/* Contact Information */}
 			<Item>

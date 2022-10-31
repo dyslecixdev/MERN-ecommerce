@@ -6,7 +6,8 @@ import Home from './pages/Home';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Checkout from './pages/Checkout';
-import Items from './pages/Items';
+import Products from './pages/Products';
+import SingleProduct from './pages/SingleProduct';
 
 import './App.css';
 
@@ -25,7 +26,8 @@ function App() {
 						element={user ? <Profile /> : <Navigate to='/login' />}
 					/> */}
 					<Route path='/checkout' element={<Checkout />} />
-					<Route path='/items' element={<Items />} />
+					<Route path='/products/:category' element={<Products />} />
+					<Route path='/product/:id' element={<SingleProduct />} />
 				</Route>
 			</Routes>
 		</div>
