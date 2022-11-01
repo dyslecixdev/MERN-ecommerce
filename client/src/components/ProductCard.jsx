@@ -8,7 +8,7 @@ function ProductCard() {
 			<CardMedia
 				component='img'
 				image='https://cdn11.bigcommerce.com/s-3vdgh6wtox/images/stencil/650x650/products/146/1767/50500-901__18401.1646928274.png?c=3'
-				alt='green iguana'
+				alt='product name'
 				sx={{height: 200, objectFit: 'contain'}}
 			/>
 			<CardContent>

@@ -4,13 +4,14 @@ import {useParams} from 'react-router-dom';
 import {Typography, Box, FormControl, InputLabel, Select, MenuItem} from '@mui/material';
 
 import ProductCard from '../components/ProductCard';
+import Footer from '../components/Footer';
 
 function Items() {
 	const catName = useParams();
 
-	const [size, setSize] = useState(null);
-	const [color, setColor] = useState(null);
-	const [priceFilter, setPriceFilter] = useState(null);
+	const [size, setSize] = useState('');
+	const [color, setColor] = useState('');
+	const [priceFilter, setPriceFilter] = useState('');
 
 	const sizes = ['XS', 'S', 'M', 'L', 'XL'];
 	const colors = [
@@ -132,6 +133,8 @@ function Items() {
 				<ProductCard />
 				<ProductCard />
 			</Box>
+
+			<Footer />
 		</div>
 	);
 }
