@@ -1,4 +1,6 @@
 import {useState} from 'react';
+import {Link} from 'react-router-dom';
+import {useSelector} from 'react-redux';
 
 import {
 	Box,
@@ -14,11 +16,14 @@ import {
 	MenuItem,
 	Button,
 	Typography,
-	Divider
+	Divider,
+	Paper
 } from '@mui/material';
 import {ShoppingCart} from '@mui/icons-material';
 
 function SingleProduct() {
+	const user = useSelector(state => state.user.currentUser);
+
 	const [size, setSize] = useState('');
 	const [color, setColor] = useState('');
 	const [quantity, setQuantity] = useState('');
@@ -39,7 +44,7 @@ function SingleProduct() {
 	const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 	return (
-		<div style={{padding: '0 1rem', border: '1px solid red'}}>
+		<div style={{padding: '0 1rem 2rem'}}>
 			<Box sx={{display: 'flex'}}>
 				{/* Product image */}
 				<img
@@ -58,17 +63,29 @@ function SingleProduct() {
 					>
 						<List>
 							<ListItem divider>
-								<ListItemText primary='Product: PRODUCT NAME' />
+								<ListItemText
+									primary='Product: PRODUCT NAME'
+									primaryTypographyProps={{fontSize: '2rem'}} // Used to change ListItemText's font-size
+								/>
 							</ListItem>
 							<ListItem divider sx={{overflowWrap: 'break-word'}}>
-								<ListItemText primary='Description: VERY LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONG PRODUCT DESCRIPTION' />
+								<ListItemText
+									primary='Description: VERY LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONG PRODUCT DESCRIPTION'
+									primaryTypographyProps={{fontSize: '2rem'}}
+								/>
 							</ListItem>
-							<ListItem divider alignItems='flex-start'>
-								<Rating value={2} readOnly />
-								<ListItemText primary='10 Reviews' />
+							<ListItem divider sx={{display: 'flex', alignItems: 'center'}}>
+								<Rating value={2} readOnly sx={{marginRight: '1rem'}} />
+								<ListItemText
+									primary='10 Reviews'
+									primaryTypographyProps={{fontSize: '1.5rem'}}
+								/>
 							</ListItem>
 							<ListItem divider>
-								<ListItemText primary='Price: PRODUCT PRICE' />
+								<ListItemText
+									primary='Price: PRODUCT PRICE'
+									primaryTypographyProps={{fontSize: '1.5rem'}}
+								/>
 							</ListItem>
 						</List>
 					</Stack>
@@ -140,14 +157,62 @@ function SingleProduct() {
 					</Box>
 				</Container>
 			</Box>
+			<Divider />
 
 			{/* Reviews */}
-			<Box>
+			<Container sx={{marginTop: '2rem'}}>
 				<Typography variant='h3' component='div'>
 					Reviews
 				</Typography>
 				<Divider />
-			</Box>
+				<Stack
+					direction='column'
+					justifyContent='flex-start'
+					alignItems='stretch'
+					spacing={0}
+				>
+					<Paper sx={{padding: '1rem', border: '1px solid black'}}>
+						<Typography variant='h4'>User's name</Typography>
+						<Rating value={2} readOnly />
+						<Typography variant='h5'>Review's date</Typography>
+						<Typography variant='h5'>Review's text</Typography>
+					</Paper>
+					<Paper sx={{padding: '1rem', border: '1px solid black'}}>
+						<Typography variant='h4'>User's name</Typography>
+						<Rating value={2} readOnly />
+						<Typography variant='h5'>Review's date</Typography>
+						<Typography variant='h5'>Review's text</Typography>
+					</Paper>
+					<Paper sx={{padding: '1rem', border: '1px solid black'}}>
+						<Typography variant='h4'>User's name</Typography>
+						<Rating value={2} readOnly />
+						<Typography variant='h5'>Review's date</Typography>
+						<Typography variant='h5'>Review's text</Typography>
+					</Paper>
+
+					{/* Review form */}
+					{user ? (
+						// todo
+						<Paper
+							sx={{marginTop: '1.5rem', padding: '1rem', border: '1px solid black'}}
+						>
+							<Typography variant='h5'>Write a Customer Review</Typography>
+						</Paper>
+					) : (
+						<Paper
+							sx={{marginTop: '1.5rem', padding: '1rem', border: '1px solid black'}}
+						>
+							<Typography variant='h6'>
+								Please{' '}
+								<Link to='/login' sx={{textDecoration: 'none'}}>
+									Login
+								</Link>{' '}
+								to write a review
+							</Typography>
+						</Paper>
+					)}
+				</Stack>
+			</Container>
 		</div>
 	);
 }
