@@ -1,6 +1,8 @@
+// todo Make page responsive
+
 import {useState} from 'react';
 import {Link} from 'react-router-dom';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import {
 	Box,
@@ -17,12 +19,20 @@ import {
 	Button,
 	Typography,
 	Divider,
-	Paper
+	Paper,
+	TextField
 } from '@mui/material';
 import {ShoppingCart} from '@mui/icons-material';
 
 function SingleProduct() {
 	const user = useSelector(state => state.user.currentUser);
+
+	const [rating, setRating] = useState(0);
+	const [review, setReview] = useState('');
+	const [errorMessage, setErrorMessage] = useState('');
+
+	// const dispatch = useDispatch();
+	// const {isFetching} = useSelector(state => state.???);
 
 	const [size, setSize] = useState('');
 	const [color, setColor] = useState('');
@@ -42,6 +52,11 @@ function SingleProduct() {
 		'Brown'
 	];
 	const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+	const handleSubmit = async e => {
+		e.preventDefault();
+		console.log('Submit');
+	};
 
 	return (
 		<div style={{padding: '0 1rem 2rem'}}>
@@ -192,11 +207,50 @@ function SingleProduct() {
 
 					{/* Review form */}
 					{user ? (
-						// todo
 						<Paper
-							sx={{marginTop: '1.5rem', padding: '1rem', border: '1px solid black'}}
+							elevation={3}
+							component='form'
+							onSubmit={handleSubmit}
+							sx={{
+								marginTop: '1.5rem',
+								padding: '1rem',
+								display: 'flex',
+								flexDirection: 'column',
+								gap: '1rem',
+								border: '1px solid black'
+							}}
 						>
-							<Typography variant='h5'>Write a Customer Review</Typography>
+							{errorMessage && (
+								<Typography color='error' sx={{textAlign: 'center'}}>
+									{errorMessage}
+								</Typography>
+							)}
+							<Rating
+								size='large'
+								value={rating}
+								onChange={(e, newRating) => setRating(newRating)}
+							/>
+							<TextField
+								label='Review'
+								type='text'
+								multiline
+								rows={6}
+								required
+								value={review}
+								onChange={e => setReview(e.target.value)}
+							/>
+							<Button
+								type='submit'
+								variant='contained'
+								// disabled={isFetching}
+								sx={{
+									width: '20%',
+									background: '#DAA520',
+									'&:hover': {background: '#E4BA4D'}
+								}}
+							>
+								Publish
+							</Button>
 						</Paper>
 					) : (
 						<Paper

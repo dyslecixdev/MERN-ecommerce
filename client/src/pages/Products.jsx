@@ -118,7 +118,8 @@ function Items() {
 					padding: '1rem 0',
 					display: 'flex',
 					flexWrap: 'wrap',
-					justifyContent: 'space-between'
+					justifyContent: {xs: 'center', sm: 'flex-start'},
+					gap: '1rem'
 				}}
 			>
 				<ProductCard />
