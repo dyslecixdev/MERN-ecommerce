@@ -35,7 +35,8 @@ import {
 	ChildFriendly,
 	Checkroom,
 	Watch,
-	Info
+	Info,
+	Home
 } from '@mui/icons-material';
 
 import {logoutStart, logoutSuccess, logoutFailure} from '../redux/userRedux';
@@ -212,7 +213,11 @@ function Navbar() {
 			onClose={handleProfileMenuClose}
 			sx={{zIndex: 100}}
 		>
-			{user && <MenuItem onClick={handleProfileMenuClose}>Profile</MenuItem>}
+			{user && (
+				<MenuItem onClick={handleProfileMenuClose} component={Link} to='/profile'>
+					Profile
+				</MenuItem>
+			)}
 			{user && <MenuItem onClick={handleLogout}>Logout</MenuItem>}
 			{!user && (
 				<MenuItem onClick={handleProfileMenuClose}>
@@ -382,6 +387,17 @@ function Navbar() {
 				</DrawerHeader>
 				<Divider />
 				<List>
+					{/* Home */}
+					<ListItem disablePadding>
+						<ListItemButton onClick={handleDrawerClose} component={Link} to='/'>
+							<ListItemIcon>
+								<Home />
+							</ListItemIcon>
+							<ListItemText primary='Home' />
+						</ListItemButton>
+					</ListItem>
+					<Divider />
+
 					{/* Men, Women, and Children */}
 					<ListItem disablePadding>
 						<ListItemButton
