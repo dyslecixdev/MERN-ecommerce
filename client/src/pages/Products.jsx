@@ -41,13 +41,13 @@ function Items() {
 				{/* Filter Products */}
 				<Box
 					sx={{
-						width: '25%',
+						width: {lg: '30%', xl: '25%'},
 						display: 'flex',
 						justifyContent: 'space-between',
 						alignItems: 'center'
 					}}
 				>
-					<Typography variant='h6' sx={{display: {xs: 'none', md: 'block'}}}>
+					<Typography variant='h6' sx={{display: {xs: 'none', lg: 'block'}}}>
 						Filter Products:{' '}
 					</Typography>
 					<Box sx={{minWidth: 120}}>
@@ -87,13 +87,13 @@ function Items() {
 				{/* Sort Products */}
 				<Box
 					sx={{
-						width: '16%',
+						width: {lg: '20%', xl: '16%'},
 						display: 'flex',
 						justifyContent: 'space-between',
 						alignItems: 'center'
 					}}
 				>
-					<Typography variant='h6' sx={{display: {xs: 'none', md: 'block'}}}>
+					<Typography variant='h6' sx={{display: {xs: 'none', lg: 'block'}}}>
 						Sort Products:{' '}
 					</Typography>
 					<Box sx={{minWidth: 120}}>

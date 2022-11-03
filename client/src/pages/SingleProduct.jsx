@@ -20,7 +20,8 @@ import {
 	Typography,
 	Divider,
 	Paper,
-	TextField
+	TextField,
+	Avatar
 } from '@mui/material';
 import {ShoppingCart} from '@mui/icons-material';
 
@@ -59,17 +60,31 @@ function SingleProduct() {
 	};
 
 	return (
-		<div style={{padding: '0 1rem 2rem'}}>
-			<Box sx={{display: 'flex'}}>
+		<div style={{width: '100vw', padding: '0 1rem 2rem'}}>
+			<Box
+				sx={{
+					width: '100%',
+					marginBottom: {xs: '6rem', lg: 'none'},
+					display: 'flex',
+					flexDirection: {xs: 'column', lg: 'row'},
+					alignItems: {xs: 'center', lg: 'flex-start'}
+				}}
+			>
 				{/* Product image */}
-				<img
+				<Avatar
 					src='https://cdn11.bigcommerce.com/s-3vdgh6wtox/images/stencil/650x650/products/146/1767/50500-901__18401.1646928274.png?c=3'
 					alt='product name'
-					style={{width: '50%'}}
+					variant='rounded'
+					sx={{
+						width: {xs: '100%', lg: '50%'},
+						height: '100%',
+						padding: '2rem',
+						background: '#DBE2FF'
+					}}
 				/>
 
 				{/* Product details */}
-				<Container sx={{width: '50%'}}>
+				<Container sx={{width: {xs: '100%', lg: '50%'}}}>
 					<Stack
 						direction='column'
 						justifyContent='flex-start'
@@ -85,8 +100,8 @@ function SingleProduct() {
 							</ListItem>
 							<ListItem divider sx={{overflowWrap: 'break-word'}}>
 								<ListItemText
-									primary='Description: VERY LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONG PRODUCT DESCRIPTION'
-									primaryTypographyProps={{fontSize: '2rem'}}
+									primary='Description: VERY LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONG PRODUCT DESCRIPTION'
+									primaryTypographyProps={{fontSize: '1.5rem'}}
 								/>
 							</ListItem>
 							<ListItem divider sx={{display: 'flex', alignItems: 'center'}}>
@@ -111,10 +126,17 @@ function SingleProduct() {
 							height: '55px',
 							marginTop: '0.5rem',
 							display: 'flex',
-							alignItems: 'center'
+							alignItems: 'center',
+							flexWrap: 'wrap'
 						}}
 					>
-						<Box sx={{minWidth: 120, marginRight: '1rem'}}>
+						<Box
+							sx={{
+								minWidth: 120,
+								marginRight: '1rem',
+								marginBottom: {xs: '1rem', lg: 'none'}
+							}}
+						>
 							<FormControl fullWidth>
 								<InputLabel>Size</InputLabel>
 								<Select
@@ -130,7 +152,13 @@ function SingleProduct() {
 								</Select>
 							</FormControl>
 						</Box>
-						<Box sx={{minWidth: 120, marginRight: '1rem'}}>
+						<Box
+							sx={{
+								minWidth: 120,
+								marginRight: '1rem',
+								marginBottom: {xs: '1rem', lg: 'none'}
+							}}
+						>
 							<FormControl fullWidth>
 								<InputLabel>Color</InputLabel>
 								<Select
@@ -172,7 +200,6 @@ function SingleProduct() {
 					</Box>
 				</Container>
 			</Box>
-			<Divider />
 
 			{/* Reviews */}
 			<Container sx={{marginTop: '2rem'}}>
@@ -244,7 +271,7 @@ function SingleProduct() {
 								variant='contained'
 								// disabled={isFetching}
 								sx={{
-									width: '20%',
+									width: {xs: '100%', sm: '30%', md: '25%', lg: '20%'},
 									background: '#DAA520',
 									'&:hover': {background: '#E4BA4D'}
 								}}
