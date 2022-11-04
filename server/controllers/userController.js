@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const asyncHandler = require('express-async-handler');
 const User = require('../models/userModel');
+const Cart = require('../models/cartModel');
 
 const generateToken = userId => {
 	return jwt.sign({userId}, process.env.JWT_SECRET, {expiresIn: '30d'});
@@ -159,9 +160,9 @@ const deleteUser = asyncHandler(async (req, res) => {
 	}
 
 	if (req.user.id === req.params.id || req.user.isAdmin) {
-		// todo Delete user's cart
+		await Cart.deleteOne({userId: req.user.id});
 		await User.findByIdAndDelete(existingUser);
-		res.status(200).json('Deleted user and their posts');
+		res.status(200).json('Deleted user and their cart');
 	} else res.status(401).json('Only an administrator or the logged in user can delete themself');
 });
 

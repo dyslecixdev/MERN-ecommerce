@@ -20,5 +20,6 @@ app.use(express.urlencoded({extended: false}));
 app.use(cors({credentials: true, origins: 'http://localhost:5000'}));
 
 app.use('/users', require('./routes/userRoute'));
+app.use('/carts', require('./routes/cartRoute'));
 
 app.listen(port, () => console.log(`Server started on port ${port}`.black.bgCyan.italic));
