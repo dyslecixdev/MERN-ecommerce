@@ -3,6 +3,7 @@ const cors = require('cors');
 const colors = require('colors');
 const dotenv = require('dotenv').config();
 const connectDB = require('./config/db');
+
 const port = process.env.PORT || 5000;
 
 connectDB();
@@ -19,7 +20,10 @@ app.use(express.urlencoded({extended: false}));
 // {credentials: true} allows all requests from the origins.
 app.use(cors({credentials: true, origins: 'http://localhost:5000'}));
 
+app.use('/static', express.static('./server/assets')); // Replaces the route to the folder holding the images (routes files) with '/static'
+
 app.use('/users', require('./routes/userRoute'));
 app.use('/carts', require('./routes/cartRoute'));
+app.use('/products', require('./routes/productRoute'));
 
 app.listen(port, () => console.log(`Server started on port ${port}`.black.bgCyan.italic));

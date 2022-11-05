@@ -18,7 +18,9 @@ const getCart = asyncHandler(async (req, res) => {
 	if (!existingCart) {
 		res.status(401).json('Cart not found');
 		return;
-	} else res.status(200).json(existingCart);
+	}
+
+	res.status(200).json(existingCart);
 });
 
 // Gets all the users' carts
