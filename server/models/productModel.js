@@ -24,6 +24,10 @@ const productSchema = mongoose.Schema(
 			required: true,
 			unique: true
 		},
+		category: {
+			type: Array,
+			required: true
+		},
 		size: {
 			type: Array,
 			required: true
@@ -42,6 +46,10 @@ const productSchema = mongoose.Schema(
 		},
 		reviews: [
 			{
+				userId: {
+					type: Number,
+					required: true
+				},
 				userName: {
 					type: String,
 					required: true

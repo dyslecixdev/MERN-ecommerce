@@ -7,7 +7,8 @@ const {
 	getOneProduct,
 	getAllProducts,
 	updateProduct,
-	deleteProduct
+	deleteProduct,
+	createReview
 } = require('../controllers/productController');
 const protect = require('../middleware/authMiddleware');
 
@@ -26,7 +27,8 @@ const upload = multer({
 		if (
 			file.mimetype === 'image/png' ||
 			file.mimetype === 'image/jpg' ||
-			file.mimetype === 'image/jpeg'
+			file.mimetype === 'image/jpeg' ||
+			file.mimetype === 'image/webp'
 		) {
 			cb(null, true);
 		} else {
@@ -41,6 +43,7 @@ router.get('/:id', getOneProduct);
 router.get('/', getAllProducts);
 router.put('/:id', protect, upload.single('image'), updateProduct);
 router.delete('/:id', protect, deleteProduct);
+router.post('/:id/reviews', protect, createReview); // ! Should this be PUT instead?
 
 // PUT user write review
 // PUT user edit review

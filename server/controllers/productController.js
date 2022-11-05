@@ -3,7 +3,7 @@ const Product = require('../models/productModel');
 
 // Creates product
 const createProduct = asyncHandler(async (req, res) => {
-	const {name, desc, price, size, color, countInStock} = req.body;
+	const {name, desc, price, category, size, color, countInStock} = req.body;
 
 	const productExists = await Product.findOne({name});
 	if (productExists) {
@@ -11,8 +11,10 @@ const createProduct = asyncHandler(async (req, res) => {
 		return;
 	}
 
-	if (!name || !desc || !price || !size || !color || !countInStock) {
-		res.status(400).json('Name, description, price, size, color, and stock count required');
+	if (!name || !desc || !price || !category || !size || !color || !countInStock) {
+		res.status(400).json(
+			'Name, description, price, category, size, color, and stock count required'
+		);
 		return;
 	}
 
@@ -36,6 +38,7 @@ const createProduct = asyncHandler(async (req, res) => {
 		rating: 0,
 		price,
 		image: filePath,
+		category,
 		size,
 		color,
 		countInStock,
@@ -76,19 +79,23 @@ const getAllProducts = asyncHandler(async (req, res) => {
 	else if (price === 'high')
 		existingProducts = await Product.find().sort({
 			price: -1
-		}); // Sorts all the mongoose documents by highest price
+		});
+	// Sorts all the mongoose documents by highest price
 	else if (price === 'low')
 		existingProducts = await Product.find().sort({
 			price: 1
-		}); // Sorts all the mongoose documents by lowest price
+		});
+	// Sorts all the mongoose documents by lowest price
 	else if (rating === 'high')
 		existingProducts = await Product.find().sort({
 			rating: -1
-		}); // Sorts all the mongoose documents by highest rating
+		});
+	// Sorts all the mongoose documents by highest rating
 	else if (rating === 'low')
 		existingProducts = await Product.find().sort({
 			rating: 1
-		}); // Sorts all the mongoose documents by lowest price
+		});
+	// Sorts all the mongoose documents by lowest price
 	else existingProducts = await Product.find();
 
 	res.status(200).json(existingProducts);
@@ -146,8 +153,51 @@ const deleteProduct = asyncHandler(async (req, res) => {
 	} else res.status(403).json('Only an administrator can delete a product');
 });
 
-// PUT user write review
+// Creates review
+const createReview = asyncHandler(async (req, res) => {
+	const {userRating, userReview} = req.body;
+
+	const existingProduct = await Product.findById(req.params.id);
+	if (!existingProduct) {
+		res.status(404).json('Product not found');
+		return;
+	}
+
+	if (existingProduct.reviews.findById({userId: req.user.id})) {
+		res.status(409).json('The user has already written a review for this product');
+		return;
+	}
+
+	const newReview = {
+		userId: req.user.id,
+		userName: `${req.user.firstName} ${req.user.lastName}`,
+		userRating,
+		userReview
+	};
+
+	existingProduct.reviews.push(newReview); // Adds the review object to the reviews array
+	existingProduct.rating = existingProduct.reviews.reduce(
+		(a, b) => (b.userRating + a, 0) / existingProduct.reviews.length
+	); // ! Changes the rating to reflect the mean of all the users' ratings
+	existingProduct.numReviews = existingProduct.reviews.length; // Increments the number of reviews
+
+	const updatedProduct = await existingProduct.save(); // Save in this case updates the document
+	if (updatedProduct)
+		res.status(201).json({
+			review: updatedProduct.reviews[updatedProduct.reviews.length - 1],
+			rating: updatedProduct.rating,
+			numReviews: updatedProduct.numReviews
+		});
+	else res.status(400).json('Invalid product review data');
+});
 // PUT user edit review
 // PUT user delete review
 
-module.exports = {createProduct, getOneProduct, getAllProducts, updateProduct, deleteProduct};
+module.exports = {
+	createProduct,
+	getOneProduct,
+	getAllProducts,
+	updateProduct,
+	deleteProduct,
+	createReview
+};
