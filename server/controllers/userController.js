@@ -10,7 +10,7 @@ const generateToken = userId => {
 
 // Registers a user
 const registerUser = asyncHandler(async (req, res) => {
-	const {username, email, password, confirmPassword, isAdmin} = req.body;
+	const {firstName, lastName, email, password, confirmPassword, isAdmin} = req.body;
 
 	const userExists = await User.findOne({email});
 	if (userExists) {
@@ -18,8 +18,10 @@ const registerUser = asyncHandler(async (req, res) => {
 		return;
 	}
 
-	if (!username || !email || !password || !confirmPassword) {
-		res.status(400).json('Username, email, password, and confirm password are required');
+	if (!firstName || !lastName || !email || !password || !confirmPassword) {
+		res.status(400).json(
+			'First name, last name, email, password, and confirm password are required'
+		);
 		return;
 	}
 
@@ -35,7 +37,8 @@ const registerUser = asyncHandler(async (req, res) => {
 	const hashedPassword = await bcrypt.hash(password, salt);
 
 	const newUser = await User.create({
-		username,
+		firstName,
+		lastName,
 		email,
 		password: hashedPassword,
 		confirmPassword: hashedPassword,
@@ -45,7 +48,8 @@ const registerUser = asyncHandler(async (req, res) => {
 	if (newUser) {
 		res.status(201).json({
 			id: newUser.id,
-			username: newUser.username,
+			firstName: newUser.firstName,
+			lastName: newUser.lastName,
 			email: newUser.email,
 			profilePic: newUser.profilePic,
 			isAdmin: newUser.isAdmin,
@@ -62,7 +66,8 @@ const loginUser = asyncHandler(async (req, res) => {
 	if (existingUser && (await bcrypt.compare(password, existingUser.password))) {
 		res.status(200).json({
 			id: existingUser.id,
-			username: existingUser.username,
+			firstName: existingUser.firstName,
+			lastName: existingUser.lastName,
 			email: existingUser.email,
 			profilePic: existingUser.profilePic,
 			isAdmin: existingUser.isAdmin,
@@ -82,7 +87,8 @@ const getOneUser = asyncHandler(async (req, res) => {
 	if (req.user.id === req.params.id || req.user.isAdmin)
 		res.status(200).json({
 			id: existingUser.id,
-			username: existingUser.username,
+			firstName: existingUser.firstName,
+			lastName: existingUser.lastName,
 			email: existingUser.email,
 			profilePic: existingUser.profilePic,
 			isAdmin: existingUser.isAdmin,
@@ -142,7 +148,8 @@ const updateUser = asyncHandler(async (req, res) => {
 	if (req.user.id === req.params.id || req.user.isAdmin)
 		res.status(201).json({
 			id: updatedUser.id,
-			username: updatedUser.username,
+			firstName: updatedUser.firstName,
+			lastName: updatedUser.lastName,
 			email: updatedUser.email,
 			profilePic: updatedUser.profilePic,
 			isAdmin: updatedUser.isAdmin,

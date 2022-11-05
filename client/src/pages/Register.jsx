@@ -9,7 +9,8 @@ import axios from 'axios';
 import {loginStart, loginSuccess, loginFailure} from '../redux/userRedux';
 
 function Register() {
-	const [username, setUsername] = useState('');
+	const [firstName, setFirstName] = useState('');
+	const [lastName, setLastName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
@@ -26,7 +27,8 @@ function Register() {
 		dispatch(loginStart());
 		try {
 			const res = await axios.post('http://localhost:5000/users/register', {
-				username,
+				firstName,
+				lastName,
 				email,
 				password,
 				confirmPassword,
@@ -74,11 +76,18 @@ function Register() {
 					</Typography>
 				)}
 				<TextField
-					label='Username'
+					label='First Name'
 					type='text'
 					required
-					value={username}
-					onChange={e => setUsername(e.target.value)}
+					value={firstName}
+					onChange={e => setFirstName(e.target.value)}
+				/>
+				<TextField
+					label='Last Name'
+					type='text'
+					required
+					value={lastName}
+					onChange={e => setLastName(e.target.value)}
 				/>
 				<TextField
 					label='Email'

@@ -21,7 +21,8 @@ function Profile() {
 
 	const [editMode, setEditMode] = useState(false);
 	const [openModal, setOpenModal] = useState(false);
-	const [username, setUsername] = useState(user.username);
+	const [firstName, setFirstName] = useState(user.firstName);
+	const [lastName, setLastName] = useState(user.lastName);
 	const [email, setEmail] = useState(user.email);
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
@@ -37,7 +38,7 @@ function Profile() {
 		try {
 			const res = await axios.put(
 				`http://localhost:5000/users/${user.id}`,
-				{username, email, password, confirmPassword, isAdmin: user.isAdmin},
+				{firstName, lastName, email, password, confirmPassword, isAdmin: user.isAdmin},
 				{
 					headers: {
 						Authorization: 'Bearer ' + user.token
@@ -73,7 +74,8 @@ function Profile() {
 	// Resets the form when Cancel is clicked
 	const handleReset = () => {
 		setEditMode(false);
-		setUsername(user.username);
+		setFirstName(user.firstName);
+		setLastName(user.lastName);
 		setEmail(user.email);
 		setPassword('');
 		setConfirmPassword('');
@@ -115,11 +117,18 @@ function Profile() {
 						</Typography>
 					)}
 					<TextField
-						label='Username'
+						label='First Name'
 						type='text'
 						required
-						value={username}
-						onChange={e => setUsername(e.target.value)}
+						value={firstName}
+						onChange={e => setFirstName(e.target.value)}
+					/>
+					<TextField
+						label='Last Name'
+						type='text'
+						required
+						value={lastName}
+						onChange={e => setLastName(e.target.value)}
 					/>
 					<TextField
 						label='Email'
@@ -243,7 +252,9 @@ function Profile() {
 						background: 'white'
 					}}
 				>
-					<Typography variant='h5'>Username: {user.username}</Typography>
+					<Typography variant='h5'>
+						{user.firstName} {user.lastName}
+					</Typography>
 					<Typography variant='h5'>Email: {user.email}</Typography>
 					<Button onClick={() => setEditMode(true)}>Change Your Information</Button>
 				</Paper>
