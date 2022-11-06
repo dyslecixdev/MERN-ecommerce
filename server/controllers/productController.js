@@ -69,82 +69,100 @@ const getOneProduct = asyncHandler(async (req, res) => {
 
 // Gets all the products
 const getAllProducts = asyncHandler(async (req, res) => {
+	const category = req.query.category;
 	const size = req.query.size;
 	const color = req.query.color;
 	const filter = req.query.filter;
 
+	// Each if-else statement handles a different combination of queries
 	let existingProducts;
-	if (size && color && filter === 'Price (Highest to Lowest)')
-		existingProducts = await Product.find({size, color}).sort({
+	if (category && size && color && filter === 'Price (Highest to Lowest)')
+		existingProducts = await Product.find({category, size, color}).sort({
 			price: -1
 		});
-	else if (size && color && filter === 'Price (Lowest to Highest)')
-		existingProducts = await Product.find({size, color}).sort({
+	else if (category && size && color && filter === 'Price (Lowest to Highest)')
+		existingProducts = await Product.find({category, size, color}).sort({
 			price: 1
 		});
-	else if (size && color && filter === 'Rating (Highest to Lowest)')
-		existingProducts = await Product.find({size, color}).sort({
+	else if (category && size && color && filter === 'Rating (Highest to Lowest)')
+		existingProducts = await Product.find({category, size, color}).sort({
 			rating: -1
 		});
-	else if (size && color && filter === 'Rating (Lowest to Highest)')
-		existingProducts = await Product.find({size, color}).sort({
+	else if (category && size && color && filter === 'Rating (Lowest to Highest)')
+		existingProducts = await Product.find({category, size, color}).sort({
 			rating: 1
 		});
-	else if (size && filter === 'Price (Highest to Lowest)')
-		existingProducts = await Product.find({size}).sort({
+	else if (category && size && filter === 'Price (Highest to Lowest)')
+		existingProducts = await Product.find({category, size}).sort({
 			price: -1
 		});
-	else if (size && filter === 'Price (Lowest to Highest)')
-		existingProducts = await Product.find({size}).sort({
+	else if (category && size && filter === 'Price (Lowest to Highest)')
+		existingProducts = await Product.find({category, size}).sort({
 			price: 1
 		});
-	else if (color && filter === 'Price (Highest to Lowest)')
-		existingProducts = await Product.find({color}).sort({
+	else if (category && color && filter === 'Price (Highest to Lowest)')
+		existingProducts = await Product.find({category, color}).sort({
 			price: -1
 		});
-	else if (color && filter === 'Price (Lowest to Highest)')
-		existingProducts = await Product.find({color}).sort({
+	else if (category && color && filter === 'Price (Lowest to Highest)')
+		existingProducts = await Product.find({category, color}).sort({
 			price: 1
 		});
-	else if (size && filter === 'Rating (Highest to Lowest)')
-		existingProducts = await Product.find({size}).sort({
+	else if (category && size && filter === 'Rating (Highest to Lowest)')
+		existingProducts = await Product.find({category, size}).sort({
 			rating: -1
 		});
-	else if (size && filter === 'Rating (Lowest to Highest)')
-		existingProducts = await Product.find({size}).sort({
+	else if (category && size && filter === 'Rating (Lowest to Highest)')
+		existingProducts = await Product.find({category, size}).sort({
 			rating: 1
 		});
-	else if (color && filter === 'Rating (Highest to Lowest)')
-		existingProducts = await Product.find({color}).sort({
+	else if (category && color && filter === 'Rating (Highest to Lowest)')
+		existingProducts = await Product.find({category, color}).sort({
 			rating: -1
 		});
-	else if (color && filter === 'Rating (Lowest to Highest)')
-		existingProducts = await Product.find({color}).sort({
+	else if (category && color && filter === 'Rating (Lowest to Highest)')
+		existingProducts = await Product.find({category, color}).sort({
 			rating: 1
 		});
-	else if (size && color) existingProducts = await Product.find({size, color});
+	else if (category && size && color)
+		existingProducts = await Product.find({category, size, color});
+	else if (category && size) existingProducts = await Product.find({category, size});
+	else if (category && color) existingProducts = await Product.find({category, color});
+	else if (category && filter === 'Price (Highest to Lowest)')
+		existingProducts = await Product.find({category}).sort({
+			price: -1
+		});
+	else if (category && filter === 'Price (Lowest to Highest)')
+		existingProducts = await Product.find({category}).sort({
+			price: 1
+		});
+	else if (category && filter === 'Rating (Highest to Lowest)')
+		existingProducts = await Product.find({category}).sort({
+			rating: -1
+		});
+	else if (category && filter === 'Rating (Lowest to Highest)')
+		existingProducts = await Product.find({category}).sort({
+			rating: 1
+		});
+	else if (category) existingProducts = await Product.find({category});
 	else if (size) existingProducts = await Product.find({size});
 	else if (color) existingProducts = await Product.find({color});
 	else if (filter === 'Price (Highest to Lowest)')
 		existingProducts = await Product.find().sort({
 			price: -1
 		});
-	// Sorts all the mongoose documents by highest price
 	else if (filter === 'Price (Lowest to Highest)')
 		existingProducts = await Product.find().sort({
 			price: 1
 		});
-	// Sorts all the mongoose documents by lowest price
 	else if (filter === 'Rating (Highest to Lowest)')
 		existingProducts = await Product.find().sort({
 			rating: -1
 		});
-	// Sorts all the mongoose documents by highest rating
 	else if (filter === 'Rating (Lowest to Highest)')
 		existingProducts = await Product.find().sort({
 			rating: 1
 		});
-	// Sorts all the mongoose documents by lowest filter
 	else existingProducts = await Product.find();
 
 	res.status(200).json(existingProducts);

@@ -37,7 +37,7 @@ function Items() {
 		async function fetchData() {
 			try {
 				const res = await axios.get(
-					`http://localhost:5000/products?size=${size}&color=${color}&filter=${filter}`
+					`http://localhost:5000/products?category=${catName.category}&size=${size}&color=${color}&filter=${filter}`
 				);
 				setProducts(res.data);
 			} catch (err) {
@@ -45,7 +45,7 @@ function Items() {
 			}
 		}
 		fetchData();
-	}, [size, color, filter]);
+	}, [catName.category, size, color, filter]);
 
 	return (
 		<div style={{padding: '0 1rem'}}>
@@ -144,19 +144,35 @@ function Items() {
 			</Box>
 
 			{/* Container to hold all Product cards */}
-			<Box
-				sx={{
-					padding: '1rem 0',
-					display: 'flex',
-					flexWrap: 'wrap',
-					justifyContent: {xs: 'center', sm: 'flex-start'},
-					gap: '1rem'
-				}}
-			>
-				{products.map(product => (
-					<ProductCard key={product._id} productData={product} />
-				))}
-			</Box>
+			{products.length !== 0 ? (
+				<Box
+					sx={{
+						padding: '1rem 0',
+						display: 'flex',
+						flexWrap: 'wrap',
+						justifyContent: {xs: 'center', sm: 'flex-start'},
+						gap: '1rem'
+					}}
+				>
+					{products.map(product => (
+						<ProductCard key={product._id} productData={product} />
+					))}
+				</Box>
+			) : (
+				<Box
+					sx={{
+						height: '50vh',
+						padding: '1rem 0',
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center'
+					}}
+				>
+					<Typography variant='h4'>
+						Sorry there are no products that match your search
+					</Typography>
+				</Box>
+			)}
 
 			<Footer />
 		</div>

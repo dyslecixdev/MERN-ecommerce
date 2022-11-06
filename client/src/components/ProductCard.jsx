@@ -4,7 +4,7 @@ import {Card, CardMedia, CardContent, Typography, CardActions, Button} from '@mu
 
 function ProductCard({productData}) {
 	return (
-		<Card sx={{width: 300, margin: '1rem 0', padding: '1rem', background: '#DBE2FF'}}>
+		<Card sx={{width: 310, margin: '1rem 0', padding: '1rem', background: '#DBE2FF'}}>
 			<CardMedia
 				component='img'
 				image={`http://localhost:5000/static/${productData.image}`}
@@ -30,7 +30,7 @@ function ProductCard({productData}) {
 					{productData.desc}
 				</Typography>
 			</CardContent>
-			<CardActions>
+			<CardActions sx={{width: '100%', display: 'flex', justifyContent: 'space-between'}}>
 				<Button variant='outlined' size='small'>
 					Add to Cart
 				</Button>

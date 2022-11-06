@@ -1,7 +1,7 @@
 // todo Make page responsive
 
-import {useState} from 'react';
-import {Link} from 'react-router-dom';
+import {useState, useEffect} from 'react';
+import {Link, useParams} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 
 import {
@@ -25,8 +25,30 @@ import {
 } from '@mui/material';
 import {ShoppingCart} from '@mui/icons-material';
 
+import axios from 'axios';
+
 function SingleProduct() {
 	const user = useSelector(state => state.user.currentUser);
+	const productId = useParams();
+
+	const [product, setProduct] = useState([]);
+	const [productPrice, setProductPrice] = useState(0);
+	const [productSize, setProductSize] = useState(['', 'XS', 'S', 'M', 'L', 'XL']);
+	const [productColor, setProductColor] = useState([
+		'',
+		'Pink',
+		'Red',
+		'Orange',
+		'Yellow',
+		'Green',
+		'Blue',
+		'Purple',
+		'Black',
+		'Gray',
+		'White',
+		'Brown'
+	]);
+	const [productReviews, setProductReviews] = useState([]);
 
 	const [rating, setRating] = useState(0);
 	const [review, setReview] = useState('');
@@ -39,20 +61,28 @@ function SingleProduct() {
 	const [color, setColor] = useState('');
 	const [quantity, setQuantity] = useState('');
 
-	const sizes = ['XS', 'S', 'M', 'L', 'XL'];
-	const colors = [
-		'Red',
-		'Orange',
-		'Yellow',
-		'Green',
-		'Blue',
-		'Purple',
-		'Black',
-		'Gray',
-		'White',
-		'Brown'
-	];
 	const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+	// Gets one product from MongoDB
+	useEffect(() => {
+		async function fetchData() {
+			try {
+				const res = await axios.get(`http://localhost:5000/products/${productId.id}`);
+				setProduct(res.data);
+			} catch (err) {
+				console.log(err);
+			}
+		}
+		fetchData();
+	}, [productId]);
+
+	// Second useEffect to seperate the data from the product object because it is still being fetched in the above useEffect
+	useEffect(() => {
+		if (product.price) setProductPrice(product.price);
+		if (product.size) setProductSize(product.size);
+		if (product.color) setProductColor(product.color);
+		if (product.reviews) setProductReviews(product.reviews);
+	}, [product.price, product.size, product.color, product.reviews]);
 
 	const handleSubmit = async e => {
 		e.preventDefault();
@@ -60,7 +90,7 @@ function SingleProduct() {
 	};
 
 	return (
-		<div style={{width: '100vw', padding: '0 1rem 2rem'}}>
+		<div style={{width: '98.5vw', padding: '0 1rem 2rem'}}>
 			<Box
 				sx={{
 					width: '100%',
@@ -72,14 +102,15 @@ function SingleProduct() {
 			>
 				{/* Product image */}
 				<Avatar
-					src='https://cdn11.bigcommerce.com/s-3vdgh6wtox/images/stencil/650x650/products/146/1767/50500-901__18401.1646928274.png?c=3'
-					alt='product name'
+					src={`http://localhost:5000/static/${product.image}`}
+					alt={product.name}
 					variant='rounded'
 					sx={{
 						width: {xs: '100%', lg: '50%'},
-						height: '100%',
+						height: '90vh',
 						padding: '2rem',
 						background: '#DBE2FF'
+						// bug Sometimes the image is cut off
 					}}
 				/>
 
@@ -94,26 +125,30 @@ function SingleProduct() {
 						<List>
 							<ListItem divider>
 								<ListItemText
-									primary='Product: PRODUCT NAME'
+									primary={`Product: ${product.name}`}
 									primaryTypographyProps={{fontSize: '2rem'}} // Used to change ListItemText's font-size
 								/>
 							</ListItem>
 							<ListItem divider sx={{overflowWrap: 'break-word'}}>
 								<ListItemText
-									primary='Description: VERY LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONG PRODUCT DESCRIPTION'
+									primary={`Description: ${product.desc}`}
 									primaryTypographyProps={{fontSize: '1.5rem'}}
 								/>
 							</ListItem>
 							<ListItem divider sx={{display: 'flex', alignItems: 'center'}}>
-								<Rating value={2} readOnly sx={{marginRight: '1rem'}} />
+								<Rating
+									value={product.rating}
+									readOnly
+									sx={{marginRight: '1rem'}}
+								/>
 								<ListItemText
-									primary='10 Reviews'
+									primary={`${product.numReviews} Reviews`}
 									primaryTypographyProps={{fontSize: '1.5rem'}}
 								/>
 							</ListItem>
 							<ListItem divider>
 								<ListItemText
-									primary='Price: PRODUCT PRICE'
+									primary={`Price: $${productPrice.toFixed(2)}`}
 									primaryTypographyProps={{fontSize: '1.5rem'}}
 								/>
 							</ListItem>
@@ -126,7 +161,7 @@ function SingleProduct() {
 							height: '55px',
 							marginTop: '0.5rem',
 							display: 'flex',
-							alignItems: 'center',
+							alignItems: 'flex-start',
 							flexWrap: 'wrap'
 						}}
 					>
@@ -144,7 +179,7 @@ function SingleProduct() {
 									label='Size'
 									onChange={e => setSize(e.target.value)}
 								>
-									{sizes.map((size, idx) => (
+									{productSize.map((size, idx) => (
 										<MenuItem key={idx} value={size}>
 											{size}
 										</MenuItem>
@@ -166,7 +201,7 @@ function SingleProduct() {
 									label='Color'
 									onChange={e => setColor(e.target.value)}
 								>
-									{colors.map((color, idx) => (
+									{productColor.map((color, idx) => (
 										<MenuItem key={idx} value={color}>
 											{color}
 										</MenuItem>
@@ -213,24 +248,22 @@ function SingleProduct() {
 					alignItems='stretch'
 					spacing={0}
 				>
-					<Paper sx={{padding: '1rem', border: '1px solid black'}}>
-						<Typography variant='h4'>User's name</Typography>
-						<Rating value={2} readOnly />
-						<Typography variant='h5'>Review's date</Typography>
-						<Typography variant='h5'>Review's text</Typography>
-					</Paper>
-					<Paper sx={{padding: '1rem', border: '1px solid black'}}>
-						<Typography variant='h4'>User's name</Typography>
-						<Rating value={2} readOnly />
-						<Typography variant='h5'>Review's date</Typography>
-						<Typography variant='h5'>Review's text</Typography>
-					</Paper>
-					<Paper sx={{padding: '1rem', border: '1px solid black'}}>
-						<Typography variant='h4'>User's name</Typography>
-						<Rating value={2} readOnly />
-						<Typography variant='h5'>Review's date</Typography>
-						<Typography variant='h5'>Review's text</Typography>
-					</Paper>
+					{productReviews.length !== 0 ? (
+						productReviews.map((review, idx) => (
+							<Paper key={idx} sx={{padding: '1rem', border: '1px solid black'}}>
+								<Typography variant='h4'>{review.username}</Typography>
+								<Rating value={review.userRating} readOnly />
+								<Typography variant='h5'>Review's date</Typography>
+								<Typography variant='h5'>{review.userReview}</Typography>
+							</Paper>
+						))
+					) : (
+						<Paper sx={{padding: '1rem', border: '1px solid black'}}>
+							<Typography variant='h5'>
+								There are no reviews for this product.
+							</Typography>
+						</Paper>
+					)}
 
 					{/* Review form */}
 					{user ? (

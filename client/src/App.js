@@ -12,6 +12,7 @@ import SingleProduct from './pages/SingleProduct';
 
 import './App.css';
 
+// todo Include Google fonts
 function App() {
 	const user = useSelector(state => state.user.currentUser); // Logged in user from redux
 
