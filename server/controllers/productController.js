@@ -23,7 +23,8 @@ const createProduct = asyncHandler(async (req, res) => {
 		if (
 			req.file.mimetype === 'image/png' ||
 			req.file.mimetype === 'image/jpg' ||
-			req.file.mimetype === 'image/jpeg'
+			req.file.mimetype === 'image/jpeg' ||
+			req.file.mimetype === 'image/webp'
 		)
 			filePath = req.file.filename;
 		else res.status(409).json('The only accepted image files are .png, .jpg, and .jpeg');
@@ -70,32 +71,80 @@ const getOneProduct = asyncHandler(async (req, res) => {
 const getAllProducts = asyncHandler(async (req, res) => {
 	const size = req.query.size;
 	const color = req.query.color;
-	const price = req.query.price;
-	const rating = req.query.rating;
+	const filter = req.query.filter;
 
 	let existingProducts;
-	if (size) existingProducts = await Product.find({size});
+	if (size && color && filter === 'Price (Highest to Lowest)')
+		existingProducts = await Product.find({size, color}).sort({
+			price: -1
+		});
+	else if (size && color && filter === 'Price (Lowest to Highest)')
+		existingProducts = await Product.find({size, color}).sort({
+			price: 1
+		});
+	else if (size && color && filter === 'Rating (Highest to Lowest)')
+		existingProducts = await Product.find({size, color}).sort({
+			rating: -1
+		});
+	else if (size && color && filter === 'Rating (Lowest to Highest)')
+		existingProducts = await Product.find({size, color}).sort({
+			rating: 1
+		});
+	else if (size && filter === 'Price (Highest to Lowest)')
+		existingProducts = await Product.find({size}).sort({
+			price: -1
+		});
+	else if (size && filter === 'Price (Lowest to Highest)')
+		existingProducts = await Product.find({size}).sort({
+			price: 1
+		});
+	else if (color && filter === 'Price (Highest to Lowest)')
+		existingProducts = await Product.find({color}).sort({
+			price: -1
+		});
+	else if (color && filter === 'Price (Lowest to Highest)')
+		existingProducts = await Product.find({color}).sort({
+			price: 1
+		});
+	else if (size && filter === 'Rating (Highest to Lowest)')
+		existingProducts = await Product.find({size}).sort({
+			rating: -1
+		});
+	else if (size && filter === 'Rating (Lowest to Highest)')
+		existingProducts = await Product.find({size}).sort({
+			rating: 1
+		});
+	else if (color && filter === 'Rating (Highest to Lowest)')
+		existingProducts = await Product.find({color}).sort({
+			rating: -1
+		});
+	else if (color && filter === 'Rating (Lowest to Highest)')
+		existingProducts = await Product.find({color}).sort({
+			rating: 1
+		});
+	else if (size && color) existingProducts = await Product.find({size, color});
+	else if (size) existingProducts = await Product.find({size});
 	else if (color) existingProducts = await Product.find({color});
-	else if (price === 'high')
+	else if (filter === 'Price (Highest to Lowest)')
 		existingProducts = await Product.find().sort({
 			price: -1
 		});
 	// Sorts all the mongoose documents by highest price
-	else if (price === 'low')
+	else if (filter === 'Price (Lowest to Highest)')
 		existingProducts = await Product.find().sort({
 			price: 1
 		});
 	// Sorts all the mongoose documents by lowest price
-	else if (rating === 'high')
+	else if (filter === 'Rating (Highest to Lowest)')
 		existingProducts = await Product.find().sort({
 			rating: -1
 		});
 	// Sorts all the mongoose documents by highest rating
-	else if (rating === 'low')
+	else if (filter === 'Rating (Lowest to Highest)')
 		existingProducts = await Product.find().sort({
 			rating: 1
 		});
-	// Sorts all the mongoose documents by lowest price
+	// Sorts all the mongoose documents by lowest filter
 	else existingProducts = await Product.find();
 
 	res.status(200).json(existingProducts);
@@ -114,7 +163,8 @@ const updateProduct = asyncHandler(async (req, res) => {
 		if (
 			req.file.mimetype === 'image/png' ||
 			req.file.mimetype === 'image/jpg' ||
-			req.file.mimetype === 'image/jpeg'
+			req.file.mimetype === 'image/jpeg' ||
+			req.file.mimetype === 'image/webp'
 		)
 			filePath = req.file.filename;
 		else res.status(409).json('The only accepted image files are .png, .jpg, and .jpeg');

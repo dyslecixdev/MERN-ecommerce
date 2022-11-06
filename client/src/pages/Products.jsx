@@ -1,7 +1,9 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 
 import {Typography, Box, FormControl, InputLabel, Select, MenuItem} from '@mui/material';
+
+import axios from 'axios';
 
 import ProductCard from '../components/ProductCard';
 import Footer from '../components/Footer';
@@ -9,12 +11,15 @@ import Footer from '../components/Footer';
 function Items() {
 	const catName = useParams();
 
+	const [products, setProducts] = useState([]);
 	const [size, setSize] = useState('');
 	const [color, setColor] = useState('');
-	const [priceFilter, setPriceFilter] = useState('');
+	const [filter, setFilter] = useState('');
 
-	const sizes = ['XS', 'S', 'M', 'L', 'XL'];
+	const sizes = ['', 'XS', 'S', 'M', 'L', 'XL'];
 	const colors = [
+		'',
+		'Pink',
 		'Red',
 		'Orange',
 		'Yellow',
@@ -26,6 +31,21 @@ function Items() {
 		'White',
 		'Brown'
 	];
+
+	// Gets all the products from MongoDB
+	useEffect(() => {
+		async function fetchData() {
+			try {
+				const res = await axios.get(
+					`http://localhost:5000/products?size=${size}&color=${color}&filter=${filter}`
+				);
+				setProducts(res.data);
+			} catch (err) {
+				console.log(err);
+			}
+		}
+		fetchData();
+	}, [size, color, filter]);
 
 	return (
 		<div style={{padding: '0 1rem'}}>
@@ -60,7 +80,7 @@ function Items() {
 							>
 								{sizes.map((size, idx) => (
 									<MenuItem key={idx} value={size}>
-										{size}
+										{size === '' ? 'All' : size}
 									</MenuItem>
 								))}
 							</Select>
@@ -76,7 +96,7 @@ function Items() {
 							>
 								{colors.map((color, idx) => (
 									<MenuItem key={idx} value={color}>
-										{color}
+										{color === '' ? 'All' : color}
 									</MenuItem>
 								))}
 							</Select>
@@ -98,14 +118,25 @@ function Items() {
 					</Typography>
 					<Box sx={{minWidth: 120}}>
 						<FormControl fullWidth>
-							<InputLabel>Price</InputLabel>
+							<InputLabel>Sort</InputLabel>
 							<Select
-								value={priceFilter}
+								value={filter}
 								label='Price'
-								onChange={e => setPriceFilter(e.target.value)}
+								onChange={e => setFilter(e.target.value)}
 							>
-								<MenuItem value='Price (asc.)'>Price (asc.)</MenuItem>
-								<MenuItem value='Price (desc.)'>Price (asc.)</MenuItem>
+								<MenuItem value=''>Alphabetical</MenuItem>
+								<MenuItem value='Price (Lowest to Highest)'>
+									Price (Lowest to Highest)
+								</MenuItem>
+								<MenuItem value='Price (Highest to Lowest)'>
+									Price (Highest to Lowest)
+								</MenuItem>
+								<MenuItem value='Rating (Lowest to Highest)'>
+									Rating (Lowest to Highest)
+								</MenuItem>
+								<MenuItem value='Rating (Highest to Lowest)'>
+									Rating (Highest to Lowest)
+								</MenuItem>
 							</Select>
 						</FormControl>
 					</Box>
@@ -122,17 +153,9 @@ function Items() {
 					gap: '1rem'
 				}}
 			>
-				<ProductCard />
-				<ProductCard />
-				<ProductCard />
-				<ProductCard />
-				<ProductCard />
-				<ProductCard />
-				<ProductCard />
-				<ProductCard />
-				<ProductCard />
-				<ProductCard />
-				<ProductCard />
+				{products.map(product => (
+					<ProductCard key={product._id} productData={product} />
+				))}
 			</Box>
 
 			<Footer />
