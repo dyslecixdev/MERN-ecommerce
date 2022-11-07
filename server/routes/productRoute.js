@@ -43,9 +43,7 @@ router.get('/:id', getOneProduct);
 router.get('/', getAllProducts);
 router.put('/:id', protect, upload.single('image'), updateProduct);
 router.delete('/:id', protect, deleteProduct);
-router.post('/:id/reviews', protect, createReview); // ! Should this be PUT instead?
-
-// PUT user write review
+router.put('/:id/reviews', protect, createReview);
 // PUT user edit review
 // PUT user delete review
 

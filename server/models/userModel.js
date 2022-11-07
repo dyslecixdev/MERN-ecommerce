@@ -2,16 +2,13 @@ const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema(
 	{
-		// todo Change username to firstName and lastName
 		firstName: {
 			type: String,
-			required: true,
-			unique: true
+			required: true
 		},
 		lastName: {
 			type: String,
-			required: true,
-			unique: true
+			required: true
 		},
 		email: {
 			type: String,

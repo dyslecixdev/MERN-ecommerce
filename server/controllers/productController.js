@@ -231,32 +231,41 @@ const createReview = asyncHandler(async (req, res) => {
 		return;
 	}
 
-	if (existingProduct.reviews.findById({userId: req.user.id})) {
-		res.status(409).json('The user has already written a review for this product');
+	if (
+		existingProduct.reviews.find(
+			user => user.userName === `${req.user.firstName} ${req.user.lastName}`
+		)
+	) {
+		res.status(409).json('You have already written a review for this product');
+		return;
+	}
+
+	if (!userRating || !userReview) {
+		res.status(400).json('Rating and review are required');
 		return;
 	}
 
 	const newReview = {
-		userId: req.user.id,
 		userName: `${req.user.firstName} ${req.user.lastName}`,
 		userRating,
 		userReview
 	};
 
-	existingProduct.reviews.push(newReview); // Adds the review object to the reviews array
-	existingProduct.rating = existingProduct.reviews.reduce(
-		(a, b) => (b.userRating + a, 0) / existingProduct.reviews.length
-	); // ! Changes the rating to reflect the mean of all the users' ratings
-	existingProduct.numReviews = existingProduct.reviews.length; // Increments the number of reviews
+	existingProduct.reviews.push(newReview); // Adds the newReview object to the reviews array
+	existingProduct.rating =
+		existingProduct.reviews.reduce((a, b) => b.userRating + a, 0) /
+		existingProduct.reviews.length; // ! Updates the average rating of all the reviews' userRatings
+	existingProduct.numReviews = existingProduct.reviews.length;
 
-	const updatedProduct = await existingProduct.save(); // Save in this case updates the document
+	const updatedProduct = await existingProduct.save(); // .save() in this case updates the document
+
 	if (updatedProduct)
 		res.status(201).json({
 			review: updatedProduct.reviews[updatedProduct.reviews.length - 1],
 			rating: updatedProduct.rating,
 			numReviews: updatedProduct.numReviews
 		});
-	else res.status(400).json('Invalid product review data');
+	else res.status(400).json('Invalid review data');
 });
 // PUT user edit review
 // PUT user delete review

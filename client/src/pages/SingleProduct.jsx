@@ -35,6 +35,7 @@ function SingleProduct() {
 	const dispatch = useDispatch();
 
 	const [product, setProduct] = useState([]);
+	const [productRating, setProductRating] = useState(0);
 	const [productPrice, setProductPrice] = useState(0);
 	const [productSize, setProductSize] = useState(['', 'XS', 'S', 'M', 'L', 'XL']);
 	const [productColor, setProductColor] = useState([
@@ -78,7 +79,7 @@ function SingleProduct() {
 
 	// Second useEffect to seperate the data from the product object because it is still being fetched in the above useEffect
 	useEffect(() => {
-		if (product.rating) setRating(product.rating);
+		if (product.rating) setProductRating(product.rating);
 		if (product.price) setProductPrice(product.price);
 		if (product.size) setProductSize(product.size);
 		if (product.color) setProductColor(product.color);
@@ -91,10 +92,16 @@ function SingleProduct() {
 			dispatch(addProduct({...product, size, color, quantity}));
 	};
 
+	// Creates a review for the product
 	const handleSubmit = async e => {
 		e.preventDefault();
 		try {
-			console.log('Submit');
+			await axios.put(
+				`http://localhost:5000/products/${productId.id}/reviews`,
+				{userRating: rating, userReview: review},
+				{headers: {Authorization: 'Bearer ' + user.token}}
+			);
+			window.location.reload(false); // Reloads the window to update the information on the page
 		} catch (err) {
 			setErrorMessage(err.response.data);
 		}
@@ -147,9 +154,9 @@ function SingleProduct() {
 								/>
 							</ListItem>
 							<ListItem divider sx={{display: 'flex', alignItems: 'center'}}>
-								<Rating value={rating} readOnly sx={{marginRight: '1rem'}} />
+								<Rating value={productRating} readOnly sx={{marginRight: '1rem'}} />
 								<ListItemText
-									primary={`${product.numReviews} Reviews`}
+									primary={`${product.numReviews} Review(s)`}
 									primaryTypographyProps={{fontSize: '1.5rem'}}
 								/>
 							</ListItem>
@@ -235,7 +242,11 @@ function SingleProduct() {
 						<Button
 							variant='contained'
 							startIcon={<ShoppingCart />}
-							sx={{height: '100%'}}
+							sx={{
+								height: '100%',
+								background: '#DAA520',
+								'&:hover': {background: '#E4BA4D'}
+							}}
 							onClick={handleAddToCart}
 						>
 							Add to Cart
