@@ -107,7 +107,7 @@ function Items() {
 				{/* Sort Products */}
 				<Box
 					sx={{
-						width: {lg: '20%', xl: '16%'},
+						width: {lg: '28%', xl: '23%'},
 						display: 'flex',
 						justifyContent: 'space-between',
 						alignItems: 'center'

@@ -27,9 +27,12 @@ import {ShoppingCart} from '@mui/icons-material';
 
 import axios from 'axios';
 
+import {addProduct} from '../redux/cartRedux';
+
 function SingleProduct() {
 	const user = useSelector(state => state.user.currentUser);
 	const productId = useParams();
+	const dispatch = useDispatch();
 
 	const [product, setProduct] = useState([]);
 	const [productPrice, setProductPrice] = useState(0);
@@ -54,9 +57,6 @@ function SingleProduct() {
 	const [review, setReview] = useState('');
 	const [errorMessage, setErrorMessage] = useState('');
 
-	// const dispatch = useDispatch();
-	// const {isFetching} = useSelector(state => state.???);
-
 	const [size, setSize] = useState('');
 	const [color, setColor] = useState('');
 	const [quantity, setQuantity] = useState('');
@@ -74,19 +74,30 @@ function SingleProduct() {
 			}
 		}
 		fetchData();
-	}, [productId]);
+	}, [productId, product.rating]);
 
 	// Second useEffect to seperate the data from the product object because it is still being fetched in the above useEffect
 	useEffect(() => {
+		if (product.rating) setRating(product.rating);
 		if (product.price) setProductPrice(product.price);
 		if (product.size) setProductSize(product.size);
 		if (product.color) setProductColor(product.color);
 		if (product.reviews) setProductReviews(product.reviews);
-	}, [product.price, product.size, product.color, product.reviews]);
+	}, [product.rating, product.price, product.size, product.color, product.reviews]);
+
+	// Adds a product to the cart
+	const handleAddToCart = () => {
+		if (size && color && quantity > 0)
+			dispatch(addProduct({...product, size, color, quantity}));
+	};
 
 	const handleSubmit = async e => {
 		e.preventDefault();
-		console.log('Submit');
+		try {
+			console.log('Submit');
+		} catch (err) {
+			setErrorMessage(err.response.data);
+		}
 	};
 
 	return (
@@ -136,11 +147,7 @@ function SingleProduct() {
 								/>
 							</ListItem>
 							<ListItem divider sx={{display: 'flex', alignItems: 'center'}}>
-								<Rating
-									value={product.rating}
-									readOnly
-									sx={{marginRight: '1rem'}}
-								/>
+								<Rating value={rating} readOnly sx={{marginRight: '1rem'}} />
 								<ListItemText
 									primary={`${product.numReviews} Reviews`}
 									primaryTypographyProps={{fontSize: '1.5rem'}}
@@ -229,6 +236,7 @@ function SingleProduct() {
 							variant='contained'
 							startIcon={<ShoppingCart />}
 							sx={{height: '100%'}}
+							onClick={handleAddToCart}
 						>
 							Add to Cart
 						</Button>

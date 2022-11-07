@@ -19,8 +19,7 @@ import {
 	InputBase,
 	Badge,
 	MenuItem,
-	Menu,
-	Button
+	Menu
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
@@ -129,15 +128,14 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
 
 function Navbar() {
 	const user = useSelector(state => state.user.currentUser);
+	const cartQuantity = useSelector(state => state.cart.quantity);
 	const dispatch = useDispatch();
 
 	const theme = useTheme();
 	const [open, setOpen] = useState(false);
 	const [anchorEl, setAnchorEl] = useState(null);
-	const [cartAnchorEl, setCartAnchorEl] = useState(null);
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
-	const isCartMenuOpen = Boolean(cartAnchorEl);
 	const isMenuOpen = Boolean(anchorEl);
 	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -164,24 +162,11 @@ function Navbar() {
 	// Opens the profile menu
 	const handleProfileMenuOpen = e => {
 		setAnchorEl(e.currentTarget);
-		handleCartMenuClose();
 	};
 
 	// Closes the profile menu
 	const handleProfileMenuClose = () => {
 		setAnchorEl(null);
-		handleMobileMenuClose();
-	};
-
-	// Opens the cart menu
-	const handleCartMenuOpen = e => {
-		setCartAnchorEl(e.currentTarget);
-		handleProfileMenuClose();
-	};
-
-	// Closes the cart menu
-	const handleCartMenuClose = () => {
-		setCartAnchorEl(null);
 		handleMobileMenuClose();
 	};
 
@@ -236,34 +221,6 @@ function Navbar() {
 		</Menu>
 	);
 
-	// Cart menu
-	const renderCartMenu = (
-		<Menu
-			anchorEl={cartAnchorEl}
-			anchorOrigin={{
-				vertical: 'top',
-				horizontal: 'right'
-			}}
-			keepMounted
-			transformOrigin={{
-				vertical: 'top',
-				horizontal: 'right'
-			}}
-			open={isCartMenuOpen}
-			onClose={handleCartMenuClose}
-			sx={{zIndex: 100}}
-		>
-			<Button
-				variant='contained'
-				onClick={handleCartMenuClose}
-				component={Link}
-				to='/checkout'
-			>
-				Checkout
-			</Button>
-		</Menu>
-	);
-
 	// Vertical ellipsis menu for mobile devices
 	const renderMobileMenu = (
 		<Menu
@@ -282,8 +239,8 @@ function Navbar() {
 			sx={{zIndex: 99}}
 		>
 			<MenuItem>
-				<IconButton size='large' onClick={handleCartMenuOpen} color='inherit'>
-					<Badge badgeContent={17} color='error'>
+				<IconButton size='large' color='inherit' component={Link} to='/checkout'>
+					<Badge badgeContent={cartQuantity} color='error'>
 						<ShoppingCart />
 					</Badge>
 				</IconButton>
@@ -336,8 +293,8 @@ function Navbar() {
 
 					{/* Shopping cart and Profile icons for non-mobile devices */}
 					<Box sx={{display: {xs: 'none', sm: 'flex'}}}>
-						<IconButton size='large' onClick={handleCartMenuOpen} color='inherit'>
-							<Badge badgeContent={17} color='error'>
+						<IconButton size='large' color='inherit' component={Link} to='/checkout'>
+							<Badge badgeContent={cartQuantity} color='error'>
 								<ShoppingCart />
 							</Badge>
 						</IconButton>
@@ -360,8 +317,7 @@ function Navbar() {
 				</Toolbar>
 			</AppBar>
 
-			{/* Menu popups for the cart, profile, and vertical ellipsis */}
-			{renderCartMenu}
+			{/* Menu popups for the profile and vertical ellipsis */}
 			{renderProfileMenu}
 			{renderMobileMenu}
 

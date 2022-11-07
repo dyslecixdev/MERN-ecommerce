@@ -30,10 +30,7 @@ function ProductCard({productData}) {
 					{productData.desc}
 				</Typography>
 			</CardContent>
-			<CardActions sx={{width: '100%', display: 'flex', justifyContent: 'space-between'}}>
-				<Button variant='outlined' size='small'>
-					Add to Cart
-				</Button>
+			<CardActions>
 				<Button
 					variant='outlined'
 					size='small'
