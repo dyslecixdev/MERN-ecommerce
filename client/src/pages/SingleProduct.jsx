@@ -18,14 +18,14 @@ import {
 	Typography,
 	Divider,
 	Paper,
-	TextField,
-	Avatar
+	TextField
 } from '@mui/material';
 import {ShoppingCart} from '@mui/icons-material';
 
 import axios from 'axios';
 
 import Review from '../components/Review';
+import Footer from '../components/Footer';
 
 import {addProduct} from '../redux/cartRedux';
 
@@ -97,6 +97,7 @@ function SingleProduct() {
 	const handleAddToCart = () => {
 		if (size && color && quantity > 0)
 			dispatch(addProduct({...product, size, color, quantity}));
+		else setErrorMessage('Color, size, and quantity required');
 	};
 
 	// Creates a review for the product
@@ -115,7 +116,7 @@ function SingleProduct() {
 	};
 
 	return (
-		<div style={{width: '98.5vw', padding: '0 1rem 2rem'}}>
+		<div style={{width: '98.5vw', padding: '0 1rem'}}>
 			<Box
 				sx={{
 					width: '100%',
@@ -126,16 +127,16 @@ function SingleProduct() {
 				}}
 			>
 				{/* Product image */}
-				<Avatar
+				<img
 					src={`http://localhost:5000/static/${product.image}`}
 					alt={product.name}
-					variant='rounded'
-					sx={{
-						width: {xs: '100%', lg: '50%'},
-						height: '90vh',
+					style={{
+						width: '100%',
+						maxHeight: '88vh',
 						padding: '2rem',
-						background: '#DBE2FF'
-						// bug Sometimes the image is cut off
+						background: '#DBE2FF',
+						objectFit: 'contain',
+						borderRadius: '5px'
 					}}
 				/>
 
@@ -161,7 +162,12 @@ function SingleProduct() {
 								/>
 							</ListItem>
 							<ListItem divider sx={{display: 'flex', alignItems: 'center'}}>
-								<Rating value={productRating} readOnly sx={{marginRight: '1rem'}} />
+								<Rating
+									precision={0.1}
+									value={productRating}
+									readOnly
+									sx={{marginRight: '1rem'}}
+								/>
 								<ListItemText
 									primary={`${product.numReviews} Review(s)`}
 									primaryTypographyProps={{fontSize: '1.5rem'}}
@@ -177,6 +183,11 @@ function SingleProduct() {
 					</Stack>
 
 					{/* Product size, color, and quantity, and Cart button */}
+					{errorMessage && (
+						<Typography color='error' sx={{textAlign: 'center'}}>
+							{errorMessage}
+						</Typography>
+					)}
 					<Box
 						sx={{
 							height: '55px',
@@ -188,7 +199,7 @@ function SingleProduct() {
 					>
 						<Box
 							sx={{
-								minWidth: 120,
+								minWidth: 100,
 								marginRight: '1rem',
 								marginBottom: {xs: '1rem', lg: 'none'}
 							}}
@@ -210,7 +221,7 @@ function SingleProduct() {
 						</Box>
 						<Box
 							sx={{
-								minWidth: 120,
+								minWidth: 100,
 								marginRight: '1rem',
 								marginBottom: {xs: '1rem', lg: 'none'}
 							}}
@@ -230,7 +241,7 @@ function SingleProduct() {
 								</Select>
 							</FormControl>
 						</Box>
-						<Box sx={{minWidth: 120, marginRight: '1rem'}}>
+						<Box sx={{minWidth: 100, marginRight: '1rem'}}>
 							<FormControl fullWidth>
 								<InputLabel>Quantity</InputLabel>
 								<Select
@@ -292,6 +303,7 @@ function SingleProduct() {
 							onSubmit={handleSubmit}
 							sx={{
 								marginTop: '1.5rem',
+								marginBottom: '2rem',
 								padding: '1rem',
 								display: 'flex',
 								flexDirection: 'column',
@@ -333,7 +345,12 @@ function SingleProduct() {
 						</Paper>
 					) : (
 						<Paper
-							sx={{marginTop: '1.5rem', padding: '1rem', border: '1px solid black'}}
+							sx={{
+								marginTop: '1.5rem',
+								marginBottom: '2rem',
+								padding: '1rem',
+								border: '1px solid black'
+							}}
 						>
 							<Typography variant='h6'>
 								Please{' '}
@@ -346,6 +363,8 @@ function SingleProduct() {
 					)}
 				</Stack>
 			</Container>
+
+			<Footer />
 		</div>
 	);
 }

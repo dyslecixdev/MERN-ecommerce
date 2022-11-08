@@ -1,5 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 
+// bug Cart persists between all users and non-users
+// todo Create removeProduct reducer
 const cartSlice = createSlice({
 	name: 'cart',
 	initialState: {

@@ -239,7 +239,13 @@ function Navbar() {
 			sx={{zIndex: 99}}
 		>
 			<MenuItem>
-				<IconButton size='large' color='inherit' component={Link} to='/checkout'>
+				<IconButton
+					size='large'
+					color='inherit'
+					component={Link}
+					to='/checkout'
+					onClick={handleMobileMenuClose}
+				>
 					<Badge badgeContent={cartQuantity} color='error'>
 						<ShoppingCart />
 					</Badge>
@@ -293,7 +299,13 @@ function Navbar() {
 
 					{/* Shopping cart and Profile icons for non-mobile devices */}
 					<Box sx={{display: {xs: 'none', sm: 'flex'}}}>
-						<IconButton size='large' color='inherit' component={Link} to='/checkout'>
+						<IconButton
+							size='large'
+							color='inherit'
+							component={Link}
+							to='/checkout'
+							onClick={handleMobileMenuClose}
+						>
 							<Badge badgeContent={cartQuantity} color='error'>
 								<ShoppingCart />
 							</Badge>
