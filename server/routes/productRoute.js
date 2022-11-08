@@ -8,7 +8,8 @@ const {
 	getAllProducts,
 	updateProduct,
 	deleteProduct,
-	createReview
+	createReview,
+	updateReview
 } = require('../controllers/productController');
 const protect = require('../middleware/authMiddleware');
 
@@ -44,7 +45,7 @@ router.get('/', getAllProducts);
 router.put('/:id', protect, upload.single('image'), updateProduct);
 router.delete('/:id', protect, deleteProduct);
 router.put('/:id/reviews', protect, createReview);
-// PUT user edit review
+router.put('/:id/updateReviews', protect, updateReview);
 // PUT user delete review
 
 module.exports = router;

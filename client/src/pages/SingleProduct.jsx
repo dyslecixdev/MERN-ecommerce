@@ -83,10 +83,7 @@ function SingleProduct() {
 		if (product.price) setProductPrice(product.price);
 		if (product.size) setProductSize(product.size);
 		if (product.color) setProductColor(product.color);
-		if (product.reviews) {
-			setProductReviews(product.reviews);
-			// setMonth(months[date[1]]);
-		}
+		if (product.reviews) setProductReviews(product.reviews);
 	}, [
 		product.rating,
 		product.price,

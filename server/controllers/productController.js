@@ -251,7 +251,7 @@ const createReview = asyncHandler(async (req, res) => {
 	existingProduct.reviews.push(newReview); // Adds the newReview object to the reviews array
 	existingProduct.rating =
 		existingProduct.reviews.reduce((a, b) => b.userRating + a, 0) /
-		existingProduct.reviews.length; // ! Updates the average rating of all the reviews' userRatings
+		existingProduct.reviews.length; // Updates the average rating of all the reviews' userRatings
 	existingProduct.numReviews = existingProduct.reviews.length;
 
 	const updatedProduct = await existingProduct.save(); // .save() in this case updates the document
@@ -264,7 +264,57 @@ const createReview = asyncHandler(async (req, res) => {
 		});
 	else res.status(400).json('Invalid review data');
 });
-// PUT user edit review
+
+const updateReview = asyncHandler(async (req, res) => {
+	const {userRating, userReview} = req.body;
+
+	const existingProduct = await Product.findById(req.params.id);
+	if (!existingProduct) {
+		res.status(404).json('Product not found');
+		return;
+	}
+
+	if (!existingProduct.reviews.find(user => user.userId === req.user.id)) {
+		res.status(409).json('You have not written a review for this product');
+		return;
+	}
+
+	if (!userRating || !userReview) {
+		res.status(400).json('Rating and review are required');
+		return;
+	}
+
+	await Product.updateOne(
+		{_id: req.params.id},
+		{
+			$pull: {reviews: {userId: req.user.id}} // Removes any object in the reviews array where its userId matches to the logged in user's id
+		}
+	);
+
+	const productWithoutReview = await Product.findById(req.params.id); // You have to find the product again after the above update, and assigning the const to above update returns an object with upserts instead of the document
+	const updatedReview = {
+		userName: `${req.user.firstName} ${req.user.lastName}`,
+		userId: req.user.id,
+		userRating,
+		userReview
+	};
+
+	productWithoutReview.reviews.push(updatedReview);
+	productWithoutReview.rating =
+		productWithoutReview.reviews.reduce((a, b) => b.userRating + a, 0) /
+		productWithoutReview.reviews.length;
+
+	const updatedProduct = await productWithoutReview.save();
+
+	if (updatedProduct)
+		res.status(201).json({
+			review: updatedProduct.reviews[updatedProduct.reviews.length - 1],
+			rating: updatedProduct.rating,
+			numReviews: updatedProduct.numReviews
+		});
+	else res.status(400).json('Invalid updated review data');
+});
+
 // PUT user delete review
 
 module.exports = {
@@ -273,5 +323,6 @@ module.exports = {
 	getAllProducts,
 	updateProduct,
 	deleteProduct,
-	createReview
+	createReview,
+	updateReview
 };
