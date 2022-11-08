@@ -66,7 +66,7 @@ function Profile() {
 			dispatch(deleteUserSuccess());
 			// navigate not needed here because App.js will navigate to the login page
 		} catch (err) {
-			setErrorMessage(err.response.data);
+			console.log(err);
 			dispatch(deleteUserFailure());
 		}
 	};

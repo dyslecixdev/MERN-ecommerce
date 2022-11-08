@@ -265,6 +265,7 @@ const createReview = asyncHandler(async (req, res) => {
 	else res.status(400).json('Invalid review data');
 });
 
+// Updates review
 const updateReview = asyncHandler(async (req, res) => {
 	const {userRating, userReview} = req.body;
 
@@ -315,7 +316,37 @@ const updateReview = asyncHandler(async (req, res) => {
 	else res.status(400).json('Invalid updated review data');
 });
 
-// PUT user delete review
+// Deletes review
+const deleteReview = asyncHandler(async (req, res) => {
+	const existingProduct = await Product.findById(req.params.id);
+	if (!existingProduct) {
+		res.status(404).json('Product not found');
+		return;
+	}
+
+	if (!existingProduct.reviews.find(user => user.userId === req.user.id)) {
+		res.status(409).json('You have not written a review for this product');
+		return;
+	}
+
+	await Product.updateOne(
+		{_id: req.params.id},
+		{
+			$pull: {reviews: {userId: req.user.id}}
+		}
+	);
+
+	const productWithoutReview = await Product.findById(req.params.id);
+
+	productWithoutReview.rating =
+		productWithoutReview.reviews.reduce((a, b) => b.userRating + a, 0) /
+			productWithoutReview.reviews.length || 0; // If there is at least one review then find the average, otherwise it is 0
+	productWithoutReview.numReviews = productWithoutReview.reviews.length;
+
+	await productWithoutReview.save();
+
+	res.status(200).json("Deleted user's review");
+});
 
 module.exports = {
 	createProduct,
@@ -324,5 +355,6 @@ module.exports = {
 	updateProduct,
 	deleteProduct,
 	createReview,
-	updateReview
+	updateReview,
+	deleteReview
 };

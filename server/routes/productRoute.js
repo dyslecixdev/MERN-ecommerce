@@ -9,7 +9,8 @@ const {
 	updateProduct,
 	deleteProduct,
 	createReview,
-	updateReview
+	updateReview,
+	deleteReview
 } = require('../controllers/productController');
 const protect = require('../middleware/authMiddleware');
 
@@ -46,6 +47,6 @@ router.put('/:id', protect, upload.single('image'), updateProduct);
 router.delete('/:id', protect, deleteProduct);
 router.put('/:id/reviews', protect, createReview);
 router.put('/:id/updateReviews', protect, updateReview);
-// PUT user delete review
+router.delete('/:id/deleteReviews', protect, deleteReview); // Making this a PUT request results in an error because we are not including data to modify the document
 
 module.exports = router;

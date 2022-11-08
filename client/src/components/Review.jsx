@@ -51,9 +51,19 @@ function Review({review}) {
 		}
 	};
 
+	// Deletes the user's review for the product
 	const handleDelete = async e => {
 		e.preventDefault();
-		console.log('Delete');
+		try {
+			await axios.delete(`http://localhost:5000/products/${productId.id}/deleteReviews`, {
+				headers: {
+					Authorization: 'Bearer ' + user.token
+				}
+			});
+			window.location.reload(false);
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	// Resets the form when Cancel is clicked
@@ -103,7 +113,7 @@ function Review({review}) {
 				variant='contained'
 				disableElevation
 				sx={{
-					width: '20%',
+					width: {xs: '60%', sm: '40%', md: '25%', lg: '20%'},
 					display: 'flex',
 					justifyContent: 'space-between'
 				}}
@@ -118,8 +128,15 @@ function Review({review}) {
 		</Paper>
 	) : (
 		// Written/Updated review
-		<Paper sx={{padding: '1rem', display: 'flex', border: '1px solid black'}}>
-			<Box sx={{flex: 5}}>
+		<Paper
+			sx={{
+				padding: '1rem',
+				display: 'flex',
+				flexDirection: 'column',
+				border: '1px solid black'
+			}}
+		>
+			<Box sx={{flex: 5, marginBottom: '1rem'}}>
 				<Typography variant='h4'>{review.userName}</Typography>
 				<Rating value={review.userRating} readOnly />
 				<Typography variant='h5'>
@@ -129,7 +146,9 @@ function Review({review}) {
                         ${review.updatedAt.slice(0, 10).split('-')[0]}
                     `}
 				</Typography>
-				<Typography variant='h5'>{review.userReview}</Typography>
+				<Typography variant='h5' sx={{overflowWrap: 'break-word', color: 'red'}}>
+					{review.userReview}
+				</Typography>
 			</Box>
 			{user.id === review.userId && (
 				<>
@@ -137,10 +156,11 @@ function Review({review}) {
 						disableElevation
 						variant='contained'
 						sx={{
+							width: {xs: '60%', sm: '30%', lg: '20%'},
 							flex: 1,
 							display: 'flex',
-							flexDirection: 'column',
-							justifyContent: 'space-evenly'
+							flexDirection: 'row',
+							justifyContent: 'space-between'
 						}}
 					>
 						<Button onClick={() => setEditMode(true)}>Edit</Button>
