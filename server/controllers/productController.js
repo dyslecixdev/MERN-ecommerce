@@ -231,11 +231,7 @@ const createReview = asyncHandler(async (req, res) => {
 		return;
 	}
 
-	if (
-		existingProduct.reviews.find(
-			user => user.userName === `${req.user.firstName} ${req.user.lastName}`
-		)
-	) {
+	if (existingProduct.reviews.find(user => user.userId === req.user.id)) {
 		res.status(409).json('You have already written a review for this product');
 		return;
 	}
@@ -247,6 +243,7 @@ const createReview = asyncHandler(async (req, res) => {
 
 	const newReview = {
 		userName: `${req.user.firstName} ${req.user.lastName}`,
+		userId: req.user.id,
 		userRating,
 		userReview
 	};

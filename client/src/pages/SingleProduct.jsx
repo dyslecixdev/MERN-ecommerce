@@ -1,5 +1,3 @@
-// todo Make page responsive
-
 import {useState, useEffect} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
@@ -26,6 +24,8 @@ import {
 import {ShoppingCart} from '@mui/icons-material';
 
 import axios from 'axios';
+
+import Review from '../components/Review';
 
 import {addProduct} from '../redux/cartRedux';
 
@@ -83,8 +83,18 @@ function SingleProduct() {
 		if (product.price) setProductPrice(product.price);
 		if (product.size) setProductSize(product.size);
 		if (product.color) setProductColor(product.color);
-		if (product.reviews) setProductReviews(product.reviews);
-	}, [product.rating, product.price, product.size, product.color, product.reviews]);
+		if (product.reviews) {
+			setProductReviews(product.reviews);
+			// setMonth(months[date[1]]);
+		}
+	}, [
+		product.rating,
+		product.price,
+		product.size,
+		product.color,
+		product.reviews,
+		productReviews
+	]);
 
 	// Adds a product to the cart
 	const handleAddToCart = () => {
@@ -268,14 +278,7 @@ function SingleProduct() {
 					spacing={0}
 				>
 					{productReviews.length !== 0 ? (
-						productReviews.map((review, idx) => (
-							<Paper key={idx} sx={{padding: '1rem', border: '1px solid black'}}>
-								<Typography variant='h4'>{review.username}</Typography>
-								<Rating value={review.userRating} readOnly />
-								<Typography variant='h5'>Review's date</Typography>
-								<Typography variant='h5'>{review.userReview}</Typography>
-							</Paper>
-						))
+						productReviews.map((review, idx) => <Review key={idx} review={review} />)
 					) : (
 						<Paper sx={{padding: '1rem', border: '1px solid black'}}>
 							<Typography variant='h5'>
