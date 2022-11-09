@@ -37,6 +37,48 @@ const cartSlice = createSlice({
 				state.totalPrice += action.payload.price * action.payload.quantity;
 			}
 		},
+		incrementProduct: (state, action) => {
+			const productToModify = state.products.find(
+				product =>
+					product._id === action.payload._id &&
+					product.size === action.payload.size &&
+					product.color === action.payload.color
+			);
+
+			if (productToModify) {
+				const cartState = state.products.filter(
+					product =>
+						product._id !== action.payload._id &&
+						product.size !== action.payload.size &&
+						product.color !== action.payload.color
+				);
+				productToModify.quantity += 1;
+				cartState.push(productToModify);
+				state.quantity += 1;
+				state.totalPrice += action.payload.price * 1;
+			} else console.log('Product does not exist');
+		},
+		decrementProduct: (state, action) => {
+			const productToModify = state.products.find(
+				product =>
+					product._id === action.payload._id &&
+					product.size === action.payload.size &&
+					product.color === action.payload.color
+			);
+
+			if (productToModify) {
+				const cartState = state.products.filter(
+					product =>
+						product._id !== action.payload._id &&
+						product.size !== action.payload.size &&
+						product.color !== action.payload.color
+				);
+				productToModify.quantity -= 1;
+				state.quantity -= 1;
+				state.totalPrice -= action.payload.price * 1;
+				cartState.push(productToModify);
+			} else console.log('Product does not exist');
+		},
 		removeProduct: (state, action) => {
 			const cartWithoutProduct = state.products.filter(
 				product =>
@@ -48,13 +90,11 @@ const cartSlice = createSlice({
 			); // Returns a new array while filtering out the object that matches the product's id, size, and color
 			state.products = cartWithoutProduct;
 			state.quantity -= action.payload.quantity;
-			if (state.products.length > 1)
-				state.totalPrice -= action.payload.price * action.payload.quantity;
-			else state.totalPrice = 0; // Used to fix JS math bug
+			state.totalPrice -= action.payload.price * action.payload.quantity;
 		}
 	}
 });
 
-export const {addProduct, removeProduct} = cartSlice.actions;
+export const {addProduct, incrementProduct, decrementProduct, removeProduct} = cartSlice.actions;
 
 export default cartSlice.reducer;

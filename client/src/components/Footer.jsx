@@ -51,7 +51,7 @@ const Footer = () => {
 					component='form'
 					sx={{p: '2px 4px', display: 'flex', alignItems: 'center', width: '100%'}}
 				>
-					<InputBase placeholder='Enter your email' sx={{ml: 1, flex: 1}} />
+					<InputBase placeholder='Currently not functional' sx={{ml: 1, flex: 1}} />
 					<Divider sx={{height: 28, m: 0.5}} orientation='vertical' />
 					<IconButton sx={{p: '10px'}}>
 						<Send />

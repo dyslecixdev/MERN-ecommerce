@@ -291,7 +291,7 @@ function Navbar() {
 						<SearchIconWrapper>
 							<SearchIcon />
 						</SearchIconWrapper>
-						<StyledInputBase placeholder='Search…' />
+						<StyledInputBase placeholder='Currently not functional' />
 					</Search>
 
 					{/* Space between search field and icons */}

@@ -8,7 +8,7 @@ import {Remove, Add, Delete} from '@mui/icons-material';
 import LoginForm from '../components/LoginForm';
 import Footer from '../components/Footer';
 
-import {removeProduct} from '../redux/cartRedux';
+import {incrementProduct, decrementProduct, removeProduct} from '../redux/cartRedux';
 
 const steps = ['Login', 'ConfirmProducts', 'Shipping Details', 'Payment Details', 'Place Order'];
 
@@ -19,14 +19,29 @@ function Checkout() {
 
 	const [activeStep, setActiveStep] = useState(0);
 
+	// Allows the Next button to move to the next step
 	const handleNext = () => {
 		setActiveStep(prevActiveStep => prevActiveStep + 1);
 	};
 
+	// Allows the Back button to move to the previous step
 	const handleBack = () => {
 		setActiveStep(prevActiveStep => prevActiveStep - 1);
 	};
 
+	// Increments a product's quantity by 1
+	const handleIncrementProduct = (_id, price, size, color) => {
+		dispatch(incrementProduct({_id, price, size, color}));
+	};
+
+	// Decrements a product's quantity by 1
+	const handleDecrementProduct = (_id, price, size, color, quantity) => {
+		console.log(quantity);
+		if (quantity > 1) dispatch(decrementProduct({_id, price, size, color}));
+		else handleRemoveFromCart(_id, price, size, color, quantity);
+	};
+
+	// Removes all copies of a product from the cart
 	const handleRemoveFromCart = (_id, price, size, color, quantity) => {
 		dispatch(removeProduct({_id, price, size, color, quantity}));
 	};
@@ -149,7 +164,18 @@ function Checkout() {
 													gap: '0.5rem'
 												}}
 											>
-												<Remove />
+												<Remove
+													onClick={() =>
+														handleDecrementProduct(
+															product._id,
+															product.price,
+															product.size,
+															product.color,
+															product.quantity
+														)
+													}
+													sx={{cursor: 'pointer'}}
+												/>
 												<Paper
 													elevation={0}
 													sx={{
@@ -159,7 +185,17 @@ function Checkout() {
 												>
 													{product.quantity}
 												</Paper>
-												<Add />
+												<Add
+													onClick={() =>
+														handleIncrementProduct(
+															product._id,
+															product.price,
+															product.size,
+															product.color
+														)
+													}
+													sx={{cursor: 'pointer'}}
+												/>
 											</Box>
 											<Delete
 												onClick={() =>
@@ -189,7 +225,7 @@ function Checkout() {
 						</Box>
 					</Box>
 				)}
-				{activeStep === 1 && !user && cart.products.length > 0 && (
+				{activeStep === 1 && !user && (
 					<Box
 						sx={{
 							minHeight: '58vh',
@@ -210,7 +246,7 @@ function Checkout() {
 						</Typography>
 					</Box>
 				)}
-				{activeStep === 1 && cart.products.length < 1 && (
+				{activeStep === 1 && user && cart.products.length < 1 && (
 					<Box
 						sx={{
 							minHeight: '58vh',
