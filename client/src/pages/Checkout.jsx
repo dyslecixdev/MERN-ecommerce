@@ -6,6 +6,7 @@ import {Box, Stepper, Step, StepLabel, Button, Typography, Paper, Divider} from 
 import {Remove, Add, Delete} from '@mui/icons-material';
 
 import LoginForm from '../components/LoginForm';
+import CheckoutLoginError from '../components/CheckoutLoginError';
 import Footer from '../components/Footer';
 
 import {incrementProduct, decrementProduct, removeProduct} from '../redux/cartRedux';
@@ -225,27 +226,7 @@ function Checkout() {
 						</Box>
 					</Box>
 				)}
-				{activeStep === 1 && !user && (
-					<Box
-						sx={{
-							minHeight: '58vh',
-							display: 'flex',
-							flexDirection: 'column',
-							justifyContent: 'center',
-							alignItems: 'center',
-							gap: '2rem'
-						}}
-					>
-						<Typography variant='h4'>Uh oh! You are not logged in.</Typography>
-						<Typography variant='h4'>
-							Click{' '}
-							<Link to='/login' style={{textDecoration: 'none'}}>
-								here
-							</Link>{' '}
-							to log in.
-						</Typography>
-					</Box>
-				)}
+				{activeStep === 1 && !user && <CheckoutLoginError />}
 				{activeStep === 1 && user && cart.products.length < 1 && (
 					<Box
 						sx={{
@@ -271,7 +252,7 @@ function Checkout() {
 				)}
 
 				{/* Shipping step 3 */}
-				{activeStep === 2 && (
+				{activeStep === 2 && user && (
 					<Box
 						sx={{
 							minHeight: '58vh',
@@ -283,21 +264,10 @@ function Checkout() {
 						<Typography>Shipping</Typography>
 					</Box>
 				)}
-				{activeStep === 2 && !user && (
-					<Box
-						sx={{
-							minHeight: '58vh',
-							display: 'flex',
-							justifyContent: 'center',
-							alignItems: 'center'
-						}}
-					>
-						<Typography>Go back and login.</Typography>
-					</Box>
-				)}
+				{activeStep === 2 && !user && <CheckoutLoginError />}
 
 				{/* Payment step 4 */}
-				{activeStep === 3 && (
+				{activeStep === 3 && user && (
 					<Box
 						sx={{
 							minHeight: '58vh',
@@ -309,21 +279,10 @@ function Checkout() {
 						<Typography>Payment</Typography>
 					</Box>
 				)}
-				{activeStep === 3 && !user && (
-					<Box
-						sx={{
-							minHeight: '58vh',
-							display: 'flex',
-							justifyContent: 'center',
-							alignItems: 'center'
-						}}
-					>
-						<Typography>Go back and login.</Typography>
-					</Box>
-				)}
+				{activeStep === 3 && !user && <CheckoutLoginError />}
 
 				{/* Checkout step 5 */}
-				{activeStep === 4 && (
+				{activeStep === 4 && user && (
 					<Box
 						sx={{
 							minHeight: '58vh',
@@ -335,18 +294,7 @@ function Checkout() {
 						<Typography>Checkout</Typography>
 					</Box>
 				)}
-				{activeStep === 4 && !user && (
-					<Box
-						sx={{
-							minHeight: '58vh',
-							display: 'flex',
-							justifyContent: 'center',
-							alignItems: 'center'
-						}}
-					>
-						<Typography>Go back and login.</Typography>
-					</Box>
-				)}
+				{activeStep === 4 && !user && <CheckoutLoginError />}
 
 				{/* Confirm order page */}
 				{activeStep === steps.length ? (

@@ -9,17 +9,28 @@ import axios from 'axios';
 import {loginStart, loginSuccess, loginFailure} from '../redux/userRedux';
 
 function LoginForm({route}) {
+	const cart = useSelector(state => state.cart);
+
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [errorMessage, setErrorMessage] = useState('');
+
+	const [userId, setUserId] = useState('example');
 
 	const dispatch = useDispatch();
 	const {isFetching} = useSelector(state => state.user);
 
 	const navigate = useNavigate();
 
-	// Logs a user into the app
+	// Executes two async functions
 	const handleSubmit = async e => {
+		await loginUser(e);
+		// await createCart(e);
+		if (route) navigate(route);
+	};
+
+	// Logs a user into the app
+	const loginUser = async e => {
 		e.preventDefault();
 		dispatch(loginStart());
 		try {
@@ -28,10 +39,19 @@ function LoginForm({route}) {
 				password
 			});
 			dispatch(loginSuccess(res.data));
-			if (route) navigate(route);
 		} catch (err) {
 			setErrorMessage(err.response.data);
 			dispatch(loginFailure());
+		}
+	};
+
+	// bug Cannot get userId with setting useState
+	const createCart = async e => {
+		e.preventDefault();
+		try {
+			await axios.post('http://localhost:5000/carts', {userId, cart});
+		} catch (err) {
+			console.log(err);
 		}
 	};
 

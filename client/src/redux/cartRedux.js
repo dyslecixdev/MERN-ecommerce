@@ -90,11 +90,20 @@ const cartSlice = createSlice({
 			); // Returns a new array while filtering out the object that matches the product's id, size, and color
 			state.products = cartWithoutProduct;
 			state.quantity -= action.payload.quantity;
-			state.totalPrice -= action.payload.price * action.payload.quantity;
+			// state.totalPrice = 0;
+			if (state.products.length > 0)
+				state.totalPrice -= action.payload.price * action.payload.quantity;
+			else state.totalPrice = 0;
+		},
+		logoutUser: state => {
+			state.products = [];
+			state.quantity = 0;
+			state.totalPrice = 0;
 		}
 	}
 });
 
-export const {addProduct, incrementProduct, decrementProduct, removeProduct} = cartSlice.actions;
+export const {addProduct, incrementProduct, decrementProduct, removeProduct, logoutUser} =
+	cartSlice.actions;
 
 export default cartSlice.reducer;
