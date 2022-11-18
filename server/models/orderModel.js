@@ -47,7 +47,7 @@ const orderSchema = mongoose.Schema(
 		},
 		payment: {
 			cardNumer: {
-				type: Number,
+				type: String,
 				required: true
 			},
 			cardDate: {
@@ -55,7 +55,7 @@ const orderSchema = mongoose.Schema(
 				required: true
 			},
 			ccv: {
-				type: Number,
+				type: String,
 				required: true
 			}
 		},

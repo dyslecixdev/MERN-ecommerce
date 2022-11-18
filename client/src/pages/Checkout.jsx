@@ -2,7 +2,21 @@ import {useState} from 'react';
 import {Link} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 
-import {Box, Stepper, Step, StepLabel, Button, Typography, Paper, Divider} from '@mui/material';
+import {
+	Box,
+	Stepper,
+	Step,
+	StepLabel,
+	Button,
+	Typography,
+	Paper,
+	Divider,
+	TextField,
+	FormControl,
+	InputLabel,
+	Select,
+	MenuItem
+} from '@mui/material';
 import {Remove, Add, Delete} from '@mui/icons-material';
 
 import LoginForm from '../components/LoginForm';
@@ -12,11 +26,74 @@ import Footer from '../components/Footer';
 import {incrementProduct, decrementProduct, removeProduct} from '../redux/cartRedux';
 
 const steps = ['Login', 'ConfirmProducts', 'Shipping Details', 'Payment Details', 'Place Order'];
+const states = [
+	'AL',
+	'AK',
+	'AZ',
+	'AR',
+	'CA',
+	'CO',
+	'CT',
+	'DE',
+	'FL',
+	'GA',
+	'HI',
+	'ID',
+	'IL',
+	'IN',
+	'IA',
+	'KS',
+	'KY',
+	'LA',
+	'ME',
+	'MD',
+	'MA',
+	'MI',
+	'MN',
+	'MS',
+	'MO',
+	'MT',
+	'NE',
+	'NV',
+	'NH',
+	'NJ',
+	'NM',
+	'NY',
+	'NC',
+	'ND',
+	'OH',
+	'OK',
+	'OR',
+	'PA',
+	'RI',
+	'SC',
+	'SD',
+	'TN',
+	'TX',
+	'UT',
+	'VT',
+	'VA',
+	'WA',
+	'WV',
+	'WI',
+	'WY'
+];
+const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+const years = [2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031];
 
 function Checkout() {
 	const user = useSelector(state => state.user.currentUser);
 	const cart = useSelector(state => state.cart);
 	const dispatch = useDispatch();
+
+	const [street, setStreet] = useState('');
+	const [city, setCity] = useState('');
+	const [state, setState] = useState('');
+	const [zipCode, setZipCode] = useState('');
+	const [cardNumber, setCardNumber] = useState('');
+	const [cardDateMonth, setCardDateMonth] = useState('');
+	const [cardDateYear, setCardDateYear] = useState('');
+	const [ccv, setCcv] = useState('');
 
 	const [activeStep, setActiveStep] = useState(0);
 
@@ -27,7 +104,8 @@ function Checkout() {
 
 	// Allows the Back button to move to the previous step
 	const handleBack = () => {
-		setActiveStep(prevActiveStep => prevActiveStep - 1);
+		if (!user) setActiveStep(0);
+		else setActiveStep(prevActiveStep => prevActiveStep - 1);
 	};
 
 	// Increments a product's quantity by 1
@@ -261,7 +339,61 @@ function Checkout() {
 							alignItems: 'center'
 						}}
 					>
-						<Typography>Shipping</Typography>
+						<Paper
+							elevation={3}
+							sx={{
+								width: {
+									xs: '100%',
+									sm: '90%',
+									md: '75%',
+									lg: '50%',
+									xl: '40%'
+								},
+								padding: '1rem',
+								display: 'flex',
+								flexDirection: 'column',
+								gap: '2rem',
+								background: '#F1F1F1'
+							}}
+						>
+							<TextField
+								label='Address'
+								type='text'
+								required
+								value={street}
+								onChange={e => setStreet(e.target.value)}
+							/>
+							<TextField
+								label='City'
+								type='text'
+								required
+								value={city}
+								onChange={e => setCity(e.target.value)}
+							/>
+							<Box sx={{minWidth: 120}}>
+								<FormControl fullWidth>
+									<InputLabel>State</InputLabel>
+									<Select
+										value={state}
+										label='State'
+										onChange={e => setState(e.target.value)}
+									>
+										{states.map((state, idx) => (
+											<MenuItem key={idx} value={state}>
+												{state}
+											</MenuItem>
+										))}
+									</Select>
+								</FormControl>
+							</Box>
+							<TextField
+								label='Zip Code'
+								type='text'
+								required
+								value={zipCode}
+								onChange={e => setZipCode(e.target.value)}
+							/>
+						</Paper>
 					</Box>
 				)}
 				{activeStep === 2 && !user && <CheckoutLoginError />}
@@ -276,7 +408,74 @@ function Checkout() {
 							alignItems: 'center'
 						}}
 					>
-						<Typography>Payment</Typography>
+						<Paper
+							elevation={3}
+							sx={{
+								width: {
+									xs: '100%',
+									sm: '90%',
+									md: '75%',
+									lg: '50%',
+									xl: '40%'
+								},
+								padding: '1rem',
+								display: 'flex',
+								flexDirection: 'column',
+								gap: '2rem',
+								background: '#F1F1F1'
+							}}
+						>
+							<TextField
+								label='Card Number'
+								type='text'
+								required
+								value={cardNumber}
+								onChange={e => setCardNumber(e.target.value)}
+							/>
+							<Box
+								sx={{display: 'flex', justifyContent: 'space-between', gap: '1rem'}}
+							>
+								<Box sx={{flex: 1}}>
+									<FormControl fullWidth>
+										<InputLabel>Month</InputLabel>
+										<Select
+											value={cardDateMonth}
+											label='Month'
+											onChange={e => setCardDateMonth(e.target.value)}
+										>
+											{months.map((month, idx) => (
+												<MenuItem key={idx} value={month}>
+													{month}
+												</MenuItem>
+											))}
+										</Select>
+									</FormControl>
+								</Box>
+								<Box sx={{flex: 1}}>
+									<FormControl fullWidth>
+										<InputLabel>Year</InputLabel>
+										<Select
+											value={cardDateYear}
+											label='Year'
+											onChange={e => setCardDateYear(e.target.value)}
+										>
+											{years.map((year, idx) => (
+												<MenuItem key={idx} value={year}>
+													{year}
+												</MenuItem>
+											))}
+										</Select>
+									</FormControl>
+								</Box>
+							</Box>
+							<TextField
+								label='CCV'
+								type='text'
+								required
+								value={ccv}
+								onChange={e => setCcv(e.target.value)}
+							/>
+						</Paper>
 					</Box>
 				)}
 				{activeStep === 3 && !user && <CheckoutLoginError />}
@@ -333,7 +532,15 @@ function Checkout() {
 							Back
 						</Button>
 						<Box sx={{flex: '1 1 auto'}} />
-						<Button disabled={!user} onClick={handleNext}>
+						<Button
+							disabled={
+								!user ||
+								(activeStep === 2 && (!street || !city || !state || !zipCode)) ||
+								(activeStep === 3 &&
+									(!cardNumber || !cardDateMonth || !cardDateYear || !ccv))
+							}
+							onClick={handleNext}
+						>
 							{activeStep === steps.length - 1 ? 'Finish' : 'Next'}
 						</Button>
 					</Box>

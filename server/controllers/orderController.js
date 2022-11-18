@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const Order = require('../models/orderModel');
 
+// Create an order
 const createOrder = asyncHandler(async (req, res) => {
 	const {products, address, payment, totalPrice} = req.body;
 
@@ -23,6 +24,7 @@ const createOrder = asyncHandler(async (req, res) => {
 	else res.status(400).json('Invalid order data');
 });
 
+// Get one order
 const getOneOrder = asyncHandler(async (req, res) => {
 	const existingOrder = await Order.findById(req.params.id);
 	if (!existingOrder) return res.status(401).json('Order not found');
@@ -32,6 +34,7 @@ const getOneOrder = asyncHandler(async (req, res) => {
 	else res.status(401).json("Only an administrator or the order's user can get this order");
 });
 
+// Gets all the orders
 const getAllOrders = asyncHandler(async (req, res) => {
 	const userId = req.query.userId;
 
@@ -45,6 +48,7 @@ const getAllOrders = asyncHandler(async (req, res) => {
 	res.status(200).json(existingOrders);
 });
 
+// Updates an order
 const updateOrder = asyncHandler(async (req, res) => {
 	// const {products, address, payment, totalPrice} = req.body;
 
@@ -69,6 +73,7 @@ const updateOrder = asyncHandler(async (req, res) => {
 	else res.status(403).json('Only an administrator can update an order');
 });
 
+// Deletes an order
 const deleteOrder = asyncHandler(async (req, res) => {
 	const existingOrder = await Order.findById(req.params.id);
 	if (!existingOrder) return res.status(404).json('Order not found');
@@ -79,6 +84,7 @@ const deleteOrder = asyncHandler(async (req, res) => {
 	} else res.status(403).json('Only an administrator can delete an order');
 });
 
+// Stripe checkout
 // const checkout = asyncHandler(async (req, res) => {
 // 	const paymentIntent = await stripe.paymentIntents.create({
 // 		amount: req.body.amount,
