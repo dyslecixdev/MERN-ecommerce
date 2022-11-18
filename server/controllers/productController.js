@@ -6,17 +6,12 @@ const createProduct = asyncHandler(async (req, res) => {
 	const {name, desc, price, category, size, color, countInStock} = req.body;
 
 	const productExists = await Product.findOne({name});
-	if (productExists) {
-		res.status(409).json('Product already exists');
-		return;
-	}
+	if (productExists) return res.status(409).json('Product already exists');
 
-	if (!name || !desc || !price || !category || !size || !color || !countInStock) {
-		res.status(400).json(
-			'Name, description, price, category, size, color, and stock count required'
-		);
-		return;
-	}
+	if (!name || !desc || !price || !category || !size || !color || !countInStock)
+		return res
+			.status(400)
+			.json('Name, description, price, category, size, color, and stock count required');
 
 	let filePath;
 	if (req.file) {
@@ -47,10 +42,8 @@ const createProduct = asyncHandler(async (req, res) => {
 		reviews: []
 	});
 
-	if (!req.user.isAdmin) {
-		res.status(403).json('Only an administrator can create a product');
-		return;
-	}
+	if (!req.user.isAdmin)
+		return res.status(403).json('Only an administrator can create a product');
 
 	if (newProduct) res.status(201).json(newProduct);
 	else res.status(400).json('Invalid product data');
@@ -59,10 +52,7 @@ const createProduct = asyncHandler(async (req, res) => {
 // Gets one product
 const getOneProduct = asyncHandler(async (req, res) => {
 	const existingProduct = await Product.findById(req.params.id);
-	if (!existingProduct) {
-		res.status(401).json('Product not found');
-		return;
-	}
+	if (!existingProduct) return res.status(401).json('Product not found');
 
 	res.status(200).json(existingProduct);
 });
@@ -171,10 +161,7 @@ const getAllProducts = asyncHandler(async (req, res) => {
 // Updates product
 const updateProduct = asyncHandler(async (req, res) => {
 	const existingProduct = await Product.findById(req.params.id);
-	if (!existingProduct) {
-		res.status(400).json('Product not found');
-		return;
-	}
+	if (!existingProduct) return res.status(400).json('Product not found');
 
 	let filePath;
 	if (req.file) {
@@ -185,7 +172,10 @@ const updateProduct = asyncHandler(async (req, res) => {
 			req.file.mimetype === 'image/webp'
 		)
 			filePath = req.file.filename;
-		else res.status(409).json('The only accepted image files are .png, .jpg, and .jpeg');
+		else {
+			res.status(409).json('The only accepted image files are .png, .jpg, and .jpeg');
+			return;
+		}
 	}
 
 	let updatedProduct;
@@ -210,10 +200,7 @@ const updateProduct = asyncHandler(async (req, res) => {
 // Deletes product
 const deleteProduct = asyncHandler(async (req, res) => {
 	const existingProduct = await Product.findById(req.params.id);
-	if (!existingProduct) {
-		res.status(404).json('Product not found');
-		return;
-	}
+	if (!existingProduct) return res.status(404).json('Product not found');
 
 	if (req.user.isAdmin) {
 		await Product.findByIdAndDelete(existingProduct);
@@ -226,20 +213,12 @@ const createReview = asyncHandler(async (req, res) => {
 	const {userRating, userReview} = req.body;
 
 	const existingProduct = await Product.findById(req.params.id);
-	if (!existingProduct) {
-		res.status(404).json('Product not found');
-		return;
-	}
+	if (!existingProduct) return res.status(404).json('Product not found');
 
-	if (existingProduct.reviews.find(user => user.userId === req.user.id)) {
-		res.status(409).json('You have already written a review for this product');
-		return;
-	}
+	if (existingProduct.reviews.find(user => user.userId === req.user.id))
+		return res.status(409).json('You have already written a review for this product');
 
-	if (!userRating || !userReview) {
-		res.status(400).json('Rating and review are required');
-		return;
-	}
+	if (!userRating || !userReview) return res.status(400).json('Rating and review are required');
 
 	const newReview = {
 		userName: `${req.user.firstName} ${req.user.lastName}`,
@@ -270,20 +249,12 @@ const updateReview = asyncHandler(async (req, res) => {
 	const {userRating, userReview} = req.body;
 
 	const existingProduct = await Product.findById(req.params.id);
-	if (!existingProduct) {
-		res.status(404).json('Product not found');
-		return;
-	}
+	if (!existingProduct) return res.status(404).json('Product not found');
 
-	if (!existingProduct.reviews.find(user => user.userId === req.user.id)) {
-		res.status(409).json('You have not written a review for this product');
-		return;
-	}
+	if (!existingProduct.reviews.find(user => user.userId === req.user.id))
+		return res.status(409).json('You have not written a review for this product');
 
-	if (!userRating || !userReview) {
-		res.status(400).json('Rating and review are required');
-		return;
-	}
+	if (!userRating || !userReview) return res.status(400).json('Rating and review are required');
 
 	await Product.updateOne(
 		{_id: req.params.id},
@@ -319,15 +290,10 @@ const updateReview = asyncHandler(async (req, res) => {
 // Deletes review
 const deleteReview = asyncHandler(async (req, res) => {
 	const existingProduct = await Product.findById(req.params.id);
-	if (!existingProduct) {
-		res.status(404).json('Product not found');
-		return;
-	}
+	if (!existingProduct) return res.status(404).json('Product not found');
 
-	if (!existingProduct.reviews.find(user => user.userId === req.user.id)) {
-		res.status(409).json('You have not written a review for this product');
-		return;
-	}
+	if (!existingProduct.reviews.find(user => user.userId === req.user.id))
+		return res.status(409).json('You have not written a review for this product');
 
 	await Product.updateOne(
 		{_id: req.params.id},

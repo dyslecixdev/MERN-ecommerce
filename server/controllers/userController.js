@@ -13,26 +13,17 @@ const registerUser = asyncHandler(async (req, res) => {
 	const {firstName, lastName, email, password, confirmPassword, isAdmin} = req.body;
 
 	const userExists = await User.findOne({email});
-	if (userExists) {
-		res.status(409).json('User already exists');
-		return;
-	}
+	if (userExists) return res.status(409).json('User already exists');
 
-	if (!firstName || !lastName || !email || !password || !confirmPassword) {
-		res.status(400).json(
-			'First name, last name, email, password, and confirm password are required'
-		);
-		return;
-	}
+	if (!firstName || !lastName || !email || !password || !confirmPassword)
+		return res
+			.status(400)
+			.json('First name, last name, email, password, and confirm password are required');
 
-	if (password.length < 8 || password.length > 20) {
-		res.status(400).json('Password must be between 8 and 20 characters');
-		return;
-	}
-	if (password !== confirmPassword) {
-		res.status(400).json('Password and confirm password must match');
-		return;
-	}
+	if (password.length < 8 || password.length > 20)
+		return res.status(400).json('Password must be between 8 and 20 characters');
+	if (password !== confirmPassword)
+		return res.status(400).json('Password and confirm password must match');
 	const salt = await bcrypt.genSalt(10);
 	const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -79,10 +70,7 @@ const loginUser = asyncHandler(async (req, res) => {
 // Gets one user
 const getOneUser = asyncHandler(async (req, res) => {
 	const existingUser = await User.findById(req.params.id);
-	if (!existingUser) {
-		res.status(404).json('User not found');
-		return;
-	}
+	if (!existingUser) return res.status(404).json('User not found');
 
 	if (req.user.id === req.params.id || req.user.isAdmin)
 		res.status(200).json({
@@ -103,10 +91,7 @@ const getOneUser = asyncHandler(async (req, res) => {
 // Gets all the users
 const getAllUsers = asyncHandler(async (req, res) => {
 	const existingUsers = await User.find();
-	if (!existingUsers) {
-		res.status(404).json('Users not found');
-		return;
-	}
+	if (!existingUsers) return res.status(404).json('Users not found');
 
 	if (req.user.isAdmin) res.status(200).json(existingUsers);
 	else res.status(403).json("Only an administrator can get all the users' information");
@@ -117,20 +102,13 @@ const updateUser = asyncHandler(async (req, res) => {
 	const {password, confirmPassword} = req.body;
 
 	const existingUser = await User.findById(req.params.id);
-	if (!existingUser) {
-		res.status(404).json('User not found');
-		return;
-	}
+	if (!existingUser) return res.status(404).json('User not found');
 
 	if (password) {
-		if (password.length < 8 || password.length > 20) {
-			res.status(400).json('Password must be between 8 and 20 characters');
-			return;
-		}
-		if (password !== confirmPassword) {
-			res.status(400).json('Password and confirm password must match');
-			return;
-		}
+		if (password.length < 8 || password.length > 20)
+			return res.status(400).json('Password must be between 8 and 20 characters');
+		if (password !== confirmPassword)
+			return res.status(400).json('Password and confirm password must match');
 		const salt = await bcrypt.genSalt(10);
 		const hashedPassword = await bcrypt.hash(password, salt);
 		req.body.password = hashedPassword; // Using password instead of req.body.password will not change the password since it is set using req.body below
@@ -161,10 +139,7 @@ const updateUser = asyncHandler(async (req, res) => {
 // Deletes user and their cart
 const deleteUser = asyncHandler(async (req, res) => {
 	const existingUser = await User.findById(req.params.id);
-	if (!existingUser) {
-		res.status(404).json('User not found');
-		return;
-	}
+	if (!existingUser) return res.status(404).json('User not found');
 
 	if (req.user.id === req.params.id || req.user.isAdmin) {
 		await Cart.deleteOne({userId: req.user.id});
