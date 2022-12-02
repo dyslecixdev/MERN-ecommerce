@@ -17,7 +17,7 @@ function CheckoutLoginError() {
 			<Typography variant='h4'>Uh oh! You are not logged in.</Typography>
 			<Typography variant='h4'>
 				Click{' '}
-				<Link to='/login' style={{textDecoration: 'none'}}>
+				<Link to='/login' style={{textDecoration: 'none', color: 'black'}}>
 					here
 				</Link>{' '}
 				to log in.

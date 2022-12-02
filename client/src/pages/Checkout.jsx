@@ -115,8 +115,29 @@ function Checkout() {
 		appearance
 	};
 
+	// Uses stripe to checkout
+	useEffect(() => {
+		async function checkoutOrder() {
+			try {
+				const res = await axios.post(
+					'http://localhost:5000/orders/checkout',
+					{userId: user.id, totalPrice: cart.totalPrice},
+					{
+						headers: {
+							Authorization: 'Bearer ' + user.token
+						}
+					}
+				);
+				setClientSecret(res.data.clientSecret);
+			} catch (err) {
+				console.log(err);
+			}
+		}
+		checkoutOrder();
+	}, [user, cart]);
+
 	// Allows the Next button to move to the next step
-	const handleNext = () => {
+	const handleNext = e => {
 		setActiveStep(prevActiveStep => prevActiveStep + 1);
 	};
 
@@ -141,27 +162,6 @@ function Checkout() {
 	const handleRemoveFromCart = (_id, price, size, color, quantity) => {
 		dispatch(removeProduct({_id, price, size, color, quantity}));
 	};
-
-	// Uses stripe to checkout
-	useEffect(() => {
-		async function checkoutOrder() {
-			try {
-				const res = await axios.post(
-					'http://localhost:5000/orders/checkout',
-					{userId: user.id, totalPrice: cart.totalPrice},
-					{
-						headers: {
-							Authorization: 'Bearer ' + user.token
-						}
-					}
-				);
-				setClientSecret(res.data.clientSecret);
-			} catch (err) {
-				console.log(err);
-			}
-		}
-		checkoutOrder();
-	}, [user, cart]);
 
 	return (
 		<>
@@ -360,7 +360,10 @@ function Checkout() {
 						</Typography>
 						<Typography variant='h4' component='div'>
 							Please add some{' '}
-							<Link to='/products/clothing' style={{textDecoration: 'none'}}>
+							<Link
+								to='/products/clothing'
+								style={{textDecoration: 'none', color: 'black'}}
+							>
 								here
 							</Link>
 							.
@@ -391,8 +394,7 @@ function Checkout() {
 								padding: '1rem',
 								display: 'flex',
 								flexDirection: 'column',
-								gap: '2rem',
-								background: '#F1F1F1'
+								gap: '2rem'
 							}}
 						>
 							<TextField
@@ -446,7 +448,9 @@ function Checkout() {
 					>
 						{clientSecret && (
 							<Elements options={options} stripe={stripePromise}>
-								<CheckoutForm />
+								<CheckoutForm
+									address={`${street}, ${city}, ${state} ${zipCode} `}
+								/>
 							</Elements>
 						)}
 					</Box>

@@ -169,7 +169,7 @@ function Items() {
 					}}
 				>
 					<Typography variant='h4'>
-						Sorry there are no products that match your search
+						Sorry, but there are no products that match your search.
 					</Typography>
 				</Box>
 			)}

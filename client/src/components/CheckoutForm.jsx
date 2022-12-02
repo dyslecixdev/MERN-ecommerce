@@ -1,13 +1,17 @@
 import {useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import {Paper, Button} from '@mui/material';
+
+import axios from 'axios';
 
 import {PaymentElement, useStripe, useElements} from '@stripe/react-stripe-js';
 
 import {emptyCart} from '../redux/cartRedux';
 
-function CheckoutForm() {
+function CheckoutForm({address}) {
+	const user = useSelector(state => state.user.currentUser);
+	const cart = useSelector(state => state.cart);
 	const dispatch = useDispatch();
 
 	const stripe = useStripe();
@@ -19,13 +23,10 @@ function CheckoutForm() {
 	// Whenever stripe changes, uses the switch statement for each case in the payment process
 	useEffect(() => {
 		if (!stripe) return;
-
 		const clientSecret = new URLSearchParams(window.location.search).get(
 			'payment_intent_client_secret'
 		);
-
 		if (!clientSecret) return;
-
 		stripe.retrievePaymentIntent(clientSecret).then(({paymentIntent}) => {
 			switch (paymentIntent.status) {
 				case 'succeeded':
@@ -44,26 +45,39 @@ function CheckoutForm() {
 		});
 	}, [stripe]);
 
-	// Empties the cart, and approves or denies the card transaction
+	// Creates an order, empties the cart, then approves or denies the card transaction
 	const handleSubmit = async e => {
 		e.preventDefault();
-
 		if (!stripe || !elements) return;
-
 		setIsLoading(true);
 
-		dispatch(emptyCart()); // bug The cart will always empty itself even if a below error occurs
-
-		const {error} = await stripe.confirmPayment({
-			elements,
-			confirmParams: {
-				return_url: 'http://localhost:3000' // todo Change to confirmation page
-			}
-		});
-
-		if (error.type === 'card_error' || error.type === 'validation_error')
-			setMessage(error.message);
-		else setMessage('An unexpected error occurred.');
+		try {
+			await axios.post(
+				'http://localhost:5000/orders',
+				{
+					products: cart.products,
+					address,
+					totalPrice: cart.totalPrice
+				},
+				{
+					headers: {
+						Authorization: 'Bearer ' + user.token
+					}
+				}
+			);
+			dispatch(emptyCart());
+			const {error} = await stripe.confirmPayment({
+				elements,
+				confirmParams: {
+					return_url: 'http://localhost:3000' // todo Change to confirmation page
+				}
+			});
+			if (error.type === 'card_error' || error.type === 'validation_error')
+				setMessage(error.message);
+			else setMessage('An unexpected error occurred.');
+		} catch (err) {
+			console.log(err);
+		}
 
 		setIsLoading(false);
 	};

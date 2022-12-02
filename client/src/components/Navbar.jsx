@@ -63,7 +63,6 @@ const Main = styled('main', {shouldForwardProp: prop => prop !== 'open'})(({them
 }));
 
 const AppBar = styled(MuiAppBar, {shouldForwardProp: prop => prop !== 'open'})(({theme, open}) => ({
-	background: 'black',
 	zIndex: 98,
 	transition: theme.transitions.create(['margin', 'width'], {
 		easing: theme.transitions.easing.sharp,
@@ -203,6 +202,11 @@ function Navbar() {
 			{user && (
 				<MenuItem onClick={handleProfileMenuClose} component={Link} to='/profile'>
 					Profile
+				</MenuItem>
+			)}
+			{user && (
+				<MenuItem onClick={handleProfileMenuClose} component={Link} to='/orders'>
+					Orders
 				</MenuItem>
 			)}
 			{user && <MenuItem onClick={handleLogout}>Logout</MenuItem>}

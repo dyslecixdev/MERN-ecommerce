@@ -170,7 +170,7 @@ function Home() {
 				sx={{
 					width: '100%',
 					margin: 'auto',
-					background: '#EDEDED',
+					marginBottom: '5vh',
 					borderRadius: '5px'
 				}}
 			>

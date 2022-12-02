@@ -9,9 +9,14 @@ import Profile from './pages/Profile';
 import Checkout from './pages/Checkout';
 import Products from './pages/Products';
 import SingleProduct from './pages/SingleProduct';
+import Orders from './pages/Orders';
 
 import './App.css';
 
+// todo SingleOrder page
+// todo Fix Footer width on Products page
+// todo Fix responsive height
+// todo Custom theme colors
 // todo Include Google fonts
 function App() {
 	const user = useSelector(state => state.user.currentUser); // Logged in user from redux
@@ -30,6 +35,7 @@ function App() {
 					<Route path='/checkout' element={<Checkout />} />
 					<Route path='/products/:category' element={<Products />} />
 					<Route path='/product/:id' element={<SingleProduct />} />
+					<Route path='/orders' element={<Orders />} />
 				</Route>
 			</Routes>
 		</div>
