@@ -4,19 +4,15 @@ const Order = require('../models/orderModel');
 
 // Create an order
 const createOrder = asyncHandler(async (req, res) => {
-	const {products, address, payment, totalPrice} = req.body;
+	const {products, address, totalPrice} = req.body;
 
-	const orderExists = await Order.findOne({userId: req.user.id});
-	if (orderExists) return res.status(409).json('Order already exists');
-
-	if (products.length < 1 || !address || !payment || !totalPrice)
-		return res.status(400).json('Products, address, payment, and totalPrice are required');
+	if (products.length < 1 || !address || !totalPrice)
+		return res.status(400).json('Products, address, and totalPrice are required');
 
 	const newOrder = await Order.create({
 		userId: req.user.id,
 		products,
 		address,
-		payment,
 		totalPrice
 	});
 

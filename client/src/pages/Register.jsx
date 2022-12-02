@@ -66,8 +66,7 @@ function Register() {
 					padding: '1rem',
 					display: 'flex',
 					flexDirection: 'column',
-					gap: '2rem',
-					background: '#F1F1F1'
+					gap: '2rem'
 				}}
 			>
 				{errorMessage && (

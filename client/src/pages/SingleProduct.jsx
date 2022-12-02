@@ -134,7 +134,6 @@ function SingleProduct() {
 						width: '100%',
 						maxHeight: '88vh',
 						padding: '2rem',
-						background: '#DBE2FF',
 						objectFit: 'contain',
 						borderRadius: '5px'
 					}}
@@ -261,9 +260,7 @@ function SingleProduct() {
 							variant='contained'
 							startIcon={<ShoppingCart />}
 							sx={{
-								height: '100%',
-								background: '#DAA520',
-								'&:hover': {background: '#E4BA4D'}
+								height: '100%'
 							}}
 							onClick={handleAddToCart}
 						>
@@ -335,9 +332,7 @@ function SingleProduct() {
 								variant='contained'
 								// disabled={isFetching}
 								sx={{
-									width: {xs: '100%', sm: '30%', md: '25%', lg: '20%'},
-									background: '#DAA520',
-									'&:hover': {background: '#E4BA4D'}
+									width: {xs: '100%', sm: '30%', md: '25%', lg: '20%'}
 								}}
 							>
 								Publish

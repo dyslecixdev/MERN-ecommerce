@@ -45,20 +45,6 @@ const orderSchema = mongoose.Schema(
 			type: String,
 			required: true
 		},
-		payment: {
-			cardNumer: {
-				type: String,
-				required: true
-			},
-			cardDate: {
-				type: String,
-				required: true
-			},
-			ccv: {
-				type: String,
-				required: true
-			}
-		},
 		totalPrice: {
 			type: Number,
 			required: true
