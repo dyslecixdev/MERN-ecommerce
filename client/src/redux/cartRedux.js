@@ -95,7 +95,7 @@ const cartSlice = createSlice({
 				state.totalPrice -= action.payload.price * action.payload.quantity;
 			else state.totalPrice = 0;
 		},
-		logoutUser: state => {
+		emptyCart: state => {
 			state.products = [];
 			state.quantity = 0;
 			state.totalPrice = 0;
@@ -103,7 +103,7 @@ const cartSlice = createSlice({
 	}
 });
 
-export const {addProduct, incrementProduct, decrementProduct, removeProduct, logoutUser} =
+export const {addProduct, incrementProduct, decrementProduct, removeProduct, emptyCart} =
 	cartSlice.actions;
 
 export default cartSlice.reducer;

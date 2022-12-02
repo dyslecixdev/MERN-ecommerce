@@ -9,13 +9,13 @@ import axios from 'axios';
 import {loginStart, loginSuccess, loginFailure} from '../redux/userRedux';
 
 function LoginForm({route}) {
-	const cart = useSelector(state => state.cart);
+	// const cart = useSelector(state => state.cart);
 
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [errorMessage, setErrorMessage] = useState('');
 
-	const [userId, setUserId] = useState('example');
+	// const [userId, setUserId] = useState('example');
 
 	const dispatch = useDispatch();
 	const {isFetching} = useSelector(state => state.user);
@@ -46,14 +46,14 @@ function LoginForm({route}) {
 	};
 
 	// bug Cannot get userId with setting useState
-	const createCart = async e => {
-		e.preventDefault();
-		try {
-			await axios.post('http://localhost:5000/carts', {userId, cart});
-		} catch (err) {
-			console.log(err);
-		}
-	};
+	// const createCart = async e => {
+	// 	e.preventDefault();
+	// 	try {
+	// 		await axios.post('http://localhost:5000/carts', {userId, cart});
+	// 	} catch (err) {
+	// 		console.log(err);
+	// 	}
+	// };
 
 	return (
 		<Paper
@@ -94,12 +94,7 @@ function LoginForm({route}) {
 				value={password}
 				onChange={e => setPassword(e.target.value)}
 			/>
-			<Button
-				type='submit'
-				variant='contained'
-				disabled={isFetching}
-				sx={{background: '#DAA520', '&:hover': {background: '#E4BA4D'}}}
-			>
+			<Button type='submit' variant='contained' disabled={isFetching}>
 				Login
 			</Button>
 			<Typography variant='p'>

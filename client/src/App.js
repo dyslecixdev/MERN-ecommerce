@@ -13,7 +13,6 @@ import SingleProduct from './pages/SingleProduct';
 import './App.css';
 
 // todo Include Google fonts
-// bug Height of the pages just changes drastically when width changes
 function App() {
 	const user = useSelector(state => state.user.currentUser); // Logged in user from redux
 

@@ -25,7 +25,6 @@ app.use('/static', express.static('./server/assets')); // Replaces the route to 
 app.use('/users', require('./routes/userRoute'));
 app.use('/carts', require('./routes/cartRoute'));
 app.use('/products', require('./routes/productRoute'));
-// app.use('/orders');
-// app.use('/stripe');
+app.use('/orders', require('./routes/orderRoute'));
 
 app.listen(port, () => console.log(`Server started on port ${port}`.black.bgCyan.italic));

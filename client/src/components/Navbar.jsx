@@ -39,7 +39,7 @@ import {
 } from '@mui/icons-material';
 
 import {logoutStart, logoutSuccess, logoutFailure} from '../redux/userRedux';
-import {logoutUser} from '../redux/cartRedux';
+// import {logoutUser} from '../redux/cartRedux';
 
 const drawerWidth = 240;
 

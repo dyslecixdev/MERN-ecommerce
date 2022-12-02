@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 
@@ -19,13 +19,19 @@ import {
 } from '@mui/material';
 import {Remove, Add, Delete} from '@mui/icons-material';
 
+import axios from 'axios';
+
+import {loadStripe} from '@stripe/stripe-js';
+import {Elements} from '@stripe/react-stripe-js';
+
 import LoginForm from '../components/LoginForm';
 import CheckoutLoginError from '../components/CheckoutLoginError';
+import CheckoutForm from '../components/CheckoutForm';
 import Footer from '../components/Footer';
 
 import {incrementProduct, decrementProduct, removeProduct} from '../redux/cartRedux';
 
-const steps = ['Login', 'ConfirmProducts', 'Shipping Details', 'Payment Details', 'Place Order'];
+const steps = ['Login', 'Confirm Products', 'Shipping Details', 'Payment Details'];
 const states = [
 	'AL',
 	'AK',
@@ -78,8 +84,17 @@ const states = [
 	'WI',
 	'WY'
 ];
-const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-const years = [2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031];
+const stripePromise = loadStripe(
+	'pk_test_51LPYFsAcIpIPNisxPRtQfYkq6Qze3auQWuq1AbUvhQYZ6QDB6qZKSICnn2kknJyHh2B9oHyuEbhZBeAGwFtZv7vv00csXKyoHf'
+);
+const appearance = {
+	theme: 'stripe',
+	variables: {
+		colorPrimary: '#e10505',
+		colorBackground: '#28ffff',
+		colorText: '#757a43'
+	}
+};
 
 function Checkout() {
 	const user = useSelector(state => state.user.currentUser);
@@ -90,12 +105,15 @@ function Checkout() {
 	const [city, setCity] = useState('');
 	const [state, setState] = useState('');
 	const [zipCode, setZipCode] = useState('');
-	const [cardNumber, setCardNumber] = useState('');
-	const [cardDateMonth, setCardDateMonth] = useState('');
-	const [cardDateYear, setCardDateYear] = useState('');
-	const [ccv, setCcv] = useState('');
 
 	const [activeStep, setActiveStep] = useState(0);
+
+	const [clientSecret, setClientSecret] = useState('');
+
+	const options = {
+		clientSecret,
+		appearance
+	};
 
 	// Allows the Next button to move to the next step
 	const handleNext = () => {
@@ -115,7 +133,6 @@ function Checkout() {
 
 	// Decrements a product's quantity by 1
 	const handleDecrementProduct = (_id, price, size, color, quantity) => {
-		console.log(quantity);
 		if (quantity > 1) dispatch(decrementProduct({_id, price, size, color}));
 		else handleRemoveFromCart(_id, price, size, color, quantity);
 	};
@@ -125,9 +142,31 @@ function Checkout() {
 		dispatch(removeProduct({_id, price, size, color, quantity}));
 	};
 
+	// Uses stripe to checkout
+	useEffect(() => {
+		async function checkoutOrder() {
+			try {
+				const res = await axios.post(
+					'http://localhost:5000/orders/checkout',
+					{userId: user.id, totalPrice: cart.totalPrice},
+					{
+						headers: {
+							Authorization: 'Bearer ' + user.token
+						}
+					}
+				);
+				setClientSecret(res.data.clientSecret);
+			} catch (err) {
+				console.log(err);
+			}
+		}
+		checkoutOrder();
+	}, [user, cart]);
+
 	return (
 		<>
-			<Box sx={{width: '100%'}}>
+			<Box sx={{width: '100%', minHeight: '67vh'}}>
+				{/* Top step progress */}
 				<Stepper activeStep={activeStep}>
 					{steps.map((label, index) => {
 						const stepProps = {};
@@ -359,14 +398,12 @@ function Checkout() {
 							<TextField
 								label='Address'
 								type='text'
-								required
 								value={street}
 								onChange={e => setStreet(e.target.value)}
 							/>
 							<TextField
 								label='City'
 								type='text'
-								required
 								value={city}
 								onChange={e => setCity(e.target.value)}
 							/>
@@ -389,7 +426,6 @@ function Checkout() {
 							<TextField
 								label='Zip Code'
 								type='text'
-								required
 								value={zipCode}
 								onChange={e => setZipCode(e.target.value)}
 							/>
@@ -408,94 +444,16 @@ function Checkout() {
 							alignItems: 'center'
 						}}
 					>
-						<Paper
-							elevation={3}
-							sx={{
-								width: {
-									xs: '100%',
-									sm: '90%',
-									md: '75%',
-									lg: '50%',
-									xl: '40%'
-								},
-								padding: '1rem',
-								display: 'flex',
-								flexDirection: 'column',
-								gap: '2rem',
-								background: '#F1F1F1'
-							}}
-						>
-							<TextField
-								label='Card Number'
-								type='text'
-								required
-								value={cardNumber}
-								onChange={e => setCardNumber(e.target.value)}
-							/>
-							<Box
-								sx={{display: 'flex', justifyContent: 'space-between', gap: '1rem'}}
-							>
-								<Box sx={{flex: 1}}>
-									<FormControl fullWidth>
-										<InputLabel>Month</InputLabel>
-										<Select
-											value={cardDateMonth}
-											label='Month'
-											onChange={e => setCardDateMonth(e.target.value)}
-										>
-											{months.map((month, idx) => (
-												<MenuItem key={idx} value={month}>
-													{month}
-												</MenuItem>
-											))}
-										</Select>
-									</FormControl>
-								</Box>
-								<Box sx={{flex: 1}}>
-									<FormControl fullWidth>
-										<InputLabel>Year</InputLabel>
-										<Select
-											value={cardDateYear}
-											label='Year'
-											onChange={e => setCardDateYear(e.target.value)}
-										>
-											{years.map((year, idx) => (
-												<MenuItem key={idx} value={year}>
-													{year}
-												</MenuItem>
-											))}
-										</Select>
-									</FormControl>
-								</Box>
-							</Box>
-							<TextField
-								label='CCV'
-								type='text'
-								required
-								value={ccv}
-								onChange={e => setCcv(e.target.value)}
-							/>
-						</Paper>
+						{clientSecret && (
+							<Elements options={options} stripe={stripePromise}>
+								<CheckoutForm />
+							</Elements>
+						)}
 					</Box>
 				)}
 				{activeStep === 3 && !user && <CheckoutLoginError />}
 
-				{/* Checkout step 5 */}
-				{activeStep === 4 && user && (
-					<Box
-						sx={{
-							minHeight: '58vh',
-							display: 'flex',
-							justifyContent: 'center',
-							alignItems: 'center'
-						}}
-					>
-						<Typography>Checkout</Typography>
-					</Box>
-				)}
-				{activeStep === 4 && !user && <CheckoutLoginError />}
-
-				{/* Confirm order page */}
+				{/* Step buttons */}
 				{activeStep === steps.length ? (
 					<>
 						<Box
@@ -536,12 +494,11 @@ function Checkout() {
 							disabled={
 								!user ||
 								(activeStep === 2 && (!street || !city || !state || !zipCode)) ||
-								(activeStep === 3 &&
-									(!cardNumber || !cardDateMonth || !cardDateYear || !ccv))
+								activeStep === 3
 							}
 							onClick={handleNext}
 						>
-							{activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+							{activeStep !== steps.length - 1 && 'Next'}
 						</Button>
 					</Box>
 				)}

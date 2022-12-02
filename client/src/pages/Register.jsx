@@ -110,12 +110,7 @@ function Register() {
 					value={confirmPassword}
 					onChange={e => setConfirmPassword(e.target.value)}
 				/>
-				<Button
-					type='submit'
-					variant='contained'
-					disabled={isFetching}
-					sx={{background: '#DAA520', '&:hover': {background: '#E4BA4D'}}}
-				>
+				<Button type='submit' variant='contained' disabled={isFetching}>
 					Register
 				</Button>
 			</Paper>

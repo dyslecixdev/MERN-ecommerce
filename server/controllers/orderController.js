@@ -84,15 +84,21 @@ const deleteOrder = asyncHandler(async (req, res) => {
 	} else res.status(403).json('Only an administrator can delete an order');
 });
 
-// Stripe checkout
-// const checkout = asyncHandler(async (req, res) => {
-// 	const paymentIntent = await stripe.paymentIntents.create({
-// 		amount: req.body.amount,
-// 		currency: 'usd',
-// 		automatic_payment_methods: {
-// 			enabled: true
-// 		}
-// 	});
-// });
+// Stripe checkout an order
+const checkoutOrder = asyncHandler(async (req, res) => {
+	const {userId, totalPrice} = req.body;
 
-module.exports - {createOrder, getOneOrder, getAllOrders, updateOrder, deleteOrder};
+	const paymentIntent = await stripe.paymentIntents.create({
+		amount: Math.round(totalPrice * 100), // totalPrice comes in as a decimal (e.g. 100.00), but the amount for stripe has to be without decimals (viz. 100.00 should be 10000)
+		currency: 'usd',
+		automatic_payment_methods: {
+			enabled: true
+		}
+	});
+
+	if (req.user.id === userId || req.user.isAdmin) {
+		res.send({clientSecret: paymentIntent.client_secret});
+	} else res.status(401).json("Only an administrator or the order's user can get this order");
+});
+
+module.exports = {createOrder, getOneOrder, getAllOrders, updateOrder, deleteOrder, checkoutOrder};
