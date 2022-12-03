@@ -59,23 +59,47 @@ handle the app's web routing, Google Fonts, and stripe-js and react-stripe-js to
 ## Demos
 ### Register and Login a User
 
+https://user-images.githubusercontent.com/85912934/205462559-5a46c477-5309-460b-a3ff-f5a4109ec006.mp4
+
 ### Profile Functionality
+
+https://user-images.githubusercontent.com/85912934/205462634-a1b5eb8a-00a6-4a6d-8c0c-ccbd6e2860aa.mp4
 
 ### Filtering Products
 
+https://user-images.githubusercontent.com/85912934/205462717-05f16e05-c446-4fe8-924d-d674d4710da9.mp4
+
 ### Cart Functionality
+
+https://user-images.githubusercontent.com/85912934/205462784-f2fd1e8f-3c5c-465d-8259-ab6240258fc4.mp4
 
 ### Stripe Payment
 
+https://user-images.githubusercontent.com/85912934/205462975-680fe381-cc84-440b-ae93-bfff935db3c5.mp4
+
 ### Viewing the User's Orders
+
+https://user-images.githubusercontent.com/85912934/205463067-04975682-c586-4482-8459-028da1b35231.mp4
 
 ### Review Functionality
 
+https://user-images.githubusercontent.com/85912934/205463478-fdc67614-042e-4b96-9bb2-b32092e7c944.mp4
+
+https://user-images.githubusercontent.com/85912934/205463485-5fb80fc2-6700-4b6d-9ccb-edc0b0c899a8.mp4
+
 ### Responsive Design Showcase
+
+https://user-images.githubusercontent.com/85912934/205463568-bcc3d47b-fa78-40d4-8c11-f4a5694138f8.mp4
+
+https://user-images.githubusercontent.com/85912934/205463732-fb0df2f5-6fe4-47ee-9050-43f26498657a.mp4
 
 ### Cart Bug
 
+https://user-images.githubusercontent.com/85912934/205463354-03726745-1992-493b-9200-44f568434999.mp4
+
 ### Stepper Bug
+
+https://user-images.githubusercontent.com/85912934/205463365-b5ce3431-3514-4172-9a4a-65c45e8ad880.mp4
 
 ## Author
 - Christian Demesa: https://github.com/christiandeandemesa
