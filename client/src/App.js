@@ -19,6 +19,7 @@ import './App.css';
 function App() {
 	const user = useSelector(state => state.user.currentUser); // Logged in user from redux
 
+	// Custom MUI theme
 	const theme = createTheme({
 		palette: {
 			primary: {
@@ -71,6 +72,7 @@ function App() {
 	});
 
 	return (
+		// Applying custom theme to app
 		<ThemeProvider theme={theme}>
 			<div className='backgroundContainer'>
 				<Routes>
