@@ -1,7 +1,8 @@
 # MERN E-Commerce
 A faux e-commerce website where users can "purchase" items of various colors, sizes, and quantities, and view there past orders.
 
-![mern-ecommerce](https://user-images.githubusercontent.com/85912934/205421798-8f71019b-409a-43fe-bd30-568971401ade.png)
+![mern-ecommerce](https://user-images.githubusercontent.com/85912934/205430778-f8206612-b2ee-4da9-bf35-50b535847a14.png)
+
 
 The backend was built with JavaScript, Node.js, Express, MongoDB, Prettier to make the code easier 
 to read, Eslint (Airbnb and Prettier configurations) to find problems in the code, nodemon to 
@@ -36,8 +37,8 @@ handle the app's web routing, Google Fonts, and stripe-js and react-stripe-js to
 ## Features
 - User can register and log in to their account.
 - Logged in user can view, edit, and delete their profile.
-- User can add items to their cart.
 - User can filter all the items by category (e.g. men, clothing, etc.), size, color, name, price, and rating.
+- User can add items to their cart.
 - Logged in user can increase or decrease the quantity of items in their cart.
 - Logged in user can "purchase" their items using Stripe (Note: Please view the Stripe Payment video to see the testing card used).
 - Logged in user can view their past orders.
@@ -53,9 +54,28 @@ handle the app's web routing, Google Fonts, and stripe-js and react-stripe-js to
 
 ## Bugs
 - The cart is not independent to each user (Note: Please view the Cart Bug video for elaboration).
+- Changing screen sizes messes with the stepper's text (Note: Please view the Stepper Bug video for elaboration).
 
 ## Demos
-### To Be Added
+### Register and Login a User
+
+### Profile Functionality
+
+### Filtering Products
+
+### Cart Functionality
+
+### Stripe Payment
+
+### Viewing the User's Orders
+
+### Review Functionality
+
+### Responsive Design Showcase
+
+### Cart Bug
+
+### Stepper Bug
 
 ## Author
 - Christian Demesa: https://github.com/christiandeandemesa
