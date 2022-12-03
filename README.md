@@ -1,6 +1,8 @@
 # MERN E-Commerce
 A faux e-commerce website where users can "purchase" items of various colors, sizes, and quantities, and view there past orders.
 
+![mern-ecommerce](https://user-images.githubusercontent.com/85912934/205421798-8f71019b-409a-43fe-bd30-568971401ade.png)
+
 The backend was built with JavaScript, Node.js, Express, MongoDB, Prettier to make the code easier 
 to read, Eslint (Airbnb and Prettier configurations) to find problems in the code, nodemon to 
 restart the app when a server change is made, concurrently to run both the client and server 
@@ -20,7 +22,15 @@ handle the app's web routing, Google Fonts, and stripe-js and react-stripe-js to
 3. To download the frontend dependencies, cd into the client folder and type: npm install
 4. Cd .. back to the mern-ecommerce folder, and run this project by typing: npm run dev
 5. Start your server, open Postman, copy the below POST route, fill in the fields, make sure isAdmin is set to true, then create your admin user account.
+
+![postman-2](https://user-images.githubusercontent.com/85912934/205422070-0588de7e-c705-47a1-aefc-b347cbd739a0.png)
+
 6. Copy the below POST route, make sure your form is set to form-data, fill in the fields, fill in the fields, make sure Auth is set to bearer token and your token should have shown when you created your admin user account, then create a product (p.s. you can find images in the server's assets sub-folder).
+
+![postman-3](https://user-images.githubusercontent.com/85912934/205422084-afa3c012-c13d-46b4-b1b7-412a997cc784.png)
+![postman-4](https://user-images.githubusercontent.com/85912934/205422087-b48adf74-975c-4af9-895f-01f38fa1ba65.png)
+![postman-5](https://user-images.githubusercontent.com/85912934/205422093-b42ba1cd-8349-4bb4-acb4-8d639f4f818b.png)
+
 7. Stop the server with ctrl + c, then restart it with npm run dev to populate your website with your newly made products.
 
 ## Features
@@ -39,6 +49,7 @@ handle the app's web routing, Google Fonts, and stripe-js and react-stripe-js to
 - Cross browser support for Chrome, Firefox, Opera, and Safari.
 - User will have the ability to type a product's name in a search field to filter all the products.
 - User will have the ability to type in their email in the footer to get an email notification about joining the fake newsletter.
+- [Admin panel](https://github.com/christiandeandemesa/MERN-Admin-Dashboard) for admin users to view and handle all products, users, their carts, and their orders.
 
 ## Bugs
 - The cart is not independent to each user (Note: Please view the Cart Bug video for elaboration).
