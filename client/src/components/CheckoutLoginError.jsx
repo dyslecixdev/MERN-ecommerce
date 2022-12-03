@@ -8,20 +8,31 @@ function CheckoutLoginError() {
 			sx={{
 				minHeight: '58vh',
 				display: 'flex',
-				flexDirection: 'column',
 				justifyContent: 'center',
-				alignItems: 'center',
-				gap: '2rem'
+				alignItems: 'center'
 			}}
 		>
-			<Typography variant='h4'>Uh oh! You are not logged in.</Typography>
-			<Typography variant='h4'>
-				Click{' '}
-				<Link to='/login' style={{textDecoration: 'none', color: 'black'}}>
-					here
-				</Link>{' '}
-				to log in.
-			</Typography>
+			<Box
+				sx={{
+					padding: '1rem',
+					display: 'flex',
+					flexDirection: 'column',
+					justifyContent: 'center',
+					alignItems: 'center',
+					gap: '2rem',
+					background: 'white',
+					borderRadius: '10px'
+				}}
+			>
+				<Typography variant='h4'>Uh oh! You are not logged in.</Typography>
+				<Typography variant='h4'>
+					Click{' '}
+					<Link to='/login' style={{textDecoration: 'none', color: 'black'}}>
+						here
+					</Link>{' '}
+					to log in.
+				</Typography>
+			</Box>
 		</Box>
 	);
 }

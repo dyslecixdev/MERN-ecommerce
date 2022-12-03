@@ -118,10 +118,10 @@ function Review({review}) {
 					justifyContent: 'space-between'
 				}}
 			>
-				<Button type='button' onClick={handleReset}>
+				<Button type='button' color='info' onClick={handleReset}>
 					Cancel
 				</Button>
-				<Button type='submit' color='success'>
+				<Button type='submit' color='error'>
 					Update
 				</Button>
 			</ButtonGroup>
@@ -165,7 +165,9 @@ function Review({review}) {
 								justifyContent: 'space-between'
 							}}
 						>
-							<Button onClick={() => setEditMode(true)}>Edit</Button>
+							<Button color='info' onClick={() => setEditMode(true)}>
+								Edit
+							</Button>
 							<Button onClick={() => setOpenModal(true)} color='error'>
 								Delete
 							</Button>

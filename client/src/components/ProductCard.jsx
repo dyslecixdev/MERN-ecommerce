@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom';
 
-import {Card, CardMedia, CardContent, Typography, CardActions, Button} from '@mui/material';
+import {Card, CardMedia, CardContent, Typography, CardActions, Button, Rating} from '@mui/material';
 
 function ProductCard({productData}) {
 	return (
@@ -15,6 +15,10 @@ function ProductCard({productData}) {
 				<Typography gutterBottom variant='h5' component='div'>
 					{productData.name}
 				</Typography>
+				<Typography variant='body2' color='text.secondary'>
+					${productData.price.toFixed(2)}
+				</Typography>
+				<Rating name='read-only' value={productData.rating} readOnly />
 				<Typography
 					variant='body2'
 					color='text.secondary'
@@ -34,6 +38,7 @@ function ProductCard({productData}) {
 				<Button
 					variant='outlined'
 					size='small'
+					color='secondary'
 					component={Link}
 					to={`/product/${productData._id}`}
 				>

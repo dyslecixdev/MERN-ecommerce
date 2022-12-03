@@ -211,17 +211,13 @@ function Navbar() {
 			)}
 			{user && <MenuItem onClick={handleLogout}>Logout</MenuItem>}
 			{!user && (
-				<MenuItem onClick={handleProfileMenuClose}>
-					<Link to='/register' style={{textDecoration: 'none', color: 'black'}}>
-						Register
-					</Link>
+				<MenuItem onClick={handleProfileMenuClose} component={Link} to='/register'>
+					Register
 				</MenuItem>
 			)}
 			{!user && (
-				<MenuItem onClick={handleProfileMenuClose}>
-					<Link to='/login' style={{textDecoration: 'none', color: 'black'}}>
-						Login
-					</Link>
+				<MenuItem onClick={handleProfileMenuClose} component={Link} to='/login'>
+					Login
 				</MenuItem>
 			)}
 		</Menu>
@@ -268,7 +264,7 @@ function Navbar() {
 	return (
 		<Box sx={{display: 'flex'}}>
 			{/* Navbar */}
-			<AppBar position='fixed' open={open}>
+			<AppBar position='fixed' open={open} sx={{background: 'black', color: 'white'}}>
 				<Toolbar>
 					{/* Hamburger menu icon */}
 					<IconButton
@@ -284,12 +280,15 @@ function Navbar() {
 					<Typography
 						variant='h6'
 						noWrap
-						component='div'
-						sx={{display: {xs: 'none', sm: 'block'}}}
+						component={Link}
+						to='/'
+						sx={{
+							display: {xs: 'none', sm: 'block'},
+							textDecoration: 'none',
+							color: 'white'
+						}}
 					>
-						<Link to='/' style={{textDecoration: 'none', color: 'white'}}>
-							LOGO
-						</Link>
+						LOGO
 					</Typography>
 
 					{/* Search field */}
@@ -453,7 +452,11 @@ function Navbar() {
 									href='https://github.com/christiandeandemesa'
 									target='_blank'
 									rel='noreferrer'
-									style={{textDecoration: 'none', color: 'black'}}
+									style={{
+										textDecoration: 'none',
+										color: 'black',
+										fontFamily: 'Josefin sans, sans-serif'
+									}}
 								>
 									About
 								</a>

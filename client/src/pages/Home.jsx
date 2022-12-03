@@ -30,7 +30,7 @@ const Item = styled(Paper)(({theme}) => ({
 	cursor: 'pointer',
 	transition: 'all 1s ease',
 	'&:hover': {
-		transform: 'scale(1.05)',
+		transform: 'scale(1.03)',
 
 		'&::after': {
 			padding: '1rem',
@@ -42,32 +42,34 @@ const Item = styled(Paper)(({theme}) => ({
 	}
 }));
 
-function Home() {
-	// Carousel slide information
-	const carouselItems = [
-		{
-			name: 'Wedding Sale!',
-			text: "50% Off All Men's Suits",
-			img: 'https://marvel-b1-cdn.bc0a.com/f00000000192484/stitchandtie.com/content/images/thumbs/0001753_slate-blue-suit-by-allure-men.png',
-			bg: '#DBE2FF',
-			link: '/products/men'
-		},
-		{
-			name: 'Autumn Discounts!',
-			text: 'Buy 2 Get 1 Free on All Dresses',
-			img: 'https://d1fufvy4xao6k9.cloudfront.net/images/landing/sumissura/home/main_products_block/7.woman_dress_evening.webp',
-			bg: '#FFE9ED',
-			link: '/products/women'
-		},
-		{
-			name: 'Black Friday!',
-			text: "Children's Clothing Marked Down",
-			img: 'https://www.bubblegumcasting.com.au/wp-content/uploads/elementor/thumbs/how-much-does-teens-child-modeling-pay-pes9b0l7oaxny1spj82mipw9fiz50bnxohayy7f5aq.png',
-			bg: '#FFFFED',
-			link: '/products/children'
-		}
-	];
+const carouselItems = [
+	{
+		name: 'Wedding Sale!',
+		text: "50% Off All Men's Suits",
+		img: 'https://marvel-b1-cdn.bc0a.com/f00000000192484/stitchandtie.com/content/images/thumbs/0001753_slate-blue-suit-by-allure-men.png',
+		bg: '#DBE2FF',
+		link: '/products/men',
+		color: 'info'
+	},
+	{
+		name: 'Autumn Discounts!',
+		text: 'Buy 2 Get 1 Free on All Dresses',
+		img: 'https://d1fufvy4xao6k9.cloudfront.net/images/landing/sumissura/home/main_products_block/7.woman_dress_evening.webp',
+		bg: '#FFE9ED',
+		link: '/products/women',
+		color: 'error'
+	},
+	{
+		name: 'Black Friday!',
+		text: "Children's Clothing Marked Down",
+		img: 'https://www.bubblegumcasting.com.au/wp-content/uploads/elementor/thumbs/how-much-does-teens-child-modeling-pay-pes9b0l7oaxny1spj82mipw9fiz50bnxohayy7f5aq.png',
+		bg: '#FFFFED',
+		link: '/products/children',
+		color: 'warning'
+	}
+];
 
+function Home() {
 	return (
 		<>
 			{/* Image Carousel for medium or larger */}
@@ -109,6 +111,7 @@ function Home() {
 								variant='outlined'
 								component={Link} // The MUI Button component also acts as a react-router-dom Link
 								to={item.link}
+								color={item.color}
 								sx={{width: {md: '30%', lg: '25%', xl: '20%'}}}
 							>
 								View Deals

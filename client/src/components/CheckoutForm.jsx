@@ -69,7 +69,7 @@ function CheckoutForm({address}) {
 			const {error} = await stripe.confirmPayment({
 				elements,
 				confirmParams: {
-					return_url: 'http://localhost:3000' // todo Change to confirmation page
+					return_url: 'http://localhost:3000/orders'
 				}
 			});
 			if (error.type === 'card_error' || error.type === 'validation_error')
@@ -107,7 +107,12 @@ function CheckoutForm({address}) {
 			}}
 		>
 			<PaymentElement options={paymentElementOptions} />
-			<Button type='submit' variant='outlined' disabled={isLoading || !stripe || !elements}>
+			<Button
+				type='submit'
+				variant='outlined'
+				color='secondary'
+				disabled={isLoading || !stripe || !elements}
+			>
 				{isLoading ? <div className='spinner' id='spinner'></div> : 'Complete Order'}
 			</Button>
 			{message && <div id='payment-message'>{message}</div>}

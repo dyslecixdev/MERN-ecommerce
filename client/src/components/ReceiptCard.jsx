@@ -3,7 +3,7 @@ import {Box, Typography, Divider, Card, CardContent, CardMedia} from '@mui/mater
 function ReceiptCard({productData}) {
 	return (
 		<>
-			<Card sx={{padding: '1rem', display: 'flex'}} elevation={0}>
+			<Card sx={{padding: '1rem', display: 'flex', borderRadius: 'none'}} elevation={0}>
 				<Box
 					sx={{
 						width: {xs: '40%', sm: '70%'},

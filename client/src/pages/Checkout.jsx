@@ -90,9 +90,9 @@ const stripePromise = loadStripe(
 const appearance = {
 	theme: 'stripe',
 	variables: {
-		colorPrimary: '#e10505',
-		colorBackground: '#28ffff',
-		colorText: '#757a43'
+		colorPrimary: '#32CD32',
+		colorBackground: '#CD32CD',
+		colorText: '#000'
 	}
 };
 
@@ -197,18 +197,29 @@ function Checkout() {
 						sx={{
 							minHeight: '58vh',
 							display: 'flex',
-							flexDirection: 'column',
 							justifyContent: 'center',
-							alignItems: 'center',
-							gap: '2rem'
+							alignItems: 'center'
 						}}
 					>
-						<Typography variant='h4' component='div'>
-							You are logged in.
-						</Typography>
-						<Typography variant='h4' component='div'>
-							Click Next to continue.
-						</Typography>
+						<Box
+							sx={{
+								padding: '1rem',
+								display: 'flex',
+								flexDirection: 'column',
+								justifyContent: 'center',
+								alignItems: 'center',
+								gap: '2rem',
+								background: 'white',
+								borderRadius: '10px'
+							}}
+						>
+							<Typography variant='h4' component='div'>
+								You are logged in.
+							</Typography>
+							<Typography variant='h4' component='div'>
+								Click Next to continue.
+							</Typography>
+						</Box>
 					</Box>
 				)}
 
@@ -249,8 +260,7 @@ function Checkout() {
 											width: 375,
 											height: 300,
 											marginBottom: '1rem',
-											display: 'flex',
-											background: '#DBE2FF'
+											display: 'flex'
 										}}
 									>
 										<img
@@ -332,7 +342,14 @@ function Checkout() {
 								))}
 							</Box>
 						</Box>
-						<Box sx={{flex: 1, padding: '1rem', border: '1px solid black'}}>
+						<Box
+							sx={{
+								flex: 1,
+								padding: '1rem',
+								background: 'white',
+								border: '1px solid black'
+							}}
+						>
 							<Typography variant='h4' component='p'>
 								Subtotal: ${cart.totalPrice.toFixed(2)}
 							</Typography>
@@ -349,25 +366,41 @@ function Checkout() {
 						sx={{
 							minHeight: '58vh',
 							display: 'flex',
-							flexDirection: 'column',
 							justifyContent: 'center',
-							alignItems: 'center',
-							gap: '2rem'
+							alignItems: 'center'
 						}}
 					>
-						<Typography variant='h4' component='div'>
-							Your cart is empty.
-						</Typography>
-						<Typography variant='h4' component='div'>
-							Please add some{' '}
-							<Link
-								to='/products/clothing'
-								style={{textDecoration: 'none', color: 'black'}}
-							>
-								here
-							</Link>
-							.
-						</Typography>
+						<Box
+							sx={{
+								padding: '1rem',
+								display: 'flex',
+								flexDirection: 'column',
+								justifyContent: 'center',
+								alignItems: 'center',
+								gap: '2rem',
+								background: 'white',
+								borderRadius: '10px'
+							}}
+						>
+							<Typography variant='h4' component='div'>
+								Your cart is empty.
+							</Typography>
+							<Typography variant='h4' component='div'>
+								Please add some{' '}
+								<Typography
+									variant='h4'
+									component={Link}
+									to='/products/clothing'
+									style={{
+										textDecoration: 'none',
+										color: 'black'
+									}}
+								>
+									here
+								</Typography>
+								.
+							</Typography>
+						</Box>
 					</Box>
 				)}
 
@@ -488,6 +521,7 @@ function Checkout() {
 					<Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
 						<Button
 							color='inherit'
+							variant='outlined'
 							disabled={activeStep === 0}
 							onClick={handleBack}
 							sx={{mr: 1}}
@@ -502,9 +536,11 @@ function Checkout() {
 								(activeStep === 2 && (!street || !city || !state || !zipCode)) ||
 								activeStep === 3
 							}
+							color='inherit'
+							variant='outlined'
 							onClick={handleNext}
 						>
-							{activeStep !== steps.length - 1 && 'Next'}
+							Next
 						</Button>
 					</Box>
 				)}

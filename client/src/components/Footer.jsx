@@ -8,7 +8,7 @@ const Item = styled(Box)(({theme}) => ({
 	display: 'flex',
 	flexDirection: 'column',
 	justifyContent: 'space-between',
-	background: '#F9F0D9'
+	background: '#249324'
 }));
 
 const Footer = () => {
@@ -22,7 +22,7 @@ const Footer = () => {
 				marginTop: '5vh',
 				display: 'flex',
 				justifyContent: 'space-between',
-				background: '#F9F0D9'
+				background: '#249324'
 			}}
 		>
 			{/* LOGO */}
@@ -30,7 +30,7 @@ const Footer = () => {
 				<Typography variant='h6' noWrap component='div'>
 					LOGO
 				</Typography>
-				<Typography variant='p' component='div' sx={{color: 'gray'}}>
+				<Typography variant='p' component='div' sx={{color: 'black'}}>
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto voluptas possimus
 					laboriosam mollitia aut animi placeat, a molestiae esse quas. Accusantium,
 					laborum deleniti doloribus ducimus magni non enim atque ipsum facilis harum,
@@ -41,7 +41,7 @@ const Footer = () => {
 			<Divider
 				orientation='vertical'
 				flexItem
-				sx={{display: {xs: 'none', sm: 'flex'}, background: '#F9F0D9'}}
+				sx={{display: {xs: 'none', sm: 'flex'}, background: '#249324'}}
 			/>
 
 			{/* Newsletter Subscription */}
@@ -63,7 +63,7 @@ const Footer = () => {
 			<Divider
 				orientation='vertical'
 				flexItem
-				sx={{display: {xs: 'none', sm: 'block'}, background: '#F9F0D9'}}
+				sx={{display: {xs: 'none', sm: 'block'}, background: '#249324'}}
 			/>
 
 			{/* Contact Information */}
@@ -74,7 +74,7 @@ const Footer = () => {
 				<Typography
 					variant='p'
 					component='div'
-					sx={{display: 'flex', alignItems: 'center', color: 'gray'}}
+					sx={{display: 'flex', alignItems: 'center', color: 'black'}}
 				>
 					<Room sx={{marginRight: '1rem', color: 'red'}} /> 123 Imaginary Lane, Los
 					Angeles, California, 90001
@@ -82,14 +82,14 @@ const Footer = () => {
 				<Typography
 					variant='p'
 					component='div'
-					sx={{display: 'flex', alignItems: 'center', color: 'gray'}}
+					sx={{display: 'flex', alignItems: 'center', color: 'black'}}
 				>
 					<Phone sx={{marginRight: '1rem'}} /> 909-909-9009
 				</Typography>
 				<Typography
 					variant='p'
 					component='div'
-					sx={{display: 'flex', alignItems: 'center', color: 'gray'}}
+					sx={{display: 'flex', alignItems: 'center', color: 'black'}}
 				>
 					<MailOutline sx={{marginRight: '1rem', color: 'blue'}} /> fakeEmail@gmail.com
 				</Typography>

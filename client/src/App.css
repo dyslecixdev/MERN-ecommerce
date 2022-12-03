@@ -1,3 +1,4 @@
 .backgroundContainer {
 	min-height: 100vh;
+	background: linear-gradient(white, black, white);
 }

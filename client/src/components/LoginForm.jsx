@@ -98,7 +98,7 @@ function LoginForm({route}) {
 			</Button>
 			<Typography variant='p'>
 				Don't have an account? Click{' '}
-				<Link to='/register' style={{color: 'blue', textDecoration: 'none'}}>
+				<Link to='/register' style={{color: '#CD32CD', textDecoration: 'none'}}>
 					here
 				</Link>
 				.

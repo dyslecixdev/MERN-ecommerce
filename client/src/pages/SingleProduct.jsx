@@ -56,7 +56,8 @@ function SingleProduct() {
 
 	const [rating, setRating] = useState(0);
 	const [review, setReview] = useState('');
-	const [errorMessage, setErrorMessage] = useState('');
+	const [topErrorMessage, setTopErrorMessage] = useState('');
+	const [botErrorMessage, setBotErrorMessage] = useState('');
 
 	const [size, setSize] = useState('');
 	const [color, setColor] = useState('');
@@ -97,7 +98,7 @@ function SingleProduct() {
 	const handleAddToCart = () => {
 		if (size && color && quantity > 0)
 			dispatch(addProduct({...product, size, color, quantity}));
-		else setErrorMessage('Color, size, and quantity required');
+		else setTopErrorMessage('Color, size, and quantity required');
 	};
 
 	// Creates a review for the product
@@ -111,256 +112,266 @@ function SingleProduct() {
 			);
 			window.location.reload(false); // Reloads the window to update the information on the page
 		} catch (err) {
-			setErrorMessage(err.response.data);
+			setBotErrorMessage(err.response.data);
 		}
 	};
 
 	return (
-		<div style={{width: '98.5vw', padding: '0 1rem'}}>
-			<Box
-				sx={{
-					width: '100%',
-					marginBottom: {xs: '6rem', lg: 'none'},
-					display: 'flex',
-					flexDirection: {xs: 'column', lg: 'row'},
-					alignItems: {xs: 'center', lg: 'flex-start'}
-				}}
-			>
-				{/* Product image */}
-				<img
-					src={`http://localhost:5000/static/${product.image}`}
-					alt={product.name}
-					style={{
+		<>
+			<div style={{width: '98.5vw', padding: '0 1rem'}}>
+				<Box
+					sx={{
 						width: '100%',
-						maxHeight: '88vh',
-						padding: '2rem',
-						objectFit: 'contain',
-						borderRadius: '5px'
+						marginBottom: {xs: '6rem', lg: 'none'},
+						display: 'flex',
+						flexDirection: {xs: 'column', lg: 'row'},
+						alignItems: {xs: 'center', lg: 'flex-start'}
 					}}
-				/>
+				>
+					{/* Product image */}
+					<img
+						src={`http://localhost:5000/static/${product.image}`}
+						alt={product.name}
+						style={{
+							width: '100%',
+							maxHeight: '88vh',
+							padding: '2rem',
+							objectFit: 'contain',
+							borderRadius: '5px'
+						}}
+					/>
 
-				{/* Product details */}
-				<Container sx={{width: {xs: '100%', lg: '50%'}}}>
+					{/* Product details */}
+					<Container
+						sx={{
+							width: {xs: '100%', lg: '50%'},
+							paddingBottom: '1rem',
+							background: 'white',
+							borderRadius: '5px',
+							boxShadow: '0px 5px 15px rgba(0, 0, 0, 0.5)'
+						}}
+					>
+						<Stack
+							direction='column'
+							justifyContent='flex-start'
+							alignItems='stretch'
+							spacing={0.5}
+						>
+							<List>
+								<ListItem divider>
+									<ListItemText
+										primary={`Product: ${product.name}`}
+										primaryTypographyProps={{fontSize: '2rem'}} // Used to change ListItemText's font-size
+									/>
+								</ListItem>
+								<ListItem divider>
+									<ListItemText
+										primary={`Price: $${productPrice.toFixed(2)}`}
+										primaryTypographyProps={{fontSize: '1.5rem'}}
+									/>
+								</ListItem>
+								<ListItem divider sx={{display: 'flex', alignItems: 'center'}}>
+									<Rating
+										precision={0.1}
+										value={productRating}
+										readOnly
+										sx={{marginRight: '1rem'}}
+									/>
+									<ListItemText
+										primary={`${product.numReviews} Review(s)`}
+										primaryTypographyProps={{fontSize: '1.5rem'}}
+									/>
+								</ListItem>
+								<ListItem divider sx={{overflowWrap: 'break-word'}}>
+									<ListItemText
+										primary={`Description: ${product.desc}`}
+										primaryTypographyProps={{fontSize: '1.5rem'}}
+									/>
+								</ListItem>
+							</List>
+						</Stack>
+
+						{/* Product size, color, and quantity, and Cart button */}
+						{topErrorMessage && (
+							<Typography color='error' sx={{textAlign: 'center'}}>
+								{topErrorMessage}
+							</Typography>
+						)}
+						<Box
+							sx={{
+								height: '55px',
+								marginTop: '0.5rem',
+								display: 'flex',
+								alignItems: 'flex-start',
+								flexWrap: 'wrap'
+							}}
+						>
+							<Box
+								sx={{
+									minWidth: 100,
+									marginRight: '1rem',
+									marginBottom: {xs: '1rem', lg: 'none'}
+								}}
+							>
+								<FormControl fullWidth>
+									<InputLabel>Size</InputLabel>
+									<Select
+										value={size}
+										label='Size'
+										onChange={e => setSize(e.target.value)}
+									>
+										{productSize.map((size, idx) => (
+											<MenuItem key={idx} value={size}>
+												{size}
+											</MenuItem>
+										))}
+									</Select>
+								</FormControl>
+							</Box>
+							<Box
+								sx={{
+									minWidth: 100,
+									marginRight: '1rem',
+									marginBottom: {xs: '1rem', lg: 'none'}
+								}}
+							>
+								<FormControl fullWidth>
+									<InputLabel>Color</InputLabel>
+									<Select
+										value={color}
+										label='Color'
+										onChange={e => setColor(e.target.value)}
+									>
+										{productColor.map((color, idx) => (
+											<MenuItem key={idx} value={color}>
+												{color}
+											</MenuItem>
+										))}
+									</Select>
+								</FormControl>
+							</Box>
+							<Box sx={{minWidth: 100, marginRight: '1rem'}}>
+								<FormControl fullWidth>
+									<InputLabel>Quantity</InputLabel>
+									<Select
+										value={quantity}
+										label='Quantity'
+										onChange={e => setQuantity(e.target.value)}
+									>
+										{numbers.map((number, idx) => (
+											<MenuItem key={idx} value={number}>
+												{number}
+											</MenuItem>
+										))}
+									</Select>
+								</FormControl>
+							</Box>
+							<Button
+								variant='outlined'
+								startIcon={<ShoppingCart />}
+								color='secondary'
+								sx={{
+									height: '100%'
+								}}
+								onClick={handleAddToCart}
+							>
+								Add to Cart
+							</Button>
+						</Box>
+					</Container>
+				</Box>
+
+				{/* Reviews */}
+				<Container sx={{marginTop: '2rem'}}>
+					<Divider />
 					<Stack
 						direction='column'
 						justifyContent='flex-start'
 						alignItems='stretch'
-						spacing={0.5}
+						spacing={0}
 					>
-						<List>
-							<ListItem divider>
-								<ListItemText
-									primary={`Product: ${product.name}`}
-									primaryTypographyProps={{fontSize: '2rem'}} // Used to change ListItemText's font-size
-								/>
-							</ListItem>
-							<ListItem divider sx={{overflowWrap: 'break-word'}}>
-								<ListItemText
-									primary={`Description: ${product.desc}`}
-									primaryTypographyProps={{fontSize: '1.5rem'}}
-								/>
-							</ListItem>
-							<ListItem divider sx={{display: 'flex', alignItems: 'center'}}>
-								<Rating
-									precision={0.1}
-									value={productRating}
-									readOnly
-									sx={{marginRight: '1rem'}}
-								/>
-								<ListItemText
-									primary={`${product.numReviews} Review(s)`}
-									primaryTypographyProps={{fontSize: '1.5rem'}}
-								/>
-							</ListItem>
-							<ListItem divider>
-								<ListItemText
-									primary={`Price: $${productPrice.toFixed(2)}`}
-									primaryTypographyProps={{fontSize: '1.5rem'}}
-								/>
-							</ListItem>
-						</List>
-					</Stack>
-
-					{/* Product size, color, and quantity, and Cart button */}
-					{errorMessage && (
-						<Typography color='error' sx={{textAlign: 'center'}}>
-							{errorMessage}
-						</Typography>
-					)}
-					<Box
-						sx={{
-							height: '55px',
-							marginTop: '0.5rem',
-							display: 'flex',
-							alignItems: 'flex-start',
-							flexWrap: 'wrap'
-						}}
-					>
-						<Box
-							sx={{
-								minWidth: 100,
-								marginRight: '1rem',
-								marginBottom: {xs: '1rem', lg: 'none'}
-							}}
-						>
-							<FormControl fullWidth>
-								<InputLabel>Size</InputLabel>
-								<Select
-									value={size}
-									label='Size'
-									onChange={e => setSize(e.target.value)}
-								>
-									{productSize.map((size, idx) => (
-										<MenuItem key={idx} value={size}>
-											{size}
-										</MenuItem>
-									))}
-								</Select>
-							</FormControl>
-						</Box>
-						<Box
-							sx={{
-								minWidth: 100,
-								marginRight: '1rem',
-								marginBottom: {xs: '1rem', lg: 'none'}
-							}}
-						>
-							<FormControl fullWidth>
-								<InputLabel>Color</InputLabel>
-								<Select
-									value={color}
-									label='Color'
-									onChange={e => setColor(e.target.value)}
-								>
-									{productColor.map((color, idx) => (
-										<MenuItem key={idx} value={color}>
-											{color}
-										</MenuItem>
-									))}
-								</Select>
-							</FormControl>
-						</Box>
-						<Box sx={{minWidth: 100, marginRight: '1rem'}}>
-							<FormControl fullWidth>
-								<InputLabel>Quantity</InputLabel>
-								<Select
-									value={quantity}
-									label='Quantity'
-									onChange={e => setQuantity(e.target.value)}
-								>
-									{numbers.map((number, idx) => (
-										<MenuItem key={idx} value={number}>
-											{number}
-										</MenuItem>
-									))}
-								</Select>
-							</FormControl>
-						</Box>
-						<Button
-							variant='contained'
-							startIcon={<ShoppingCart />}
-							sx={{
-								height: '100%'
-							}}
-							onClick={handleAddToCart}
-						>
-							Add to Cart
-						</Button>
-					</Box>
-				</Container>
-			</Box>
-
-			{/* Reviews */}
-			<Container sx={{marginTop: '2rem'}}>
-				<Typography variant='h3' component='div'>
-					Reviews
-				</Typography>
-				<Divider />
-				<Stack
-					direction='column'
-					justifyContent='flex-start'
-					alignItems='stretch'
-					spacing={0}
-				>
-					{productReviews.length !== 0 ? (
-						productReviews.map((review, idx) => <Review key={idx} review={review} />)
-					) : (
-						<Paper sx={{padding: '1rem', border: '1px solid black'}}>
-							<Typography variant='h5'>
-								There are no reviews for this product.
-							</Typography>
-						</Paper>
-					)}
-
-					{/* Review form */}
-					{user ? (
-						<Paper
-							elevation={3}
-							component='form'
-							onSubmit={handleSubmit}
-							sx={{
-								marginTop: '1.5rem',
-								marginBottom: '2rem',
-								padding: '1rem',
-								display: 'flex',
-								flexDirection: 'column',
-								gap: '1rem',
-								border: '1px solid black'
-							}}
-						>
-							{errorMessage && (
-								<Typography color='error' sx={{textAlign: 'center'}}>
-									{errorMessage}
+						{productReviews.length !== 0 ? (
+							productReviews.map((review, idx) => (
+								<Review key={idx} review={review} />
+							))
+						) : (
+							<Paper sx={{padding: '1rem', border: '1px solid black'}}>
+								<Typography variant='h5'>
+									There are no reviews for this product.
 								</Typography>
-							)}
-							<Rating
-								size='large'
-								value={rating}
-								onChange={(e, newRating) => setRating(newRating)}
-							/>
-							<TextField
-								label='Review'
-								type='text'
-								multiline
-								rows={6}
-								required
-								value={review}
-								onChange={e => setReview(e.target.value)}
-							/>
-							<Button
-								type='submit'
-								variant='contained'
-								// disabled={isFetching}
+							</Paper>
+						)}
+
+						{/* Review form */}
+						{user ? (
+							<Paper
+								elevation={3}
+								component='form'
+								onSubmit={handleSubmit}
 								sx={{
-									width: {xs: '100%', sm: '30%', md: '25%', lg: '20%'}
+									marginTop: '1.5rem',
+									marginBottom: '2rem',
+									padding: '1rem',
+									display: 'flex',
+									flexDirection: 'column',
+									gap: '1rem',
+									border: '1px solid black'
 								}}
 							>
-								Publish
-							</Button>
-						</Paper>
-					) : (
-						<Paper
-							sx={{
-								marginTop: '1.5rem',
-								marginBottom: '2rem',
-								padding: '1rem',
-								border: '1px solid black'
-							}}
-						>
-							<Typography variant='h6'>
-								Please{' '}
-								<Link to='/login' sx={{textDecoration: 'none'}}>
-									Login
-								</Link>{' '}
-								to write a review
-							</Typography>
-						</Paper>
-					)}
-				</Stack>
-			</Container>
+								{botErrorMessage && (
+									<Typography color='error' sx={{textAlign: 'center'}}>
+										{botErrorMessage}
+									</Typography>
+								)}
+								<Rating
+									size='large'
+									value={rating}
+									onChange={(e, newRating) => setRating(newRating)}
+								/>
+								<TextField
+									label='Write a review'
+									type='text'
+									multiline
+									rows={6}
+									required
+									value={review}
+									onChange={e => setReview(e.target.value)}
+								/>
+								<Button
+									type='submit'
+									variant='outlined'
+									color='secondary'
+									sx={{
+										width: {xs: '100%', sm: '30%', md: '25%', lg: '20%'}
+									}}
+								>
+									Publish
+								</Button>
+							</Paper>
+						) : (
+							<Paper
+								sx={{
+									marginTop: '1.5rem',
+									marginBottom: '2rem',
+									padding: '1rem',
+									border: '1px solid black'
+								}}
+							>
+								<Typography variant='h6'>
+									Please{' '}
+									<Link to='/login' sx={{textDecoration: 'none'}}>
+										Login
+									</Link>{' '}
+									to write a review
+								</Typography>
+							</Paper>
+						)}
+					</Stack>
+				</Container>
+			</div>
 
 			<Footer />
-		</div>
+		</>
 	);
 }
 

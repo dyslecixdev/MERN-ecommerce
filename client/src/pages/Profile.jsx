@@ -87,7 +87,7 @@ function Profile() {
 		<>
 			<div
 				style={{
-					height: '60vh',
+					height: '61vh',
 					display: 'flex',
 					justifyContent: 'center',
 					alignItems: 'center',
@@ -168,7 +168,12 @@ function Profile() {
 								justifyContent: 'space-between'
 							}}
 						>
-							<Button type='button' onClick={handleReset} disabled={isFetching}>
+							<Button
+								type='button'
+								color='info'
+								onClick={handleReset}
+								disabled={isFetching}
+							>
 								Cancel
 							</Button>
 							<Button type='submit' color='success' disabled={isFetching}>
@@ -260,7 +265,9 @@ function Profile() {
 							Name: {user.firstName} {user.lastName}
 						</Typography>
 						<Typography variant='h5'>Email: {user.email}</Typography>
-						<Button onClick={() => setEditMode(true)}>Change Your Information</Button>
+						<Button color='secondary' onClick={() => setEditMode(true)}>
+							Change Your Information
+						</Button>
 					</Paper>
 				)}
 			</div>

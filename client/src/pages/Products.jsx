@@ -8,6 +8,22 @@ import axios from 'axios';
 import ProductCard from '../components/ProductCard';
 import Footer from '../components/Footer';
 
+const sizes = ['', 'XS', 'S', 'M', 'L', 'XL'];
+const colors = [
+	'',
+	'Pink',
+	'Red',
+	'Orange',
+	'Yellow',
+	'Green',
+	'Blue',
+	'Purple',
+	'Black',
+	'Gray',
+	'White',
+	'Brown'
+];
+
 function Items() {
 	const catName = useParams();
 
@@ -15,22 +31,6 @@ function Items() {
 	const [size, setSize] = useState('');
 	const [color, setColor] = useState('');
 	const [filter, setFilter] = useState('');
-
-	const sizes = ['', 'XS', 'S', 'M', 'L', 'XL'];
-	const colors = [
-		'',
-		'Pink',
-		'Red',
-		'Orange',
-		'Yellow',
-		'Green',
-		'Blue',
-		'Purple',
-		'Black',
-		'Gray',
-		'White',
-		'Brown'
-	];
 
 	// Gets all the products from MongoDB
 	useEffect(() => {
@@ -108,7 +108,7 @@ function Items() {
 					{/* Sort Products */}
 					<Box
 						sx={{
-							width: {lg: '28%', xl: '23%'},
+							width: {lg: '28%', xl: '16%'},
 							display: 'flex',
 							justifyContent: 'space-between',
 							alignItems: 'center'

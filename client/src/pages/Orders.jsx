@@ -13,6 +13,7 @@ function Orders() {
 
 	const [orders, setOrders] = useState([]);
 
+	// Gets all orders that the user made
 	useEffect(() => {
 		async function fetchData() {
 			try {

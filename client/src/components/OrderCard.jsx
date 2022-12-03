@@ -41,8 +41,8 @@ function OrderCard({address, products, totalPrice, date, orderId}) {
 					{address}
 				</Typography>
 			</CardContent>
-			<CardActions>
-				<Button size='small' component={Link} to={`/orders/${orderId}`}>
+			<CardActions sx={{display: 'flex', justifyContent: 'center'}}>
+				<Button size='small' color='secondary' component={Link} to={`/orders/${orderId}`}>
 					View Ordered Products
 				</Button>
 			</CardActions>
