@@ -31,7 +31,7 @@ import Footer from '../components/Footer';
 
 import {incrementProduct, decrementProduct, removeProduct} from '../redux/cartRedux';
 
-const steps = ['Login', 'Confirm Products', 'Shipping Details', 'Payment Details'];
+const steps = ['Login', 'Products', 'Shipping', 'Payment'];
 const states = [
 	'AL',
 	'AK',
@@ -165,15 +165,17 @@ function Checkout() {
 
 	return (
 		<>
-			<Box sx={{width: '100%', minHeight: '67vh'}}>
+			<Box sx={{width: '98vw', minHeight: '67vh', padding: '0 1rem'}}>
 				{/* Top step progress */}
 				<Stepper activeStep={activeStep}>
-					{steps.map((label, index) => {
+					{steps.map(label => {
 						const stepProps = {};
 						const labelProps = {};
 						return (
 							<Step key={label} {...stepProps}>
-								<StepLabel {...labelProps}>{label}</StepLabel>
+								<StepLabel {...labelProps}>
+									{window.screen.width > 700 ? label : ''}
+								</StepLabel>
 							</Step>
 						);
 					})}
@@ -230,6 +232,7 @@ function Checkout() {
 							minHeight: '56.2vh',
 							padding: '1rem 1rem 0',
 							display: 'flex',
+							flexDirection: {xs: 'column', sm: 'row'},
 							justifyContent: 'center',
 							alignItems: 'flex-start',
 							gap: '2rem'
@@ -257,7 +260,7 @@ function Checkout() {
 									<Paper
 										key={idx}
 										sx={{
-											width: 375,
+											maxWidth: 375,
 											height: 300,
 											marginBottom: '1rem',
 											display: 'flex'
@@ -393,7 +396,7 @@ function Checkout() {
 									to='/products/clothing'
 									style={{
 										textDecoration: 'none',
-										color: 'black'
+										color: '#CD32CD'
 									}}
 								>
 									here
@@ -521,7 +524,7 @@ function Checkout() {
 					<Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
 						<Button
 							color='inherit'
-							variant='outlined'
+							variant='contained'
 							disabled={activeStep === 0}
 							onClick={handleBack}
 							sx={{mr: 1}}
@@ -537,7 +540,7 @@ function Checkout() {
 								activeStep === 3
 							}
 							color='inherit'
-							variant='outlined'
+							variant='contained'
 							onClick={handleNext}
 						>
 							Next

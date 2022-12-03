@@ -363,7 +363,7 @@ function Navbar() {
 					{/* Home */}
 					<ListItem disablePadding>
 						<ListItemButton onClick={handleDrawerClose} component={Link} to='/'>
-							<ListItemIcon>
+							<ListItemIcon sx={{color: '#32CD32'}}>
 								<Home />
 							</ListItemIcon>
 							<ListItemText primary='Home' />
@@ -378,7 +378,7 @@ function Navbar() {
 							component={Link}
 							to='/products/men'
 						>
-							<ListItemIcon>
+							<ListItemIcon sx={{color: '#CD32CD'}}>
 								<Man />
 							</ListItemIcon>
 							<ListItemText primary='Men' />
@@ -390,7 +390,7 @@ function Navbar() {
 							component={Link}
 							to='/products/women'
 						>
-							<ListItemIcon>
+							<ListItemIcon sx={{color: '#CD32CD'}}>
 								<Woman />
 							</ListItemIcon>
 							<ListItemText primary='Women' />
@@ -402,7 +402,7 @@ function Navbar() {
 							component={Link}
 							to='/products/children'
 						>
-							<ListItemIcon>
+							<ListItemIcon sx={{color: '#CD32CD'}}>
 								<ChildFriendly />
 							</ListItemIcon>
 							<ListItemText primary='Children' />
@@ -419,7 +419,7 @@ function Navbar() {
 							component={Link}
 							to='/products/accesories'
 						>
-							<ListItemIcon>
+							<ListItemIcon sx={{color: '#32CD32'}}>
 								<Watch />
 							</ListItemIcon>
 							<ListItemText primary='Accesories' />
@@ -431,7 +431,7 @@ function Navbar() {
 							component={Link}
 							to='/products/clothing'
 						>
-							<ListItemIcon>
+							<ListItemIcon sx={{color: '#32CD32'}}>
 								<Checkroom />
 							</ListItemIcon>
 							<ListItemText primary='Clothing' />
@@ -444,7 +444,7 @@ function Navbar() {
 				<List>
 					<ListItem disablePadding>
 						<ListItemButton>
-							<ListItemIcon>
+							<ListItemIcon sx={{color: '#CD32CD'}}>
 								<Info />
 							</ListItemIcon>
 							<ListItemText>
@@ -454,7 +454,6 @@ function Navbar() {
 									rel='noreferrer'
 									style={{
 										textDecoration: 'none',
-										color: 'black',
 										fontFamily: 'Josefin sans, sans-serif'
 									}}
 								>

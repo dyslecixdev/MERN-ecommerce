@@ -34,7 +34,7 @@ function SingleOrder() {
 
 	return (
 		<>
-			<Box sx={{minHeight: '60vh'}}>
+			<Box sx={{minHeight: '61vh'}}>
 				<Box
 					sx={{
 						width: {xs: '100%', sm: '80%', md: '60%', lg: '40%'},

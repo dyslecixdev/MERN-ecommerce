@@ -210,7 +210,11 @@ function Review({review}) {
 									<Button type='button' color='error' onClick={handleDelete}>
 										Yes, delete it
 									</Button>
-									<Button type='button' onClick={() => setOpenModal(false)}>
+									<Button
+										type='button'
+										color='info'
+										onClick={() => setOpenModal(false)}
+									>
 										No, keep it
 									</Button>
 								</ButtonGroup>

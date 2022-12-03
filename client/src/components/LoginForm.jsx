@@ -23,11 +23,11 @@ function LoginForm({route}) {
 	const navigate = useNavigate();
 
 	// Executes two async functions
-	const handleSubmit = async e => {
-		await loginUser(e);
-		// await createCart(e);
-		if (route) navigate(route);
-	};
+	// const handleSubmit = async e => {
+	// 	await loginUser(e);
+	// 	// await createCart(e);
+	// 	if (route) navigate(route);
+	// };
 
 	// Logs a user into the app
 	const loginUser = async e => {
@@ -39,6 +39,7 @@ function LoginForm({route}) {
 				password
 			});
 			dispatch(loginSuccess(res.data));
+			if (route) navigate(route); // ! Remove this after fixing cart
 		} catch (err) {
 			setErrorMessage(err.response.data);
 			dispatch(loginFailure());
@@ -59,7 +60,7 @@ function LoginForm({route}) {
 		<Paper
 			elevation={3}
 			component='form'
-			onSubmit={handleSubmit}
+			onSubmit={loginUser}
 			sx={{
 				width: {
 					xs: '100%',

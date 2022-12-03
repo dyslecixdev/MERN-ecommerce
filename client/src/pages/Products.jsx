@@ -71,7 +71,7 @@ function Items() {
 						<Typography variant='h6' sx={{display: {xs: 'none', lg: 'block'}}}>
 							Filter Products:{' '}
 						</Typography>
-						<Box sx={{minWidth: 120}}>
+						<Box sx={{width: 100}}>
 							<FormControl fullWidth>
 								<InputLabel>Size</InputLabel>
 								<Select
@@ -87,7 +87,7 @@ function Items() {
 								</Select>
 							</FormControl>
 						</Box>
-						<Box sx={{minWidth: 120}}>
+						<Box sx={{width: 100}}>
 							<FormControl fullWidth>
 								<InputLabel>Color</InputLabel>
 								<Select
@@ -117,7 +117,7 @@ function Items() {
 						<Typography variant='h6' sx={{display: {xs: 'none', lg: 'block'}}}>
 							Sort Products:{' '}
 						</Typography>
-						<Box sx={{minWidth: 120}}>
+						<Box sx={{width: 100}}>
 							<FormControl fullWidth>
 								<InputLabel>Sort</InputLabel>
 								<Select

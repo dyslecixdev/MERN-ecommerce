@@ -32,7 +32,7 @@ const getOneOrder = asyncHandler(async (req, res) => {
 
 // Gets all the orders
 const getAllOrders = asyncHandler(async (req, res) => {
-	const userId = req.query.userId;
+	const userId = req.query.category;
 
 	let existingOrders;
 	if (userId) existingOrders = await Order.find({userId});

@@ -87,7 +87,7 @@ function Profile() {
 		<>
 			<div
 				style={{
-					height: '61vh',
+					minHeight: '61vh',
 					display: 'flex',
 					justifyContent: 'center',
 					alignItems: 'center',
@@ -235,6 +235,7 @@ function Profile() {
 									</Button>
 									<Button
 										type='button'
+										color='info'
 										onClick={() => setOpenModal(false)}
 										disabled={isFetching}
 									>

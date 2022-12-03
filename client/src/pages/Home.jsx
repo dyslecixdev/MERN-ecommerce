@@ -159,6 +159,7 @@ function Home() {
 						variant='outlined'
 						component={Link} // The MUI Button component also acts as a react-router-dom Link
 						to={carouselItems[2].link}
+						color='warning'
 						sx={{width: '50%'}}
 					>
 						View Deals

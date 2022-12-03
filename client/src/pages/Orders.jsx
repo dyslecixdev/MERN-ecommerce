@@ -12,6 +12,7 @@ function Orders() {
 	const user = useSelector(state => state.user.currentUser);
 
 	const [orders, setOrders] = useState([]);
+	console.log(orders);
 
 	// Gets all orders that the user made
 	useEffect(() => {
@@ -57,14 +58,23 @@ function Orders() {
 			) : (
 				<Box
 					sx={{
-						height: '50vh',
-						padding: '1rem 0',
+						minHeight: '61vh',
 						display: 'flex',
 						justifyContent: 'center',
 						alignItems: 'center'
 					}}
 				>
-					<Typography variant='h4'>Sorry, but you currently have no orders.</Typography>
+					<Box
+						sx={{
+							padding: '1rem',
+							background: 'white',
+							borderRadius: '10px'
+						}}
+					>
+						<Typography variant='h4'>
+							Sorry, but you currently have no orders.
+						</Typography>
+					</Box>
 				</Box>
 			)}
 

@@ -199,7 +199,7 @@ function SingleProduct() {
 						)}
 						<Box
 							sx={{
-								height: '55px',
+								minHeight: '55px',
 								marginTop: '0.5rem',
 								display: 'flex',
 								alignItems: 'flex-start',
@@ -208,7 +208,7 @@ function SingleProduct() {
 						>
 							<Box
 								sx={{
-									minWidth: 100,
+									width: 100,
 									marginRight: '1rem',
 									marginBottom: {xs: '1rem', lg: 'none'}
 								}}
@@ -230,7 +230,7 @@ function SingleProduct() {
 							</Box>
 							<Box
 								sx={{
-									minWidth: 100,
+									width: 100,
 									marginRight: '1rem',
 									marginBottom: {xs: '1rem', lg: 'none'}
 								}}
@@ -250,7 +250,7 @@ function SingleProduct() {
 									</Select>
 								</FormControl>
 							</Box>
-							<Box sx={{minWidth: 100, marginRight: '1rem'}}>
+							<Box sx={{width: 100, marginRight: '1rem'}}>
 								<FormControl fullWidth>
 									<InputLabel>Quantity</InputLabel>
 									<Select
@@ -271,7 +271,7 @@ function SingleProduct() {
 								startIcon={<ShoppingCart />}
 								color='secondary'
 								sx={{
-									height: '100%'
+									minHeight: '50px'
 								}}
 								onClick={handleAddToCart}
 							>
@@ -359,9 +359,14 @@ function SingleProduct() {
 							>
 								<Typography variant='h6'>
 									Please{' '}
-									<Link to='/login' sx={{textDecoration: 'none'}}>
+									<Typography
+										variant='h6'
+										component={Link}
+										to='/login'
+										sx={{textDecoration: 'none', color: '#CD32CD'}}
+									>
 										Login
-									</Link>{' '}
+									</Typography>{' '}
 									to write a review
 								</Typography>
 							</Paper>

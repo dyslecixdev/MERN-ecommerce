@@ -18,7 +18,7 @@ const Footer = () => {
 			spacing={2}
 			sx={{
 				width: '100%',
-				height: '25vh',
+				minHeight: '25vh',
 				marginTop: '5vh',
 				display: 'flex',
 				justifyContent: 'space-between',
