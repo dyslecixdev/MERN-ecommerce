@@ -207,7 +207,7 @@ function Checkout() {
 							You are logged in.
 						</Typography>
 						<Typography variant='h4' component='div'>
-							Please click Next to continue.
+							Click Next to continue.
 						</Typography>
 					</Box>
 				)}
@@ -356,7 +356,7 @@ function Checkout() {
 						}}
 					>
 						<Typography variant='h4' component='div'>
-							You do not have any products in your cart
+							Your cart is empty.
 						</Typography>
 						<Typography variant='h4' component='div'>
 							Please add some{' '}
@@ -441,6 +441,7 @@ function Checkout() {
 					<Box
 						sx={{
 							minHeight: '58vh',
+							paddingTop: '1rem',
 							display: 'flex',
 							justifyContent: 'center',
 							alignItems: 'center'
@@ -497,6 +498,7 @@ function Checkout() {
 						<Button
 							disabled={
 								!user ||
+								(activeStep === 1 && cart.products.length < 1) ||
 								(activeStep === 2 && (!street || !city || !state || !zipCode)) ||
 								activeStep === 3
 							}

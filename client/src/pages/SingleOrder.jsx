@@ -35,7 +35,13 @@ function SingleOrder() {
 	return (
 		<>
 			<Box sx={{minHeight: '60vh'}}>
-				<Box sx={{width: '40%', margin: 'auto', border: '1px solid black'}}>
+				<Box
+					sx={{
+						width: {xs: '100%', sm: '80%', md: '60%', lg: '40%'},
+						margin: 'auto',
+						border: '1px solid black'
+					}}
+				>
 					{products.map(product => (
 						<RecieptCard key={product._id} productData={product} />
 					))}

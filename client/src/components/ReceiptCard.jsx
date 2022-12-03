@@ -6,7 +6,7 @@ function ReceiptCard({productData}) {
 			<Card sx={{padding: '1rem', display: 'flex'}} elevation={0}>
 				<Box
 					sx={{
-						width: '70%',
+						width: {xs: '40%', sm: '70%'},
 						display: 'flex',
 						flexDirection: 'column'
 					}}
@@ -31,7 +31,7 @@ function ReceiptCard({productData}) {
 				</Box>
 				<CardMedia
 					component='img'
-					sx={{width: '30%'}}
+					sx={{width: {xs: '60%', sm: '30%'}}}
 					image={`http://localhost:5000/static/${productData.image}`}
 					alt={productData.name}
 				/>
