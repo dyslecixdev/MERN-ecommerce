@@ -6,6 +6,7 @@ import {Typography, Box} from '@mui/material';
 import axios from 'axios';
 
 import OrderCard from '../components/OrderCard';
+import Footer from '../components/Footer';
 
 function Orders() {
 	const user = useSelector(state => state.user.currentUser);
@@ -48,6 +49,7 @@ function Orders() {
 							products={order.products}
 							totalPrice={order.totalPrice}
 							date={order.createdAt}
+							orderId={order._id}
 						/>
 					))}
 				</Box>
@@ -64,6 +66,8 @@ function Orders() {
 					<Typography variant='h4'>Sorry, but you currently have no orders.</Typography>
 				</Box>
 			)}
+
+			<Footer />
 		</div>
 	);
 }

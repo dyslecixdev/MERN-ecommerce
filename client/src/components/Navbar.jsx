@@ -268,7 +268,7 @@ function Navbar() {
 	return (
 		<Box sx={{display: 'flex'}}>
 			{/* Navbar */}
-			<AppBar position='fixed' open={open}>
+			<AppBar position='fixed' open={open} sx={{height: '8vh'}}>
 				<Toolbar>
 					{/* Hamburger menu icon */}
 					<IconButton

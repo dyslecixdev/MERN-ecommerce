@@ -10,11 +10,10 @@ import Checkout from './pages/Checkout';
 import Products from './pages/Products';
 import SingleProduct from './pages/SingleProduct';
 import Orders from './pages/Orders';
+import SingleOrder from './pages/SingleOrder';
 
 import './App.css';
 
-// todo SingleOrder page
-// todo Fix Footer width on Products page
 // todo Fix responsive height
 // todo Custom theme colors
 // todo Include Google fonts
@@ -35,7 +34,11 @@ function App() {
 					<Route path='/checkout' element={<Checkout />} />
 					<Route path='/products/:category' element={<Products />} />
 					<Route path='/product/:id' element={<SingleProduct />} />
-					<Route path='/orders' element={<Orders />} />
+					<Route path='/orders' element={user ? <Orders /> : <Navigate to='/login' />} />
+					<Route
+						path='/orders/:id'
+						element={user ? <SingleOrder /> : <Navigate to='/login' />}
+					/>
 				</Route>
 			</Routes>
 		</div>

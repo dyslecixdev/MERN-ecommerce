@@ -18,7 +18,7 @@ const months = [
 	'Dec'
 ];
 
-function OrderCard({address, products, totalPrice, date}) {
+function OrderCard({address, products, totalPrice, date, orderId}) {
 	const month = months[date.split('T')[0].split('-')[1]];
 	const day = date.split('T')[0].split('-')[2];
 	const year = date.split('T')[0].split('-')[0];
@@ -42,8 +42,8 @@ function OrderCard({address, products, totalPrice, date}) {
 				</Typography>
 			</CardContent>
 			<CardActions>
-				<Button size='small' component={Link}>
-					View Details
+				<Button size='small' component={Link} to={`/orders/${orderId}`}>
+					View Ordered Products
 				</Button>
 			</CardActions>
 		</Card>
