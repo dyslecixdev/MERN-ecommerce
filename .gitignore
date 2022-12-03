@@ -24,6 +24,3 @@ yarn-error.log*
 .env
 .prettierrc
 .eslintrc.js
-
-server/assets
-test.js
