@@ -19,19 +19,19 @@ handle the app's web routing, react-material-ui-carousel for the image carousel,
 1. Open your terminal and type: git clone https://github.com/christiandeandemesa/MERN-ecommerce.git
 2. Cd into MERN-ecommerce, then type git checkout e46ca8a166a to get commit before deployment.
 3. To download the backend dependencies, stay in the root folder (MERN-ecommerce) and type: npm install
-3. To download the frontend dependencies, cd into the client folder and type: npm install
-4. Cd .. back to the MERN-ecommerce folder, and run this project by typing: npm run dev
-5. Start your server, open Postman, copy the below POST route, fill in the fields, make sure isAdmin is set to true, then create your admin user account.
+4. To download the frontend dependencies, cd into the client folder and type: npm install
+5. Cd .. back to the MERN-ecommerce folder, and run this project by typing: npm run dev
+6. Start your server, open Postman, copy the below POST route, fill in the fields, make sure isAdmin is set to true, then create your admin user account.
 
 ![postman-2](https://user-images.githubusercontent.com/85912934/205422070-0588de7e-c705-47a1-aefc-b347cbd739a0.png)
 
-6. Copy the below POST route, make sure your form is set to form-data, fill in the fields, fill in the fields, make sure Auth is set to bearer token and your token should have shown when you created your admin user account, then create a product (p.s. you can find images in the server's assets sub-folder).
+7. Copy the below POST route, make sure your form is set to form-data, fill in the fields, fill in the fields, make sure Auth is set to bearer token and your token should have shown when you created your admin user account, then create a product (p.s. you can find images in the server's assets sub-folder).
 
 ![postman-3](https://user-images.githubusercontent.com/85912934/205422084-afa3c012-c13d-46b4-b1b7-412a997cc784.png)
 ![postman-4](https://user-images.githubusercontent.com/85912934/205422087-b48adf74-975c-4af9-895f-01f38fa1ba65.png)
 ![postman-5](https://user-images.githubusercontent.com/85912934/205422093-b42ba1cd-8349-4bb4-acb4-8d639f4f818b.png)
 
-7. Stop the server with ctrl + c, then restart it with npm run dev to populate your website with your newly made products.
+8. Stop the server with ctrl + c, then restart it with npm run dev to populate your website with your newly made products.
 
 ## Features
 - User can register and log in to their account.
