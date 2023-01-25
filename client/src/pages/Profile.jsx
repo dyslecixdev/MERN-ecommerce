@@ -39,7 +39,7 @@ function Profile() {
 		dispatch(updateUserStart());
 		try {
 			const res = await axios.put(
-				`http://localhost:5000/users/${user.id}`,
+				`https://mern-e-commerce-backend.onrender.com/users/${user.id}`,
 				{firstName, lastName, email, password, confirmPassword, isAdmin: user.isAdmin},
 				{
 					headers: {
@@ -60,7 +60,7 @@ function Profile() {
 		e.preventDefault();
 		dispatch(deleteUserStart());
 		try {
-			await axios.delete(`http://localhost:5000/users/${user.id}`, {
+			await axios.delete(`https://mern-e-commerce-backend.onrender.com/users/${user.id}`, {
 				headers: {
 					Authorization: 'Bearer ' + user.token
 				}

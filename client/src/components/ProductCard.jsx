@@ -7,7 +7,7 @@ function ProductCard({productData}) {
 		<Card sx={{width: 310, margin: '1rem 0', padding: '1rem'}}>
 			<CardMedia
 				component='img'
-				image={`http://localhost:5000/static/${productData.image}`}
+				image={`https://mern-e-commerce-backend.onrender.com/static/${productData.image}`}
 				alt={productData.name}
 				sx={{height: 200, objectFit: 'contain'}}
 			/>

@@ -34,10 +34,13 @@ function LoginForm({route}) {
 		e.preventDefault();
 		dispatch(loginStart());
 		try {
-			const res = await axios.post('http://localhost:5000/users/login', {
-				email,
-				password
-			});
+			const res = await axios.post(
+				'https://mern-e-commerce-backend.onrender.com/users/login',
+				{
+					email,
+					password
+				}
+			);
 			dispatch(loginSuccess(res.data));
 			if (route) navigate(route); // ! Remove this after fixing cart
 		} catch (err) {

@@ -28,7 +28,7 @@ function OrderCard({address, products, totalPrice, date, orderId}) {
 			<CardMedia
 				component='img'
 				alt={products[0].name}
-				image={`http://localhost:5000/static/${products[0].image}`}
+				image={`https://mern-e-commerce-backend.onrender.com/static/${products[0].image}`}
 			/>
 			<CardContent>
 				<Typography gutterBottom variant='h5' component='div'>

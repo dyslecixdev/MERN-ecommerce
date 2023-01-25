@@ -19,11 +19,14 @@ function SingleOrder() {
 	useEffect(() => {
 		async function fetchData() {
 			try {
-				const res = await axios.get(`http://localhost:5000/orders/${orderId.id}`, {
-					headers: {
-						Authorization: 'Bearer ' + user.token
+				const res = await axios.get(
+					`https://mern-e-commerce-backend.onrender.com/orders/${orderId.id}`,
+					{
+						headers: {
+							Authorization: 'Bearer ' + user.token
+						}
 					}
-				});
+				);
 				setProducts(res.data.products);
 			} catch (err) {
 				console.log(err);

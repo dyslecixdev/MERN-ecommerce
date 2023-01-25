@@ -32,7 +32,7 @@ function ReceiptCard({productData}) {
 				<CardMedia
 					component='img'
 					sx={{width: {xs: '60%', sm: '30%'}}}
-					image={`http://localhost:5000/static/${productData.image}`}
+					image={`https://mern-e-commerce-backend.onrender.com/static/${productData.image}`}
 					alt={productData.name}
 				/>
 			</Card>

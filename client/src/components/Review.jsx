@@ -37,7 +37,7 @@ function Review({review}) {
 		e.preventDefault();
 		try {
 			await axios.put(
-				`http://localhost:5000/products/${productId.id}/updateReviews`,
+				`https://mern-e-commerce-backend.onrender.com/products/${productId.id}/updateReviews`,
 				{userRating, userReview},
 				{
 					headers: {
@@ -55,11 +55,14 @@ function Review({review}) {
 	const handleDelete = async e => {
 		e.preventDefault();
 		try {
-			await axios.delete(`http://localhost:5000/products/${productId.id}/deleteReviews`, {
-				headers: {
-					Authorization: 'Bearer ' + user.token
+			await axios.delete(
+				`https://mern-e-commerce-backend.onrender.com/products/${productId.id}/deleteReviews`,
+				{
+					headers: {
+						Authorization: 'Bearer ' + user.token
+					}
 				}
-			});
+			);
 			window.location.reload(false);
 		} catch (err) {
 			console.log(err);

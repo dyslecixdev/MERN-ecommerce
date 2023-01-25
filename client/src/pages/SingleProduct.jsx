@@ -69,7 +69,9 @@ function SingleProduct() {
 	useEffect(() => {
 		async function fetchData() {
 			try {
-				const res = await axios.get(`http://localhost:5000/products/${productId.id}`);
+				const res = await axios.get(
+					`https://mern-e-commerce-backend.onrender.com/products/${productId.id}`
+				);
 				setProduct(res.data);
 			} catch (err) {
 				console.log(err);
@@ -106,7 +108,7 @@ function SingleProduct() {
 		e.preventDefault();
 		try {
 			await axios.put(
-				`http://localhost:5000/products/${productId.id}/reviews`,
+				`https://mern-e-commerce-backend.onrender.com/products/${productId.id}/reviews`,
 				{userRating: rating, userReview: review},
 				{headers: {Authorization: 'Bearer ' + user.token}}
 			);
@@ -130,7 +132,7 @@ function SingleProduct() {
 				>
 					{/* Product image */}
 					<img
-						src={`http://localhost:5000/static/${product.image}`}
+						src={`https://mern-e-commerce-backend.onrender.com/static/${product.image}`}
 						alt={product.name}
 						style={{
 							width: '100%',

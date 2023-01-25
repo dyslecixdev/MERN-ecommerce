@@ -26,14 +26,17 @@ function Register() {
 		e.preventDefault();
 		dispatch(loginStart());
 		try {
-			const res = await axios.post('http://localhost:5000/users/register', {
-				firstName,
-				lastName,
-				email,
-				password,
-				confirmPassword,
-				isAdmin: false
-			});
+			const res = await axios.post(
+				'https://mern-e-commerce-backend.onrender.com/users/register',
+				{
+					firstName,
+					lastName,
+					email,
+					password,
+					confirmPassword,
+					isAdmin: false
+				}
+			);
 			dispatch(loginSuccess(res.data)); // Sends the data as an action payload to the reducer function
 			navigate('/');
 		} catch (err) {

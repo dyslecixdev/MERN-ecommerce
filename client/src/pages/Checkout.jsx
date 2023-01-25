@@ -120,7 +120,7 @@ function Checkout() {
 		async function checkoutOrder() {
 			try {
 				const res = await axios.post(
-					'http://localhost:5000/orders/checkout',
+					'https://mern-e-commerce-backend.onrender.com/orders/checkout',
 					{userId: user.id, totalPrice: cart.totalPrice},
 					{
 						headers: {
@@ -267,7 +267,7 @@ function Checkout() {
 										}}
 									>
 										<img
-											src={`http://localhost:5000/static/${product.image}`}
+											src={`https://mern-e-commerce-backend.onrender.com/static/${product.image}`}
 											alt={product.name}
 											style={{
 												width: '60%',

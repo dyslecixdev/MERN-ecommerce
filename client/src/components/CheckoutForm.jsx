@@ -53,7 +53,7 @@ function CheckoutForm({address}) {
 
 		try {
 			await axios.post(
-				'http://localhost:5000/orders',
+				'https://mern-e-commerce-backend.onrender.com/orders',
 				{
 					products: cart.products,
 					address,
@@ -69,7 +69,7 @@ function CheckoutForm({address}) {
 			const {error} = await stripe.confirmPayment({
 				elements,
 				confirmParams: {
-					return_url: 'http://localhost:3000/orders'
+					return_url: 'https://mern-e-commerce-frontend.onrender.com/orders'
 				}
 			});
 			if (error.type === 'card_error' || error.type === 'validation_error')

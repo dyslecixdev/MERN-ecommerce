@@ -37,7 +37,7 @@ function Items() {
 		async function fetchData() {
 			try {
 				const res = await axios.get(
-					`http://localhost:5000/products?category=${catName.category}&size=${size}&color=${color}&filter=${filter}`
+					`https://mern-e-commerce-backend.onrender.com/products?category=${catName.category}&size=${size}&color=${color}&filter=${filter}`
 				);
 				setProducts(res.data);
 			} catch (err) {
