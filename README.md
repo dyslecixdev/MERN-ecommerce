@@ -1,27 +1,26 @@
 # MERN E-Commerce
 A faux e-commerce website where users can "purchase" items of various colors, sizes, and quantities, and view there past orders.
 
-![mern-ecommerce](https://user-images.githubusercontent.com/85912934/205430778-f8206612-b2ee-4da9-bf35-50b535847a14.png)
+![mern-ecommerce](https://user-images.githubusercontent.com/85912934/214704782-98442bb2-1eda-44ae-94e8-3f7968bb9b25.png)
 
+The backend was built with javascript, node.js, express, mongodb atlas,   
+bcryptjs to encrypt and decrypt the users' password, colors to make certain console logs pop out, 
+cors tells the browser that the app at its origin has access to resources at another origin, 
+dotenv to keep certain information secret, express-async-handler to handle async express route exceptions, 
+jsonwebtoken to give each user a unique token, multer to upload the product images, prop-types to declare the type of props for eslint, and stripe to handle payment logic. 
 
-The backend was built with JavaScript, Node.js, Express, MongoDB, Prettier to make the code easier 
-to read, Eslint (Airbnb and Prettier configurations) to find problems in the code, nodemon to 
-restart the app when a server change is made, concurrently to run both the client and server 
-simultaneously, bcryptjs to encrypt and decrypt the users' password, colors to make certain 
-console logs pop out, cors tells the browser that the app at its origin (e.g. localhost:5000) has 
-access to resources at another origin (e.g. localhost:3000), dotenv to keep certain information 
-secret, express-async-handler to handle async express route exceptions, jsonwebtoken to give each 
-user a unique token, and stripe to handle payment logic. 
+The developer version's backend, which can be cloned in the below section, also features prettier to make the code easier to read, eslint (Airbnb and 
+Prettier configurations) to find problems in the code, nodemon to restart the app when a server change is made, and concurrently to run both the client and server simultaneously.
 
-The frontend utilizes Material-UI with Emotion for styling, axios for HTTP requests, react-redux, 
-redux-persist, and reduxjs/toolkit to manage the logged in user's state and cart, react-router-dom to 
-handle the app's web routing, Google Fonts, react-material-ui-carousel for the image carousel, and stripe-js and react-stripe-js to handle payment UI.
+The frontend utilizes Material-UI with Emotion for styling, axios for HTTP requests, react-redux and reduxjs/toolkit to manage the logged in user's state, react-router-dom to 
+handle the app's web routing, react-material-ui-carousel for the image carousel, stripe-js and react-stripe-js to handle payment UI, and Google Fonts.
 
 ## How to run this project
 1. Open your terminal and type: git clone https://github.com/christiandeandemesa/MERN-ecommerce.git
-2. To download the backend dependencies, cd into the mern-ecommerce folder and type: npm install
+2. Cd into MERN-ecommerce, then type git checkout e46ca8a166a to get commit before deployment.
+3. To download the backend dependencies, stay in the root folder (MERN-ecommerce) and type: npm install
 3. To download the frontend dependencies, cd into the client folder and type: npm install
-4. Cd .. back to the mern-ecommerce folder, and run this project by typing: npm run dev
+4. Cd .. back to the MERN-ecommerce folder, and run this project by typing: npm run dev
 5. Start your server, open Postman, copy the below POST route, fill in the fields, make sure isAdmin is set to true, then create your admin user account.
 
 ![postman-2](https://user-images.githubusercontent.com/85912934/205422070-0588de7e-c705-47a1-aefc-b347cbd739a0.png)
@@ -53,53 +52,20 @@ handle the app's web routing, Google Fonts, react-material-ui-carousel for the i
 - [Admin panel](https://github.com/christiandeandemesa/react-admin) for admin users to view and handle all products, users, their carts, and their orders.
 
 ## Bugs
-- The cart is not independent to each user (Note: Please view the Cart Bug video for elaboration).
-- Changing screen sizes messes with the stepper's text (Note: Please view the Stepper Bug video for elaboration).
-
-## Demos
-### Register and Login a User
-
-https://user-images.githubusercontent.com/85912934/205462559-5a46c477-5309-460b-a3ff-f5a4109ec006.mp4
-
-### Profile Functionality
-
-https://user-images.githubusercontent.com/85912934/205462634-a1b5eb8a-00a6-4a6d-8c0c-ccbd6e2860aa.mp4
-
-### Filtering Products
-
-https://user-images.githubusercontent.com/85912934/205462717-05f16e05-c446-4fe8-924d-d674d4710da9.mp4
-
-### Cart Functionality
-
-https://user-images.githubusercontent.com/85912934/205462784-f2fd1e8f-3c5c-465d-8259-ab6240258fc4.mp4
-
-### Stripe Payment
-
-https://user-images.githubusercontent.com/85912934/205462975-680fe381-cc84-440b-ae93-bfff935db3c5.mp4
-
-### Viewing the User's Orders
-
-https://user-images.githubusercontent.com/85912934/205463067-04975682-c586-4482-8459-028da1b35231.mp4
-
-### Review Functionality
-
-https://user-images.githubusercontent.com/85912934/205463478-fdc67614-042e-4b96-9bb2-b32092e7c944.mp4
-
-https://user-images.githubusercontent.com/85912934/205463485-5fb80fc2-6700-4b6d-9ccb-edc0b0c899a8.mp4
-
-### Responsive Design Showcase
-
-https://user-images.githubusercontent.com/85912934/205463568-bcc3d47b-fa78-40d4-8c11-f4a5694138f8.mp4
-
-https://user-images.githubusercontent.com/85912934/205463732-fb0df2f5-6fe4-47ee-9050-43f26498657a.mp4
+- The cart is not independent to each user because it is not implemented in the redux yet.
+- Changing screen sizes messes with the stepper's text because the text is set to appear or not appear depending on the screen size upon first render.
+- Deployed website does not show images for products because multer is saving them in a server/assets folder.
 
 ### Cart Bug
-
 https://user-images.githubusercontent.com/85912934/205463354-03726745-1992-493b-9200-44f568434999.mp4
 
 ### Stepper Bug
-
 https://user-images.githubusercontent.com/85912934/205463365-b5ce3431-3514-4172-9a4a-65c45e8ad880.mp4
+
+### Product Image Bug
+https://user-images.githubusercontent.com/85912934/214709121-ee1985b0-7992-4b96-bfab-ba6f6bae3a6c.mp4
+
+## [MERN E-commerce Demo](https://mern-e-commerce-frontend.onrender.com/)
 
 ## Author
 - Christian Demesa: https://github.com/christiandeandemesa
