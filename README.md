@@ -1,7 +1,7 @@
 # MERN E-Commerce
 A faux e-commerce website where users can "purchase" items of various colors, sizes, and quantities, and view there past orders.
 
-![mern-ecommerce](https://user-images.githubusercontent.com/85912934/214704782-98442bb2-1eda-44ae-94e8-3f7968bb9b25.png)
+![mern-ecommerce](https://user-images.githubusercontent.com/85912934/214709423-284d627c-9800-4038-91cd-6c14ab260f6e.png)
 
 The backend was built with javascript, node.js, express, mongodb atlas,   
 bcryptjs to encrypt and decrypt the users' password, colors to make certain console logs pop out, 
