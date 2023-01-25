@@ -15,7 +15,7 @@ user a unique token, and stripe to handle payment logic.
 
 The frontend utilizes Material-UI with Emotion for styling, axios for HTTP requests, react-redux, 
 redux-persist, and reduxjs/toolkit to manage the logged in user's state and cart, react-router-dom to 
-handle the app's web routing, Google Fonts, and stripe-js and react-stripe-js to handle payment UI.
+handle the app's web routing, Google Fonts, react-material-ui-carousel for the image carousel, and stripe-js and react-stripe-js to handle payment UI.
 
 ## How to run this project
 1. Open your terminal and type: git clone https://github.com/christiandeandemesa/MERN-ecommerce.git
@@ -50,7 +50,7 @@ handle the app's web routing, Google Fonts, and stripe-js and react-stripe-js to
 - Cross browser support for Chrome, Firefox, Opera, and Safari.
 - User will have the ability to type a product's name in a search field to filter all the products.
 - User will have the ability to type in their email in the footer to get an email notification about joining the fake newsletter.
-- [Admin panel](https://github.com/christiandeandemesa/MERN-Admin-Dashboard) for admin users to view and handle all products, users, their carts, and their orders.
+- [Admin panel](https://github.com/christiandeandemesa/react-admin) for admin users to view and handle all products, users, their carts, and their orders.
 
 ## Bugs
 - The cart is not independent to each user (Note: Please view the Cart Bug video for elaboration).
