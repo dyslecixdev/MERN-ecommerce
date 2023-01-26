@@ -58,7 +58,7 @@ JWT_SECRET = Any Text Here
 STRIPE_SECRET_KEY = Below Section
 ```
 
-### Add Stripe Keys
+### Add Stripe Key
 1. Create an account or login to [Stripe](https://dashboard.stripe.com/login).
 2. Click Developers then API Keys.
 
@@ -81,7 +81,7 @@ STRIPE_SECRET_KEY = Below Section
 ![postman-4](https://user-images.githubusercontent.com/85912934/205422087-b48adf74-975c-4af9-895f-01f38fa1ba65.png)
 ![postman-5](https://user-images.githubusercontent.com/85912934/205422093-b42ba1cd-8349-4bb4-acb4-8d639f4f818b.png)
 
-4. Type ctrl + c to start the server, then type npm run dev to run both the client and server.
+4. Type ctrl + c to stop the server, then type npm run dev to run both the client and server.
 
 ## Features
 - User can register and log in to their account.
