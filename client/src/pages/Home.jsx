@@ -9,6 +9,9 @@ import Carousel from 'react-material-ui-carousel';
 
 import Footer from '../components/Footer';
 
+import SuitMan from '../assets/man-in-suit.webp';
+import DressWoman from '../assets/woman-in-dress.png';
+import ChildrenModels from '../assets/children-models.png';
 import Men from '../assets/men.jpg';
 import Women from '../assets/women.jpg';
 import Children from '../assets/children.jpg';
@@ -46,7 +49,7 @@ const carouselItems = [
 	{
 		name: 'Wedding Sale!',
 		text: "50% Off All Men's Suits",
-		img: 'https://marvel-b1-cdn.bc0a.com/f00000000192484/stitchandtie.com/content/images/thumbs/0001753_slate-blue-suit-by-allure-men.png',
+		img: SuitMan,
 		bg: '#DBE2FF',
 		link: '/products/men',
 		color: 'info'
@@ -54,7 +57,7 @@ const carouselItems = [
 	{
 		name: 'Autumn Discounts!',
 		text: 'Buy 2 Get 1 Free on All Dresses',
-		img: 'https://d1fufvy4xao6k9.cloudfront.net/images/landing/sumissura/home/main_products_block/7.woman_dress_evening.webp',
+		img: DressWoman,
 		bg: '#FFE9ED',
 		link: '/products/women',
 		color: 'error'
@@ -62,7 +65,7 @@ const carouselItems = [
 	{
 		name: 'Black Friday!',
 		text: "Children's Clothing Marked Down",
-		img: 'https://www.bubblegumcasting.com.au/wp-content/uploads/elementor/thumbs/how-much-does-teens-child-modeling-pay-pes9b0l7oaxny1spj82mipw9fiz50bnxohayy7f5aq.png',
+		img: ChildrenModels,
 		bg: '#FFFFED',
 		link: '/products/children',
 		color: 'warning'
