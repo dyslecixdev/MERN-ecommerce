@@ -54,16 +54,12 @@ handle the app's web routing, react-material-ui-carousel for the image carousel,
 ## Bugs
 - The cart is not independent to each user because it is not implemented in the redux yet.
 - Changing screen sizes messes with the stepper's text because the text is set to appear or not appear depending on the screen size upon first render.
-- Deployed website does not show images for products because multer is saving them in a server/assets folder.
 
 ### Cart Bug
 https://user-images.githubusercontent.com/85912934/205463354-03726745-1992-493b-9200-44f568434999.mp4
 
 ### Stepper Bug
 https://user-images.githubusercontent.com/85912934/205463365-b5ce3431-3514-4172-9a4a-65c45e8ad880.mp4
-
-### Product Image Bug
-https://user-images.githubusercontent.com/85912934/214709121-ee1985b0-7992-4b96-bfab-ba6f6bae3a6c.mp4
 
 ## [MERN E-commerce Demo](https://mern-e-commerce-frontend.onrender.com/)
 
