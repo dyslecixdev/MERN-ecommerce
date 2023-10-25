@@ -111,7 +111,5 @@ https://user-images.githubusercontent.com/85912934/205463354-03726745-1992-493b-
 ### Stepper Bug
 https://user-images.githubusercontent.com/85912934/205463365-b5ce3431-3514-4172-9a4a-65c45e8ad880.mp4
 
-## [MERN E-commerce Demo](https://mern-e-commerce-frontend.onrender.com/)
-
 ## Author
 - Christian Demesa: https://github.com/christiandeandemesa
